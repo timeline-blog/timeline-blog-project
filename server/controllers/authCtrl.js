@@ -24,6 +24,7 @@ const saveUser=(req,res)=>{
 
     //get user details from req.body, for now, let's assume password is 1234
     //  const { username,password,email } = req.body 
+    // this is the default profile image: https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png
      let password = '1234'
 
      //hash the password

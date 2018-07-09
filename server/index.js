@@ -35,6 +35,7 @@ app.use(
 
 //endpoint for regular user login
 app.get('/api/login',getUser)
+
 //endpoint for regular user signup
 app.post('/api/signup',saveUser)
 
