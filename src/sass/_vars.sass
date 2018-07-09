@@ -40,4 +40,18 @@ $highlightColor: #1ddfa5 // #5BD9B3
     border: none
     padding: 3px 8px
     cursor: pointer
-    
+    font-size: 14px
+
+=mainInput
+    padding: 10px
+    border: none
+    border-bottom: 3px solid lighten($mainBg, 30%)
+    background: $storySummaryBg
+    transition: 0.2s all ease-in-out
+    font-size: 20px
+    font-weight: 200
+    color: white
+    text-align: center
+    &:focus
+        border-color: $highlightColor
+        outline: none

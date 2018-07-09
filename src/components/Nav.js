@@ -8,14 +8,16 @@ class Nav extends Component {
 
   render() {
     return (
+      // *TO DO: conditional rendering depending on whether user is signed in or not
       <div className="main-nav">
         <div className="nav-left">
           <NavLink to="/">Home</NavLink>
-          <NavLink to="/">Discover</NavLink>
+          <NavLink to="/discover">Discover</NavLink>
         </div>
         <div className="nav-right">
           <button className="btn"> + New Story</button>
-          <NavLink to="/">Notifications</NavLink>
+          {/* *TO DO: Notifications will be an icon; will need to remove NavLink since there is no notifications page */}
+          <NavLink to="/#/">Notifications</NavLink>
           <img className="navatar" src="" alt="" />
         </div>
       </div>
