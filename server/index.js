@@ -5,10 +5,13 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const cors = require('cors');
 const massive = require('massive');
-const bcrypt = require('bcryptjs');
+
 
 const PORT = process.env.PORT || 3001;
 const app = express();
+
+
+const { getUser, saveUser } = require('./controllers/authCtrl')
 
 // massive(process.env.CONNECTION_STRING)
 //         .then(db=> {app.set('db',db)
@@ -29,6 +32,11 @@ app.use(
         }
     })
 )
+
+//endpoint for regular user login
+app.get('/api/login',getUser)
+//endpoint for regular user signup
+app.post('/api/signup',saveUser)
 
 
 //app listening
