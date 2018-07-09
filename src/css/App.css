@@ -1,0 +1,6 @@
+@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:200,400,700");
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #020202; }
