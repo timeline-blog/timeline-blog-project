@@ -11,7 +11,7 @@ class Nav extends Component {
       // *TO DO: conditional rendering depending on whether user is signed in or not
       <div className="main-nav">
         <div className="nav-left">
-          <NavLink to="/">Home</NavLink>
+          <NavLink to="/home">Home</NavLink>
           <NavLink to="/discover">Discover</NavLink>
         </div>
         <div className="nav-right">
