@@ -1,3 +1,4 @@
+
 import React, {Component, Fragment} from 'react';
 
 class Landing extends Component {
@@ -38,3 +39,4 @@ class Landing extends Component {
 }
 
 export default Landing;
+

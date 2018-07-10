@@ -46,6 +46,7 @@ input[type="text"], input[type="password"], input[type="email"] {
   max-width: 1000px;
   margin: 0 auto; }
 
+
 .main-nav {
   display: flex;
   justify-content: space-between;
@@ -64,6 +65,23 @@ input[type="text"], input[type="password"], input[type="email"] {
   .main-nav .active {
     color: #1ddfa5; }
   .main-nav img {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #444444;
+    vertical-align: middle; }
+
+
+.main-summary-div {
+  display: flex;
+  justify-content: center;
+  flex-direction: row; }
+  .main-summary-div ul {
+    flex-direction: column;
+    list-style-type: none;
+    width: 20vw; }
+  .main-summary-div img {
     display: inline-block;
     width: 40px;
     height: 40px;
@@ -215,3 +233,4 @@ input[type="text"], input[type="password"], input[type="email"] {
 /*
  * Full Story page
  */
+
