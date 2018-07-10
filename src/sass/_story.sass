@@ -1,0 +1,93 @@
+/* 
+ * Preview for home, liked stories, user profile, discover   
+ */
+.story-preview-wrap
+
+    .story-pv-author-wrap
+        display: flex
+        align-items: center
+        padding: 15px
+        .story-pv-author-avatar
+            height: 40px
+            width: 40px
+            display: inline-block
+            background: $storySummaryBg
+            border-radius: 50%
+            margin: 0 15px 0 0
+        a
+            font-size: 18px
+            font-weight: 200
+            color: $highContrastColor
+    
+    .story-pv-header
+        position: relative
+        .story-pv-image
+            display: block
+            background: $highlightColor
+            height: 200px
+            background-size: cover 100%
+            background-position: center
+            background-repeat: no-repeat
+        .story-pv-title
+            // display: none
+            position: absolute
+            width: 100%
+            bottom: 0
+            left: 0
+            // background: rgba(0,0,0,0.8)
+            background-image: linear-gradient(transparent 15%, rgba(0,0,0,0.5) 25%, rgba(0, 0, 0, 0.9) 80%)
+            color: #ffffff
+            padding: 10px
+            box-sizing: border-box
+            font-size: 20px
+            font-weight: 700
+    
+    .story-pv-body
+        background: $storySummaryBg
+        padding: 10px
+        color: $highContrastColor
+        .story-pv-stats
+            display: flex
+            justify-content: space-between
+            align-items: center
+            padding: 10px 0 20px
+            border-bottom: 1px solid darken($lowContrastColor, 20%)
+            .story-pv-category
+                background: rgba($highlightColor, 0.3)
+                color: #ffffff
+                padding: 3px 14px
+                font-weight: 200
+        .story-pv-info
+            text-align: left
+            margin: 30px auto 20px
+            .story-pv-subtitle
+                color: darken($lowContrastColor, 10%)
+                text-transform: uppercase
+                letter-spacing: 1.2px
+                font-size: 13px
+            .story-pv-event
+                display: flex
+                justify-content: space-between
+                align-items: center
+                color: $highContrastColor
+                font-size: 20px
+                p
+                    margin: 0
+                    font-weight: 200
+                span
+                    font-size: 13px
+                    color: darken($lowContrastColor, 10%)
+    .story-pv-cta
+        background: $storyCtaBg
+        color: $highlightColor
+        text-transform: uppercase
+        font-size: 22px
+        padding: 15px 0
+        display: block
+        transition: all 0.2s ease-in-out
+        &:hover
+            background: lighten($storyCtaBg, 3%)
+
+/* 
+ * Full Story page    
+ */

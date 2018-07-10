@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import Nav from "./components/Nav";
-import "./App.css";
+// import Landing from "./components/Landing";
 import { HashRouter } from "react-router-dom";
+import routes from "./routes"
+
+import "./App.css";
 
 class App extends Component {
   render() {
@@ -9,6 +12,8 @@ class App extends Component {
       <HashRouter>
         <div className="App">
           <Nav />
+          {routes}
+          {/* <Landing /> */}
         </div>
       </HashRouter>
     );
