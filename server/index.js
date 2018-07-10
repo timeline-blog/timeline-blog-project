@@ -9,19 +9,19 @@ const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth20')
 
 
-
-
 const PORT = process.env.PORT || 3001;
 const app = express();
 
 
-const { getUser, saveUser, googleSignIn, logout } = require('./controllers/authCtrl')
+const { getUser, saveUser, googleSignIn, logout } = require(`${__dirname}/controllers/authCtrl`)
+const { getStory } = require(`${__dirname}/controllers/storyCtrl`)
+const { getFollowing, getFollowers, addFollow, unfollow } = require(`${__dirname}/controllers/followsCtrl`)
 
-// massive(process.env.CONNECTION_STRING)
-//         .then(db=> {app.set('db',db)
-//         console.log('connected')
-//     })
-//         .catch(console.log)
+massive(process.env.CONNECTION_STRING)
+        .then(db=> {app.set('db',db)
+    
+    })
+        .catch(console.log)
 
 app.use(bodyParser.json())
 app.use(cors())
@@ -77,6 +77,24 @@ app.get('/auth/google',passport.authenticate('google',{
 //callback route for google to redirect to
 app.get('/auth/google/redirect',passport.authenticate('google'),googleSignIn)
 
+//specific story endpoint
+app.get('/api/story/:story_id',getStory)
+
+//get people you are following
+app.get('/api/people/following/:user_id',getFollowing)
+
+//get followers
+app.get('/api/people/followers/:user_id',getFollowers)
+
+//follow a user
+app.post('/api/people/follow',addFollow)
+
+//unfollow a user
+app.post('/api/people/unfollow',unfollow)
+
+
+
+//logout
 app.get('/auth/logout',logout)
 
 
