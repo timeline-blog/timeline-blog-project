@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 
+
 //gets user details when they login using the regular login
 const getUser=(req,res)=>{
 
@@ -27,7 +28,7 @@ const saveUser=(req,res)=>{
     // this is the default profile image: https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png
      let password = '1234'
 
-     //hash the password
+     //hash the password 10 signifies the number of times you want the salt applied
      let salt = bcrypt.genSaltSync(10)
      let hash = bcrypt.hashSync(password,salt)
      console.log(hash)
@@ -37,8 +38,23 @@ const saveUser=(req,res)=>{
     
 }
 
+const googleSignIn=(req,res)=>{
+    //sql statement to save user details
+  console.log(req.user)
+
+}
+
+const logout=(req,res) =>{
+    req.session.destory(()=>{
+        res.redirect('/')
+    })
+
+}
+
 
 module.exports={
     getUser,
     saveUser,
+    googleSignIn,
+    logout
 }
