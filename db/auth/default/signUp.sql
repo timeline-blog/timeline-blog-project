@@ -1,0 +1,1 @@
+INSERT INTO users (display_name, avatar, email, password) VALUES ($1, $2, $3, $4);
