@@ -24,6 +24,11 @@ class Story extends Component {
                     <span className="connect-line"></span>
                     <Event />
                 </div>
+
+                {/* *TO DO: only display this if story belongs to authorized user */}
+                <div className="add-event-wrap">
+                    <button className="add-event-btn btn"><strong>+</strong> New Event</button>
+                </div>
             
             </div>
         </div>

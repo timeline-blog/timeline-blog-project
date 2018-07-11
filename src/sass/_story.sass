@@ -91,14 +91,132 @@
 /* 
  * Full Story page    
  */
+.story-header
+    .story-title
+        .byline
+            font-size: 18px
+            font-weight: 200
+
 .events-wrap
     margin: 50px auto
+
+    .event-wrap.expanded
+        .event-content
+            max-height: none
+            overflow: initial
+        .content-fade
+            background: $storySummaryBg
+            // position: initial
+            padding: 10px 0
 
     .event-wrap
         position: relative
         padding: 30px
         border: 3px solid $storySummaryBg
         background: lighten($mainBg, 2%)
+
+        .event-header
+            margin: 0 auto 30px
+            .event-title
+                color: #ffffff
+                font-size: 28px
+                margin: 0 auto
+                letter-spacing: 0.5px
+            .event-date
+                margin: 0 auto
+                color: $lowContrastColor
+                letter-spacing: 1px
+                font-weight: 200
+        
+        .event-gallery
+            .event-image
+                display: inline-block
+                background-size: cover
+                background-position: center
+                width: 100px
+                height: 100px
+                margin: 0 5px
+                cursor: pointer
+
+        .event-content
+            color: $highContrastColor
+            font-size: 18px
+            font-weight: 200
+            letter-spacing: 0.5px
+            max-height: 100px
+            overflow: hidden
+
+            .event-comments-section
+                // border-bottom: 1px solid $lowContrastColor
+                background: $storySummaryBg
+                text-align: left
+                margin: 0 -30px 23px
+                padding: 15px 30px
+                .event-comments-header
+                    border-bottom: 1px solid $lowContrastColor
+                .comments-list
+                    max-height: 300px
+                    overflow: scroll
+                    .comment
+                        border-bottom: 1px dashed lighten($storySummaryBg, 10%)
+                        display: flex
+                        justify-content: space-between
+                        .comment-avatar
+                            background: $mainBg
+                            display: inline-block
+                            width: 40px
+                            height: 40px
+                            border-radius: 50%
+                            margin: 15px 0
+                        .comment-body
+                            width: 93%
+                            .comment-date
+                                float: right
+                                color: $lowContrastColor
+                                font-size: 14px
+                            .comment-author
+                                font-weight: 700
+                                margin-bottom: 5px
+                                color: $highContrastColor
+                            .comment-text
+                                margin-top: 0
+                .comment-form
+                    +mainInput
+                    display: block
+                    width: 100%
+                    padding: 10px
+                    box-sizing: border-box
+                    // border: none
+                    margin: 15px 0
+                    text-align: left
+                    background: lighten($storySummaryBg, 15%)
+                    font-size: 18px
+                .btn
+                    font-size: 20px
+                    font-weight: 400
+                    padding: 8px 14px
+
+        .content-fade
+            position: absolute
+            width: 100%
+            padding: 25px 0
+            bottom: 0
+            left: 0
+            background-image: linear-gradient(transparent 0%, rgba(lighten($mainBg, 2%), 0.6) 21%, rgba(lighten($mainBg, 2%), 0.8) 38%, lighten($mainBg, 2%) 60%);
+            .expand-event
+                background: none
+                color: $highlightColor
+                font-weight: 400
+                letter-spacing: 0.5px
+                font-size: 22px
+                text-shadow: 0 0 8px rgba(0,0,0,0.5)
+                border: none
+                cursor: pointer
+                transition: 0.2s all ease-in-out
+                &:hover
+                    text-decoration: underline
+                    color: lighten($highlightColor, 10%)
+
         
     .connector
         display: inline-block
@@ -119,4 +237,27 @@
         clear: both
         border-left: 3px solid $storySummaryBg
         height: 40px
-        
+
+.add-event-wrap
+    position: fixed
+    bottom: 30px
+    right: -135px
+    transition: all 0.2s ease-in-out
+    &:hover
+        right: 0
+    .add-event-btn.btn
+        background: rgba($highlightColor, 0.75)
+        font-size: 20px
+        text-transform: uppercase
+        padding: 10px 15px
+        box-shadow: 0 0 10px rgba(0,0,0,0.75)
+        transition: all 0.2s ease-in-out
+        &:hover
+            background: $highlightColor
+            right: 0
+        strong
+            display: inline-block
+            padding: 0 15px 0 5px
+            font-size: 24px
+            // vertical-align: middle
+    

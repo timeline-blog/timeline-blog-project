@@ -90,7 +90,7 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
   content: " ";
   height: 1px;
   border-top: 1px solid #8f8f8f;
-  padding: 15px 0 0 0;
+  padding: 20px 0 0 0;
   margin: 15px auto 0;
   width: 50px; }
 
@@ -278,14 +278,131 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
 /*
  * Full Story page
  */
-<<<<<<< HEAD
+.story-header .story-title .byline {
+  font-size: 18px;
+  font-weight: 200; }
+
 .events-wrap {
   margin: 50px auto; }
+  .events-wrap .event-wrap.expanded .event-content {
+    max-height: none;
+    overflow: initial; }
+  .events-wrap .event-wrap.expanded .content-fade {
+    background: #5c5c5c;
+    padding: 10px 0; }
   .events-wrap .event-wrap {
     position: relative;
     padding: 30px;
     border: 3px solid #5c5c5c;
     background: #383838; }
+    .events-wrap .event-wrap .event-header {
+      margin: 0 auto 30px; }
+      .events-wrap .event-wrap .event-header .event-title {
+        color: #ffffff;
+        font-size: 28px;
+        margin: 0 auto;
+        letter-spacing: 0.5px; }
+      .events-wrap .event-wrap .event-header .event-date {
+        margin: 0 auto;
+        color: #bbbbbb;
+        letter-spacing: 1px;
+        font-weight: 200; }
+    .events-wrap .event-wrap .event-gallery .event-image {
+      display: inline-block;
+      background-size: cover;
+      background-position: center;
+      width: 100px;
+      height: 100px;
+      margin: 0 5px;
+      cursor: pointer; }
+    .events-wrap .event-wrap .event-content {
+      color: #cccccc;
+      font-size: 18px;
+      font-weight: 200;
+      letter-spacing: 0.5px;
+      max-height: 100px;
+      overflow: hidden; }
+      .events-wrap .event-wrap .event-content .event-comments-section {
+        background: #5c5c5c;
+        text-align: left;
+        margin: 0 -30px 23px;
+        padding: 15px 30px; }
+        .events-wrap .event-wrap .event-content .event-comments-section .event-comments-header {
+          border-bottom: 1px solid #bbbbbb; }
+        .events-wrap .event-wrap .event-content .event-comments-section .comments-list {
+          max-height: 300px;
+          overflow: scroll; }
+          .events-wrap .event-wrap .event-content .event-comments-section .comments-list .comment {
+            border-bottom: 1px dashed #767676;
+            display: flex;
+            justify-content: space-between; }
+            .events-wrap .event-wrap .event-content .event-comments-section .comments-list .comment .comment-avatar {
+              background: #333333;
+              display: inline-block;
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              margin: 15px 0; }
+            .events-wrap .event-wrap .event-content .event-comments-section .comments-list .comment .comment-body {
+              width: 93%; }
+              .events-wrap .event-wrap .event-content .event-comments-section .comments-list .comment .comment-body .comment-date {
+                float: right;
+                color: #bbbbbb;
+                font-size: 14px; }
+              .events-wrap .event-wrap .event-content .event-comments-section .comments-list .comment .comment-body .comment-author {
+                font-weight: 700;
+                margin-bottom: 5px;
+                color: #cccccc; }
+              .events-wrap .event-wrap .event-content .event-comments-section .comments-list .comment .comment-body .comment-text {
+                margin-top: 0; }
+        .events-wrap .event-wrap .event-content .event-comments-section .comment-form {
+          padding: 5px 10px;
+          border: none;
+          border-bottom: 3px solid gray;
+          background: #5c5c5c;
+          transition: 0.2s all ease-in-out;
+          font-size: 20px;
+          font-weight: 200;
+          color: white;
+          text-align: center;
+          box-sizing: border-box;
+          display: block;
+          width: 100%;
+          padding: 10px;
+          box-sizing: border-box;
+          margin: 15px 0;
+          text-align: left;
+          background: #828282;
+          font-size: 18px; }
+          .events-wrap .event-wrap .event-content .event-comments-section .comment-form:focus {
+            border-color: #1ddfa5;
+            outline: none; }
+          .events-wrap .event-wrap .event-content .event-comments-section .comment-form::placeholder {
+            color: #a8a8a8; }
+        .events-wrap .event-wrap .event-content .event-comments-section .btn {
+          font-size: 20px;
+          font-weight: 400;
+          padding: 8px 14px; }
+    .events-wrap .event-wrap .content-fade {
+      position: absolute;
+      width: 100%;
+      padding: 25px 0;
+      bottom: 0;
+      left: 0;
+      background-image: linear-gradient(transparent 0%, rgba(56, 56, 56, 0.6) 21%, rgba(56, 56, 56, 0.8) 38%, #383838 60%); }
+      .events-wrap .event-wrap .content-fade .expand-event {
+        background: none;
+        color: #1ddfa5;
+        font-weight: 400;
+        letter-spacing: 0.5px;
+        font-size: 22px;
+        text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+        border: none;
+        cursor: pointer;
+        transition: 0.2s all ease-in-out; }
+        .events-wrap .event-wrap .content-fade .expand-event:hover {
+          text-decoration: underline;
+          color: #48e7b8; }
   .events-wrap .connector {
     display: inline-block;
     width: 10px;
@@ -306,10 +423,28 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
     border-left: 3px solid #5c5c5c;
     height: 40px; }
 
-=======
-<<<<<<< HEAD
-=======
->>>>>>> master
+.add-event-wrap {
+  position: fixed;
+  bottom: 30px;
+  right: -135px;
+  transition: all 0.2s ease-in-out; }
+  .add-event-wrap:hover {
+    right: 0; }
+  .add-event-wrap .add-event-btn.btn {
+    background: rgba(29, 223, 165, 0.75);
+    font-size: 20px;
+    text-transform: uppercase;
+    padding: 10px 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
+    transition: all 0.2s ease-in-out; }
+    .add-event-wrap .add-event-btn.btn:hover {
+      background: #1ddfa5;
+      right: 0; }
+    .add-event-wrap .add-event-btn.btn strong {
+      display: inline-block;
+      padding: 0 15px 0 5px;
+      font-size: 24px; }
+
 .profile-avatar {
   display: block;
   width: 120px;
@@ -346,4 +481,3 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
       margin: 0 20px 0 0;
       background: #5c5c5c;
       border-radius: 50%; }
->>>>>>> master
