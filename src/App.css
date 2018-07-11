@@ -11,7 +11,11 @@ a {
   color: inherit;
   text-decoration: none; }
 
+<<<<<<< HEAD
+input[type="text"], input[type="password"], input[type="email"] {
+=======
 input[type="text"], input[type="password"], input[type="email"], .main-input {
+>>>>>>> master
   padding: 5px 10px;
   border: none;
   border-bottom: 3px solid gray;
@@ -278,6 +282,7 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
 /*
  * Full Story page
  */
+<<<<<<< HEAD
 .events-wrap {
   margin: 50px auto; }
   .events-wrap .event-wrap {
@@ -305,6 +310,10 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
     border-left: 3px solid #5c5c5c;
     height: 40px; }
 
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> master
 .profile-avatar {
   display: block;
   width: 120px;
@@ -341,3 +350,4 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
       margin: 0 20px 0 0;
       background: #5c5c5c;
       border-radius: 50%; }
+>>>>>>> master

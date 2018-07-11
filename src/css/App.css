@@ -78,6 +78,7 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
   max-width: 1000px;
   margin: 0 auto; }
 
+<<<<<<< HEAD
 .page-header .page-title {
   color: #cccccc; }
 
@@ -102,6 +103,8 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
   padding: 3px 8px;
   color: #cccccc; }
 
+=======
+>>>>>>> master
 .main-nav {
   display: flex;
   justify-content: space-between;
