@@ -17,15 +17,6 @@ export default (
     <Route exact path="/" component={Landing} />
     <Route path="/signup" component={SignUp} />
 
-<<<<<<< HEAD
-        {/* logged in */}
-        <Route path="/home" component={Home} />
-        <Route path="/liked-stories" component={LikedStories} />
-        <Route path="/story" component={Story} />
-        <Route path="/profile/:user_id" component={User} />
-        <Route path="/following" component={Following} />
-        <Route path="/followers" component={MyFollowers} />
-=======
     {/* logged in */}
     <Route path="/home" component={Home} />
     <Route path="/liked-stories" component={LikedStories} />
@@ -33,7 +24,6 @@ export default (
     <Route path="/profile/:user_id" component={User} />
     <Route path="/following" component={Following} />
     <Route path="/followers" component={MyFollowers} />
->>>>>>> master
 
     <Route path="/discover" component={Discover} />
   </Switch>
