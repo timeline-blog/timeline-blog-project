@@ -278,6 +278,33 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
 /*
  * Full Story page
  */
+.events-wrap {
+  margin: 50px auto; }
+  .events-wrap .event-wrap {
+    position: relative;
+    padding: 30px;
+    border: 3px solid #5c5c5c;
+    background: #383838; }
+  .events-wrap .connector {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border: 3px solid #5c5c5c;
+    background: #333333;
+    border-radius: 50%;
+    position: absolute;
+    left: 49%; }
+  .events-wrap .top-connector {
+    top: -10px; }
+  .events-wrap .bottom-connector {
+    bottom: -10px; }
+  .events-wrap .connect-line {
+    display: inline-block;
+    margin: -3px 0 -3px -0.25%;
+    clear: both;
+    border-left: 3px solid #5c5c5c;
+    height: 40px; }
+
 .profile-avatar {
   display: block;
   width: 120px;

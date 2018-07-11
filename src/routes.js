@@ -20,9 +20,9 @@ export default (
         {/* logged in */}
         <Route path="/home" component={Home} />
         <Route path="/liked-stories" component={LikedStories} />
-        <Route path='/story/:story_id' component={Story} />
+        <Route path="/story" component={Story} />
         <Route path="/profile/:user_id" component={User} />
-        <Route path='/following' component={Following} />
+        <Route path="/following" component={Following} />
         <Route path="/followers" component={MyFollowers} />
 
         <Route path="/discover" component={Discover} />
