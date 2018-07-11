@@ -1,4 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+
+import Comment from './Comment';
 
 class Event extends Component {
     constructor(props) {
@@ -55,30 +57,10 @@ class Event extends Component {
                         <div className="event-comments-header">12 comments</div>
 
                         <div className="comments-list">
-                            <div className="comment">
-                                <img className="comment-avatar"/>
-                                <div className="comment-body">
-                                    <p className="comment-date">2 days ago</p>
-                                    <p className="comment-author">John Doe:</p>
-                                    <p className="comment-text">This is a comment. Proin purus turpis, malesuada ac volutpat id, tincidunt eu ante. Maecenas mollis leo et nisi viverra dapibus.</p>
-                                </div>
-                            </div>
-                            <div className="comment">
-                                <img className="comment-avatar"/>
-                                <div className="comment-body">
-                                    <p className="comment-date">2 days ago</p>
-                                    <p className="comment-author">John Doe: </p>
-                                    <p className="comment-text">This is a comment. Proin purus turpis, malesuada ac volutpat id, tincidunt eu ante. Maecenas mollis leo et nisi viverra dapibus.</p>
-                                </div>
-                            </div>
-                            <div className="comment">
-                                <img className="comment-avatar"/>
-                                <div className="comment-body">
-                                    <p className="comment-date">2 days ago</p>
-                                    <p className="comment-author">John Doe:</p>
-                                    <p className="comment-text">This is a comment. Proin purus turpis, malesuada ac volutpat id, tincidunt eu ante. Maecenas mollis leo et nisi viverra dapibus.</p>
-                                </div>
-                            </div>
+                            <Comment />
+                            <Comment />
+                            <Comment />
+                            <Comment />
                         </div>
 
                         <div className="comment-form-wrap">
