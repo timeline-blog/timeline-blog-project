@@ -11,8 +11,8 @@ a {
   color: inherit;
   text-decoration: none; }
 
-input[type="text"], input[type="password"], input[type="email"] {
-  padding: 10px;
+input[type="text"], input[type="password"], input[type="email"], .main-input {
+  padding: 5px 10px;
   border: none;
   border-bottom: 3px solid gray;
   background: #5c5c5c;
@@ -20,10 +20,13 @@ input[type="text"], input[type="password"], input[type="email"] {
   font-size: 20px;
   font-weight: 200;
   color: white;
-  text-align: center; }
-  input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+  text-align: center;
+  box-sizing: border-box; }
+  input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, .main-input:focus {
     border-color: #1ddfa5;
     outline: none; }
+  input[type="text"]::placeholder, input[type="password"]::placeholder, input[type="email"]::placeholder, .main-input::placeholder {
+    color: #a8a8a8; }
 
 .btn {
   background-color: #1ddfa5;
@@ -33,7 +36,35 @@ input[type="text"], input[type="password"], input[type="email"] {
   border: none;
   padding: 3px 8px;
   cursor: pointer;
-  font-size: 14px; }
+  font-size: 14px;
+  transition: all 0.2s ease-in-out; }
+  .btn:hover {
+    background: #1ac894; }
+
+.negative-btn.btn {
+  background: #d74a4a; }
+  .negative-btn.btn:hover {
+    background: #dc5f5f; }
+
+.border-btn.btn {
+  background: none;
+  border: 1px solid #1ddfa5;
+  color: #1ddfa5;
+  font-size: 18px;
+  transition: all 0.2s ease-in-out; }
+  .border-btn.btn:hover {
+    background: #1ddfa5;
+    color: #ffffff; }
+
+.negative-border-btn.btn {
+  background: none;
+  border: 1px solid #d74a4a;
+  color: #d74a4a;
+  font-size: 18px;
+  transition: all 0.2s ease-in-out; }
+  .negative-border-btn.btn:hover {
+    background: #d74a4a;
+    color: #ffffff; }
 
 .outer-wrap {
   background: #333333;
@@ -47,6 +78,33 @@ input[type="text"], input[type="password"], input[type="email"] {
   max-width: 1000px;
   margin: 0 auto; }
 
+<<<<<<< HEAD
+.page-header .page-title {
+  color: #cccccc; }
+
+.page-header .page-description {
+  font-size: 18px;
+  font-weight: 200; }
+
+.page-header .follow-info-wrap::before {
+  display: block;
+  content: " ";
+  height: 1px;
+  border-top: 1px solid #8f8f8f;
+  padding: 15px 0 0 0;
+  margin: 15px auto 0;
+  width: 50px; }
+
+.page-header .follow-info-wrap .follow-btn.btn, .page-header .follow-info-wrap .follow-count {
+  font-size: 18px; }
+
+.page-header .follow-info-wrap .follow-count {
+  background: #5c5c5c;
+  padding: 3px 8px;
+  color: #cccccc; }
+
+=======
+>>>>>>> master
 .main-nav {
   display: flex;
   justify-content: space-between;
@@ -98,7 +156,9 @@ input[type="text"], input[type="password"], input[type="email"] {
     .login-wrap .login-header .login-tab.selected-tab {
       border-color: #1ddfa5; }
   .login-wrap .login-form .field-group {
-    margin: 30px auto 0; }
+    margin: 17px auto 0; }
+    .login-wrap .login-form .field-group:first-child {
+      margin-top: 0; }
     .login-wrap .login-form .field-group label, .login-wrap .login-form .field-group input {
       display: block;
       margin: 0 auto;
@@ -107,6 +167,11 @@ input[type="text"], input[type="password"], input[type="email"] {
     .login-wrap .login-form .field-group label {
       font-size: 18px;
       margin-bottom: 5px; }
+  .login-wrap .login-form .btn {
+    margin-top: 17px;
+    display: inline-block;
+    font-size: 18px;
+    padding: 8px 31px; }
 
 .home-header .home-tab {
   font-size: 18px;
@@ -216,3 +281,39 @@ input[type="text"], input[type="password"], input[type="email"] {
 /*
  * Full Story page
  */
+.profile-avatar {
+  display: block;
+  width: 120px;
+  height: 120px;
+  background: #5c5c5c;
+  margin: 0 auto;
+  border-radius: 50%; }
+
+.followers-wrap .main-input {
+  display: block;
+  width: 90%;
+  max-width: 600px;
+  margin: 0 auto; }
+
+.followers-wrap .followers-list-wrap {
+  max-width: 600px;
+  margin: 50px auto; }
+
+.followers-wrap .user-summary-wrap {
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #5c5c5c;
+  padding: 15px; }
+  .followers-wrap .user-summary-wrap:last-child {
+    border-bottom: none; }
+  .followers-wrap .user-summary-wrap .user-info {
+    display: flex;
+    align-items: center; }
+    .followers-wrap .user-summary-wrap .user-info img {
+      width: 50px;
+      height: 50px;
+      margin: 0 20px 0 0;
+      background: #5c5c5c;
+      border-radius: 50%; }
