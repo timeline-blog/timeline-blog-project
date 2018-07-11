@@ -1,9 +1,27 @@
 import React, { Component } from 'react'
 
 class Event extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            eventState: 'collapsed'
+        };
+
+        this.collapseExpand = this.collapseExpand.bind( this );
+    }
+
+    collapseExpand() {
+        if ( this.state.eventState === 'collapsed' ) {
+            this.setState({ eventState: 'expanded' });
+        } else {
+            this.setState({ eventState: 'collapsed' });
+        }
+    }
+
     render() {
         return (
-            <div className="event-wrap collapsed">
+            <div className={`event-wrap ${this.state.eventState}`}>
                 <span className="connector top-connector"></span>
 
                 <header className="event-header">
@@ -71,9 +89,12 @@ class Event extends Component {
                     </div>
                 </div>
 
-                {/* button needs the event id so it can be passed to expand/collapse event handler to only act on */}
                 <div className="content-fade">
-                    <button data-eventid="1" className="expand-event">Expand +</button>
+                    <button 
+                    onClick={() => this.collapseExpand()}
+                    className="expand-event">
+                    {this.state.eventState === 'collapsed' ? 'Expand +' : 'Collapse -'}
+                </button>
                 </div>
 
                 <span className="connector bottom-connector"></span>

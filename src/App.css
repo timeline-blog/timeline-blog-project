@@ -285,8 +285,8 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
 .events-wrap {
   margin: 50px auto; }
   .events-wrap .event-wrap.expanded .event-content {
-    max-height: none;
-    overflow: initial; }
+    overflow: initial;
+    max-height: none; }
   .events-wrap .event-wrap.expanded .content-fade {
     background: #5c5c5c;
     padding: 10px 0; }
@@ -399,7 +399,8 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
         text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
         border: none;
         cursor: pointer;
-        transition: 0.2s all ease-in-out; }
+        transition: 0.2s all ease-in-out;
+        outline: none; }
         .events-wrap .event-wrap .content-fade .expand-event:hover {
           text-decoration: underline;
           color: #48e7b8; }
@@ -444,6 +445,18 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
       display: inline-block;
       padding: 0 15px 0 5px;
       font-size: 24px; }
+
+@keyframes expandEvent {
+  from {
+    max-height: 100px; }
+  to {
+    max-height: none; } }
+
+@keyframes collapseEvent {
+  from {
+    max-height: none; }
+  to {
+    max-height: 100px; } }
 
 .profile-avatar {
   display: block;

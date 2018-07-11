@@ -18,11 +18,11 @@ class Story extends Component {
                 </div>
 
                 <div className="events-wrap">
-                    <Event />
+                    <Event eventId={1}/>
                     <span className="connect-line"></span>
-                    <Event />
+                    <Event eventId={2}/>
                     <span className="connect-line"></span>
-                    <Event />
+                    <Event eventId={2}/>
                 </div>
 
                 {/* *TO DO: only display this if story belongs to authorized user */}

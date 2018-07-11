@@ -102,8 +102,12 @@
 
     .event-wrap.expanded
         .event-content
-            max-height: none
             overflow: initial
+            max-height: none
+            // animation-name: expandEvent
+            // animation-duration: 0.3s
+            // animation-iteration-count: 1
+            // animation-fill-mode: forwards
         .content-fade
             background: $storySummaryBg
             // position: initial
@@ -145,6 +149,10 @@
             letter-spacing: 0.5px
             max-height: 100px
             overflow: hidden
+            // animation-name: collapseEvent
+            // animation-duration: 0.3s
+            // animation-iteration-count: 1
+            // animation-fill-mode: forwards
 
             .event-comments-section
                 // border-bottom: 1px solid $lowContrastColor
@@ -213,6 +221,7 @@
                 border: none
                 cursor: pointer
                 transition: 0.2s all ease-in-out
+                outline: none
                 &:hover
                     text-decoration: underline
                     color: lighten($highlightColor, 10%)
@@ -260,4 +269,11 @@
             padding: 0 15px 0 5px
             font-size: 24px
             // vertical-align: middle
-    
+
+@keyframes expandEvent
+    from { max-height: 100px }
+    to { max-height: none }
+
+@keyframes collapseEvent
+    from { max-height: none }
+    to { max-height: 100px }
