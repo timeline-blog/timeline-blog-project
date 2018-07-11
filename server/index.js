@@ -16,6 +16,8 @@ const app = express();
 const { getUser, saveUser, googleSignIn, logout } = require(`${__dirname}/controllers/authCtrl`)
 const { getStory } = require(`${__dirname}/controllers/storyCtrl`)
 const { getFollowing, getFollowers, addFollow, unfollow } = require(`${__dirname}/controllers/followsCtrl`)
+const { getHome } = require(`${__dirname}/controllers/homeCtrl`)
+
 
 massive(process.env.CONNECTION_STRING)
         .then(db=> {app.set('db',db)
@@ -93,6 +95,8 @@ app.post('/api/people/follow',addFollow)
 app.post('/api/people/unfollow',unfollow)
 
 
+//home following
+app.get('/api/home/:user_id',getHome)
 
 //logout
 app.get('/auth/logout',logout)
