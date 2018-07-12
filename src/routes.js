@@ -8,6 +8,7 @@ import LikedStories from "./components/Home/LikedStories";
 import Discover from "./components/Discover";
 import Story from "./components/Story/Story";
 import SignUp from "./components/Public/SignUp";
+import Login from "./components/Public/Login";
 import MyFollowers from "./components/MyFollowers/MyFollowers";
 import Following from "./components/MyFollowers/Following";
 
@@ -16,6 +17,7 @@ export default (
     {/* not logged in */}
     <Route exact path="/" component={Landing} />
     <Route path="/signup" component={SignUp} />
+    <Route path="/login" component={Login} />
 
     {/* logged in */}
     <Route path="/home" component={Home} />
