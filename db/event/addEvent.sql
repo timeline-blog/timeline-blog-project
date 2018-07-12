@@ -1,0 +1,1 @@
+INSERT INTO events ( event_title, event_description, e_created_on, story_id ) VALUES ();
