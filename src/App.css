@@ -128,24 +128,33 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
     vertical-align: middle; }
 
 .outer-wrap.landing-wrap {
-  min-height: 0;
-  background: #4d4d4d; }
+  min-height: 50vh;
+  background: #4d4d4d;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
+  .outer-wrap.landing-wrap .welcome-title {
+    color: #cccccc; }
 
 .welcome-wrap {
+  width: 100%;
   max-width: 900px;
   margin: 0 auto; }
-  .welcome-wrap .welcome-header .welcome-title {
-    color: #cccccc; }
-  .welcome-wrap .welcome-header .btn.login-btn {
-    display: block;
-    box-sizing: border-box;
-    width: 90%;
-    max-width: 400px;
-    margin: 20px auto;
-    font-size: 24px;
-    padding: 10px 0; }
-  .welcome-wrap .welcome-header .login-wrap {
-    margin: 30px auto; }
+  .welcome-wrap .welcome-header {
+    width: 100%; }
+    .welcome-wrap .welcome-header .welcome-title {
+      color: #cccccc; }
+    .welcome-wrap .welcome-header .btn.login-btn {
+      display: block;
+      box-sizing: border-box;
+      width: 90%;
+      max-width: 400px;
+      margin: 20px auto;
+      font-size: 24px;
+      padding: 10px 0; }
+    .welcome-wrap .welcome-header .login-wrap {
+      margin: 30px auto; }
 
 .outer-wrap.login-wrap {
   min-height: 85vh;
@@ -197,6 +206,13 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
       display: inline-block;
       font-size: 18px;
       padding: 8px 31px; }
+    .outer-wrap.login-wrap .login-form a:last-child {
+      display: inline-block;
+      margin: 20px auto 0;
+      color: #1ddfa5;
+      font-weight: 200; }
+      .outer-wrap.login-wrap .login-form a:last-child:hover {
+        text-decoration: underline; }
 
 .home-header .home-tab {
   font-size: 18px;

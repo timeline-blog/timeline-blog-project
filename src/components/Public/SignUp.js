@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from "react";
 
+import { Link } from 'react-router-dom';
+
 class SignUp extends Component {
   render() {
     return (
@@ -35,6 +37,7 @@ class SignUp extends Component {
               <input className="main-input" type="text" />
             </div>
             <button className="btn login-btn">Sign Up with Email</button>
+            <Link to="/login">Already have an account? Log in here</Link>
           </div>
 
         </div>

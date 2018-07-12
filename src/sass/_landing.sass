@@ -1,12 +1,21 @@
 .outer-wrap.landing-wrap
-    min-height: 0
+    min-height: 50vh
     background: lighten($mainBg, 10%)
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+
+    .welcome-title
+        color: $highContrastColor
     
 .welcome-wrap
+    width: 100%
     max-width: 900px
     margin: 0 auto
 
     .welcome-header
+        width: 100%
         .welcome-title
             color: $highContrastColor
 
@@ -84,5 +93,12 @@
             display: inline-block
             font-size: 18px
             padding: 8px 31px
-            
+
+        a:last-child
+            display: inline-block
+            margin: 20px auto 0
+            color: $highlightColor
+            font-weight: 200
+            &:hover
+                text-decoration: underline   
             
