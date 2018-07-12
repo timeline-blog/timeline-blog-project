@@ -19,8 +19,7 @@ class Nav extends Component {
           <button className="btn"> + New Story</button>
           {/* *TO DO: Notifications will be an icon; will need to remove NavLink since there is no notifications page */}
           <NavLink to="/#/">Notifications</NavLink>
-          <img onMouseOver className="navatar" src="" alt="" />
-          <HoverMenu/>
+          <img className="navatar" src="" alt="" />
         </div>
       </div>
     );
