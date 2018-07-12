@@ -3,6 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome": "^1.1.8",
+    "@fortawesome/fontawesome-free-brands": "^5.0.13",
+    "@fortawesome/fontawesome-pro-light": "^5.0.13",
+    "@fortawesome/fontawesome-pro-regular": "^5.0.13",
+    "@fortawesome/fontawesome-pro-solid": "^5.0.13",
+    "@fortawesome/react-fontawesome": "0.0.20",
     "axios": "^0.18.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
