@@ -14,11 +14,11 @@ const app = express();
 
 
 const { getUser, saveUser, googleSignIn, logout } = require(`${__dirname}/controllers/authCtrl`);
-const { getStory } = require(`${__dirname}/controllers/storyCtrl`);
+const { getStory, addStory, editStory, deleteStory, addLike, unlike } = require(`${__dirname}/controllers/storyCtrl`);
 const { getFollowing, getFollowers, addFollow, unfollow } = require(`${__dirname}/controllers/followsCtrl`);
 const { getHome, getLiked } = require(`${__dirname}/controllers/homeCtrl`);
 const { getFiltered, getAll } = require(`${__dirname}/controllers/discoverCtrl`);
-const { getProfile } = require(`${__dirname}/controllers/profileCtrl`);
+const { getProfile, editUser } = require(`${__dirname}/controllers/profileCtrl`);
 
 
 massive(process.env.CONNECTION_STRING)
@@ -83,6 +83,11 @@ app.get('/auth/google/redirect', passport.authenticate('google'), googleSignIn);
 
 //specific story endpoint
 app.get('/api/story/:story_id', getStory);
+app.post('/api/story', addStory);
+app.put('/api/story/:story_id', editStory);
+app.delete('/api/story/:story_id', deleteStory);
+app.post('/api/like', addLike);
+app.post('/api/like', unlike);
 
 //get people you are following
 app.get('/api/people/following/:user_id', getFollowing);
@@ -107,6 +112,7 @@ app.get('/api/discover/all', getAll);
 
 //profile page
 app.get('/api/profile/:user_id', getProfile);
+app.put('/api/user/:user_id', editUser);
 
 //logout
 app.get('/auth/logout', logout);
