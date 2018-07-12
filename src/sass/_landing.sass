@@ -1,24 +1,33 @@
 .outer-wrap.landing-wrap
     min-height: 0
+    background: lighten($mainBg, 10%)
     
 .welcome-wrap
     max-width: 900px
     margin: 0 auto
 
     .welcome-header
-
         .welcome-title
             color: $highContrastColor
 
-.login-wrap
-    padding: 30px
-    width: 90%
-    max-width: 375px
-    margin: 0 auto
+        .btn.login-btn
+            display: block
+            box-sizing: border-box
+            width: 90%
+            max-width: 400px
+            margin: 20px auto
+            font-size: 24px
+            padding: 10px 0
+        
+        .login-wrap
+            margin: 30px auto
+
+
+.outer-wrap.login-wrap
+    min-height: 85vh
     color: $highContrastColor
 
     .login-header
-        display: flex
 
         .login-tab
             display: inline-block
@@ -30,6 +39,31 @@
             border-color: $highlightColor
 
     .login-form
+        width: 90%
+        max-width: 375px
+        margin: 0 auto 50px
+
+        .btn.login-btn
+            display: block
+            box-sizing: border-box
+            width: 100%
+            margin-top: 50px
+        
+        .auth-form-separator
+            font-size: 28px
+            margin: 40px auto
+            &::before, &::after
+                display: inline-block
+                vertical-align: middle
+                content: " "
+                height: 1px
+                width: 25%
+                margin: -3px 10% 0 0
+                border-top: 1px solid lighten($mainBg, 20%)
+            &::after
+                margin: -3px 0 0 10%
+
+
         .field-group
             margin: 17px auto 0
             &:first-child

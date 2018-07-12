@@ -1,6 +1,8 @@
 
 import React, {Component, Fragment} from 'react';
 
+import Discover from '../Discover';
+
 class Landing extends Component {
     render() {
         return (
@@ -10,29 +12,14 @@ class Landing extends Component {
                     <header className="welcome-header">
                         <h1 className="welcome-title">Welcome to App Name</h1>
                         {/* big logo */}
-                    </header>
-
-                    <div className="login-wrap">
-                        <header className="login-header">
-                            <span className="login-tab selected-tab">Sign Up</span>
-                            <span className="login-tab">Log In</span>
-                        </header>
-                        <div className="login-form">
-                            <div className="field-group">
-                                <label htmlFor="">Email</label>
-                                <input className="main-input" type="text"/>
-                            </div>
-                            <div className="field-group">
-                                <label htmlFor="">Password</label>
-                                <input className="main-input" type="password"/>
-                            </div>
-
+                        <div className="login-wrap">
+                            <button className="btn login-btn">Sign Up</button>
+                            <button className="btn border-btn login-btn">Log In</button>
                         </div>
-                    </div>
+                    </header>
                 </section>
-
             </div>
-            {/* <Discover /> */}
+            <Discover />
             </Fragment>
         );
     }
