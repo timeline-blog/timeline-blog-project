@@ -3,16 +3,16 @@ import { NavLink } from "react-router-dom";
 import HoverMenu from "./HoverMenu";
 import NotificationsMenu from "./NotificationsMenu";
 
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import faBell from '@fortawesome/fontawesome-pro-light/faBell';
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import faBell from "@fortawesome/fontawesome-pro-light/faBell";
 
 class Nav extends Component {
   constructor() {
     super();
 
     this.state = {
-      hoverMenuMode: 'hidden',
-      notificationsMode: 'hidden'
+      hoverMenuMode: "hidden",
+      notificationsMode: "hidden"
     };
 
     this.toggleHoverMenu = this.toggleHoverMenu.bind(this);
@@ -20,18 +20,18 @@ class Nav extends Component {
   }
 
   toggleHoverMenu() {
-    if ( this.state.hoverMenuMode === 'hidden' ) {
-      this.setState({ hoverMenuMode: 'visible' });
+    if (this.state.hoverMenuMode === "hidden") {
+      this.setState({ hoverMenuMode: "visible" });
     } else {
-      this.setState({ hoverMenuMode: 'hidden' });
+      this.setState({ hoverMenuMode: "hidden" });
     }
   }
 
   toggleNotificationsMenu() {
-    if ( this.state.notificationsMode === 'hidden' ) {
-      this.setState({ notificationsMode: 'visible' });
+    if (this.state.notificationsMode === "hidden") {
+      this.setState({ notificationsMode: "visible" });
     } else {
-      this.setState({ notificationsMode: 'hidden' });
+      this.setState({ notificationsMode: "hidden" });
     }
   }
 
@@ -47,16 +47,25 @@ class Nav extends Component {
           <button className="btn"> + New Story</button>
           {/* *TO DO: Notifications will be an icon; will need to remove NavLink since there is no notifications page */}
           <div className="notifications-wrap">
-            <FontAwesomeIcon onClick={() => this.toggleNotificationsMenu()} icon={faBell} />
-            <NotificationsMenu notificationsMode={this.state.notificationsMode}/>
+            <FontAwesomeIcon
+              onClick={() => this.toggleNotificationsMenu()}
+              icon={faBell}
+            />
+            <NotificationsMenu
+              notificationsMode={this.state.notificationsMode}
+            />
           </div>
-          
+
           <div className="account-links-wrap">
-            <img onClick={() => this.toggleHoverMenu()} className="navatar" src="" alt="" />
-            <HoverMenu hoverMenuMode={this.state.hoverMenuMode}/>
+            <img
+              onClick={() => this.toggleHoverMenu()}
+              className="navatar"
+              src=""
+              alt=""
+            />
+            <HoverMenu hoverMenuMode={this.state.hoverMenuMode} />
           </div>
         </div>
-
       </div>
     );
   }
