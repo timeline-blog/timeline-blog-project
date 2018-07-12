@@ -1,11 +1,11 @@
-require("../../../../AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/dotenv").config();
+require("dotenv").config();
 //regular setup
 const express = require("express");
 const bodyParser = require("body-parser");
-const session = require("../../../../AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/express-session");
-const cors = require("../../../../AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/cors");
-const massive = require("../../../../AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/massive");
-const passport = require("../../../../AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/passport");
+const session = require("express-session");
+const cors = require("cors");
+const massive = require("massive");
+const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20");
 
 const PORT = process.env.PORT || 3001;
