@@ -1,38 +1,28 @@
 
 import React, {Component, Fragment} from 'react';
+import { Link } from 'react-router-dom';
+
+import Discover from '../Discover';
 
 class Landing extends Component {
     render() {
         return (
             <Fragment>
             <div className="outer-wrap landing-wrap">
+                <div className="page-title">
+                    <h1 className="welcome-title">Welcome to App Name</h1>
+                </div>
                 <section className="welcome-wrap">
                     <header className="welcome-header">
-                        <h1 className="welcome-title">Welcome to App Name</h1>
                         {/* big logo */}
-                    </header>
-
-                    <div className="login-wrap">
-                        <header className="login-header">
-                            <span className="login-tab selected-tab">Sign Up</span>
-                            <span className="login-tab">Log In</span>
-                        </header>
-                        <div className="login-form">
-                            <div className="field-group">
-                                <label htmlFor="">Email</label>
-                                <input className="main-input" type="text"/>
-                            </div>
-                            <div className="field-group">
-                                <label htmlFor="">Password</label>
-                                <input className="main-input" type="password"/>
-                            </div>
-
+                        <div className="login-wrap">
+                            <Link to="/signup" className="btn login-btn">Sign Up</Link>
+                            <Link to="/login" className="btn border-btn login-btn">Log In</Link>
                         </div>
-                    </div>
+                    </header>
                 </section>
-
             </div>
-            {/* <Discover /> */}
+            <Discover />
             </Fragment>
         );
     }
