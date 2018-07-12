@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import HoverMenu from "./HoverMenu";
 
 class Nav extends Component {
   constructor() {
@@ -18,7 +19,8 @@ class Nav extends Component {
           <button className="btn"> + New Story</button>
           {/* *TO DO: Notifications will be an icon; will need to remove NavLink since there is no notifications page */}
           <NavLink to="/#/">Notifications</NavLink>
-          <img className="navatar" src="" alt="" />
+          <img onMouseOver className="navatar" src="" alt="" />
+          <HoverMenu/>
         </div>
       </div>
     );
