@@ -39,7 +39,7 @@ const GET_FOLLOWING = "GET_FOLLOWING";
 const ADD_FOLLOW = "ADD_FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
 
-export default function followsReducer() {
+export default function followsReducer(state = initialState, action) {
   switch (action.type) {
     case `${GET_FOLLOWERS}_FULFILLED`:
       return { ...state, followers: action.payload };

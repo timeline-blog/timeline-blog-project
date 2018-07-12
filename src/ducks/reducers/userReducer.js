@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const initialState = {
-  authedUser: { user_id, bio, avatar, display_name }
+  authedUser: { }
 };
 
 const EDIT_USER = "EDIT_USER";
