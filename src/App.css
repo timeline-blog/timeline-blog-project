@@ -107,7 +107,7 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
   justify-content: space-between;
   align-items: center;
   background: #020202;
-  padding: 12px 40px; }
+  padding: 12px 7%; }
   .main-nav .nav-left, .main-nav .nav-right {
     display: flex;
     align-items: center; }
@@ -119,13 +119,60 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
     letter-spacing: 0.9px; }
   .main-nav .active {
     color: #1ddfa5; }
-  .main-nav img {
+  .main-nav .notifications-wrap {
+    position: relative; }
+    .main-nav .notifications-wrap .notifications-hover {
+      left: -100%;
+      top: 120%;
+      width: 250px; }
+      .main-nav .notifications-wrap .notifications-hover button {
+        padding: 10px;
+        text-align: left;
+        font-weight: 200;
+        border-bottom: 1px solid #2f2f2f; }
+  .main-nav .fa-bell {
+    color: #ffffff;
+    font-size: 28px;
     display: inline-block;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #444444;
-    vertical-align: middle; }
+    margin: 0 25px;
+    cursor: pointer; }
+  .main-nav .account-links-wrap {
+    position: relative;
+    margin-left: 50px; }
+    .main-nav .account-links-wrap img {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #444444;
+      vertical-align: middle;
+      cursor: pointer; }
+  .main-nav .hover-main-wrap.hidden {
+    display: none; }
+  .main-nav .hover-main-wrap {
+    position: absolute;
+    background: #222222;
+    top: 110%;
+    left: -150%;
+    width: 130px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.75); }
+    .main-nav .hover-main-wrap a {
+      display: block;
+      margin: 0; }
+    .main-nav .hover-main-wrap button {
+      border: none;
+      background: none;
+      display: block;
+      padding: 10px 0;
+      width: 100%;
+      color: #cccccc;
+      font-size: 18px;
+      cursor: pointer; }
+      .main-nav .hover-main-wrap button:hover {
+        background: #2f2f2f; }
+    .main-nav .hover-main-wrap div {
+      margin-top: 20px;
+      border-top: 1px solid #2f2f2f; }
 
 .outer-wrap.landing-wrap {
   min-height: 50vh;
