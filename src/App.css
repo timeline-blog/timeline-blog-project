@@ -249,7 +249,11 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
       display: block;
       box-sizing: border-box;
       width: 100%;
-      margin-top: 50px; }
+      margin-top: 50px;
+      color: #ffffff;
+      font-weight: 700; }
+      .outer-wrap.login-wrap .login-form .btn.login-btn:hover {
+        text-decoration: none; }
     .outer-wrap.login-wrap .login-form .auth-form-separator {
       font-size: 28px;
       margin: 40px auto; }
