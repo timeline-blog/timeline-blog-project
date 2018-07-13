@@ -55,11 +55,6 @@ const GET_STORY_BY_ID = "GET_STORY_BY_ID";
 const CREATE_STORY = "CREATE_STORY";
 const EDIT_STORY = "EDIT_STORY";
 const DELETE_STORY = "DELETE_STORY";
-const CREATE_EVENT = "CREATE_EVENT";
-const EDIT_EVENT = "EDIT_EVENT";
-const DELETE_EVENT = "DELETE_EVENT";
-const LIKE_STORY = "LIKE_STORY";
-const UNLIKE_STORY = "UNLIKE_STORY";
 
 const initialState = {
   selectedStory: {}
@@ -70,7 +65,7 @@ export default function storyReducer(state = initialState, action) {
     case `${GET_STORY_BY_ID}_FULFILLED`:
       return {
         ...state,
-        selectedStory: action.payload
+        selectedStory: action.payload.data
       };
     case `${CREATE_STORY}_FULFILLED`:
       return { ...state };

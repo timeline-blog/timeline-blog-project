@@ -1,60 +1,94 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-import Event from './Event';
-import NewEventModal from './NewEventModal';
+import { getStoryById } from "../../ducks/reducers/storyReducer";
+import Event from "./Event";
+import NewEventModal from "./NewEventModal";
 
 class Story extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalMode: "hidden"
+    };
+    this.toggleModal = this.toggleModal.bind(this);
+  }
 
-        this.state = {
-            modalMode: 'hidden'
-        };
+  componentDidMount() {
+    this.props.getStoryById(this.props.match.params.story_id);
+  }
 
-        this.toggleModal = this.toggleModal.bind(this);
+  toggleModal() {
+    if (this.state.modalMode === "hidden") {
+      this.setState({ modalMode: "visible" });
+    } else {
+      this.setState({ modalMode: "hidden" });
     }
+  }
 
-    toggleModal() {
-        if ( this.state.modalMode === 'hidden' ) {
-            this.setState({ modalMode: 'visible' });
-        } else {
-            this.setState({ modalMode: 'hidden' });
-        }
-    }
+  render() {
+    console.log(this.props);
+    const { story } = this.props;
 
-    render() {
+    if (story.events) {
+      var mappedEvents = story.events.map(event => {
+        // console.log(event);
         return (
-            <div className="outer-wrap story-wrap">
-                <div className="inner-wrap">
-                
-                    <div className="page-header story-header">
-                        <h1 className="page-title story-title">Story Title <span className="byline">by John Doe</span></h1>
-                        <p className="page-description story-description">Pellentesque libero mi, sodales ut purus eget, dapibus luctus leo. Nam odio dui, vulputate et lobortis eu, hendrerit ut ipsum. Integer rhoncus, urna sit amet hendrerit varius, nisl mi condimentum nisi, nec mattis ligula velit vitae sapien.</p>
-                        <div className="follow-info-wrap">
-                            <button className="follow-btn btn">Like</button>
-                            <span className="follow-count">107</span>
-                        </div>
-                    </div>
-
-                    <div className="events-wrap">
-                        <Event />
-                        <span className="connect-line"></span>
-                        <Event />
-                        <span className="connect-line"></span>
-                        <Event />
-                    </div>
-
-                    {/* *TO DO: only display this if story belongs to authorized user */}
-                    <div className="add-event-wrap">
-                        <button onClick={() => this.toggleModal()} className="add-event-btn btn"><strong>+</strong> New Event</button>
-                    </div>
-                    
-                    <NewEventModal modalMode={this.state.modalMode} toggleModal={this.toggleModal}/>
-                
-                </div>
-            </div>
+          <Event
+            key={event.event_id}
+            event_title={event.event_title}
+            event_description={event.event_description}
+            e_created_on={event.e_created_on}
+            event_id={event.event_id}
+          />
         );
+      });
     }
+
+    return (
+      <div className="outer-wrap story-wrap">
+        <div className="inner-wrap">
+          <div className="page-header story-header">
+            <h1 className="page-title story-title">
+              {story.story_title}{" "}
+              <span className="byline">by {story.display_name}</span>
+            </h1>
+            <p className="page-description story-description">
+              {story.story_description}
+            </p>
+            <div className="follow-info-wrap">
+              <button className="follow-btn btn">Like</button>
+              <span className="follow-count">{story.like_count}</span>
+            </div>
+          </div>
+
+          <div className="events-wrap">{mappedEvents}</div>
+
+          {/* *TO DO: only display this if story belongs to authorized user */}
+          <div className="add-event-wrap">
+            <button
+              onClick={() => this.toggleModal()}
+              className="add-event-btn btn"
+            >
+              <strong>+</strong> New Event
+            </button>
+          </div>
+
+          <NewEventModal
+            modalMode={this.state.modalMode}
+            toggleModal={this.toggleModal}
+          />
+        </div>
+      </div>
+    );
+  }
 }
 
-export default Story;
+const mapStateToProps = state => {
+  return { story: state.story.selectedStory };
+};
+
+export default connect(
+  mapStateToProps,
+  { getStoryById }
+)(Story);
