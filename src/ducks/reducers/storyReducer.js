@@ -70,7 +70,7 @@ export default function storyReducer(state = initialState, action) {
     case `${GET_STORY_BY_ID}_FULFILLED`:
       return {
         ...state,
-        selectedStory: action.payload
+        selectedStory: action.payload.data
       };
     case `${CREATE_STORY}_FULFILLED`:
       return { ...state };
