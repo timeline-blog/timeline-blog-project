@@ -1,5 +1,9 @@
 import axios from "axios";
-import { bindActionCreators } from "../../../node_modules/redux";
+
+const GET_FOLLOWERS = "GET_FOLLOWERS";
+const GET_FOLLOWING = "GET_FOLLOWING";
+const ADD_FOLLOW = "ADD_FOLLOW";
+const UNFOLLOW = "UNFOLLOW";
 
 export function getFollowers(user_id) {
   return {
@@ -34,17 +38,12 @@ const initialState = {
   following: []
 };
 
-const GET_FOLLOWERS = "GET_FOLLOWERS";
-const GET_FOLLOWING = "GET_FOLLOWING";
-const ADD_FOLLOW = "ADD_FOLLOW";
-const UNFOLLOW = "UNFOLLOW";
-
 export default function followsReducer(state = initialState, action) {
   switch (action.type) {
     case `${GET_FOLLOWERS}_FULFILLED`:
-      return { ...state, followers: action.payload };
+      return { ...state, followers: action.payload.data };
     case `${GET_FOLLOWING}_FULFILLED`:
-      return { ...state, following: action.payload };
+      return { ...state, following: action.payload.data };
     case `${ADD_FOLLOW}_FULFILLED`:
     case `${UNFOLLOW}_FULFILLED`:
       return { ...state };
