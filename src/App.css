@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:200,400,700");
 body {
   margin: 0;
@@ -101,6 +102,32 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
   background: #5c5c5c;
   padding: 3px 8px;
   color: #cccccc; }
+
+.main-footer {
+  background: #020202;
+  color: #828282;
+  padding: 30px 0; }
+  .main-footer .footer-logo-wrap {
+    font-size: 24px;
+    color: #a8a8a8; }
+  .main-footer .credits-wrap {
+    padding: 20px 30px 0;
+    margin: 20px 0 0;
+    display: inline-block;
+    border-top: 1px solid #424242; }
+    .main-footer .credits-wrap a {
+      display: inline-block;
+      font-weight: 200;
+      transition: all 0.2s ease-in-out; }
+      .main-footer .credits-wrap a:hover {
+        color: #cccccc; }
+      .main-footer .credits-wrap a::after {
+        display: inline-block;
+        content: " • ";
+        margin: 0 20px;
+        color: #424242; }
+      .main-footer .credits-wrap a:last-child::after {
+        display: none; }
 
 .main-nav {
   display: flex;
@@ -550,6 +577,7 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 9;
   width: 100%;
   height: 100%;
   overflow: scroll;
@@ -600,12 +628,26 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
       font-size: 20px;
       text-transform: uppercase;
       padding: 8px 14px; }
+    .outer-modal .inner-modal .category-selector {
+      display: inline-block;
+      margin: 0 5px 0 0;
+      color: #ffffff;
+      padding: 3px 8px;
+      background: #5c5c5c;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out; }
+      .outer-modal .inner-modal .category-selector:hover, .outer-modal .inner-modal .category-selector.selected {
+        background: #1ddfa5;
+        text-shadow: 0 0 5px rgba(0, 0, 0, 0.3); }
 
 @keyframes fadeIn {
   from {
     opacity: 0; }
   to {
     opacity: 1; } }
+
+.profile-wrap .story-pv-author-wrap {
+  display: none; }
 
 .profile-avatar {
   display: block;

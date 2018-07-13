@@ -3,8 +3,16 @@ import { Link } from "react-router-dom";
 
 import StoryPreview from '../StoryPreview';
 
+import { connect } from 'react-redux';
+import { getStoriesByUser } from '../../ducks/reducers/previewsReducer';
+
 class User extends Component {
+  componentDidMount(){
+    this.props.getStoriesByUser(3);
+  }
+
   render() {
+    console.log('this.props.storiesByUser', this.props.storiesByUser)
     return (
       <div className="outer-wrap profile-wrap">
         <div className="inner-wrap">
@@ -30,4 +38,15 @@ class User extends Component {
     );
   }
 }
-export default User;
+
+const mapStateToProps = state => {
+  return {
+    storiesByUser: state.previews.storiesByUser
+  };
+};
+
+const mapDispatchToProps = {
+  getStoriesByUser
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(User);

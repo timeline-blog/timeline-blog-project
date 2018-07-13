@@ -290,6 +290,7 @@
     position: fixed
     top: 0
     left: 0
+    z-index: 9
     width: 100%
     height: 100%
     overflow: scroll
@@ -349,6 +350,27 @@
             font-size: 20px
             text-transform: uppercase
             padding: 8px 14px
+
+        .categories-wrap
+            // display: flex
+            // justify-content: space-between
+            // align-items: center
+
+        .category-selector
+            display: inline-block
+            margin: 0 5px 0 0
+            color: #ffffff
+            padding: 3px 8px
+            background: $storySummaryBg
+            cursor: pointer
+            transition: all 0.2s ease-in-out
+            &:hover, &.selected
+                background: $highlightColor
+                text-shadow: 0 0 5px rgba(0,0,0,0.3)
+
+            // display: inline-block
+            // margin: 
+            
 
 @keyframes fadeIn
     from { opacity: 0 }
