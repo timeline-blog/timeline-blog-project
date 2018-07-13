@@ -12,14 +12,25 @@ export default function UserSummary(props) {
       *TO DO: this button will be conditionally rendered, in order to be reusable in both Followers and Following
       * It should check if the user of this summary is among the logged in user's followers; if true, show Unfollow, else Follow
       */}
-      <button
-        onClick={(user_id, following_id) =>
-          props.actionHandler(1, props.following_id)
-        }
-        className="btn border-btn negative-border-btn"
-      >
-        Unfollow
-      </button>
+      {props.user_id === props.following_id ? (
+        <button
+          onClick={(user_id, following_id) =>
+            props.actionHandler(1, props.following_id)
+          }
+          className="btn border-btn negative-border-btn"
+        >
+          Unfollow
+        </button>
+      ) : (
+        <button
+          onClick={(user_id, following_id) =>
+            props.actionHandler(1, props.following_id)
+          }
+          className="btn border-btn negative-border-btn"
+        >
+          Follow
+        </button>
+      )}
     </div>
   );
 }
