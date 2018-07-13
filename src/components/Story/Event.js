@@ -5,11 +5,9 @@ import Comment from './Comment';
 class Event extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             eventState: 'collapsed'
         };
-
         this.collapseExpand = this.collapseExpand.bind( this );
     }
 
@@ -22,13 +20,14 @@ class Event extends Component {
     }
 
     render() {
+        console.log('EVENT PROPS!!! ', this.props);
         return (
             <div className={`event-wrap ${this.state.eventState}`}>
                 <span className="connector top-connector"></span>
 
                 <header className="event-header">
-                    <h2 className="event-title">Event Title Goes Here</h2>
-                    <p className="event-date">4 days ago</p>
+                    <h2 className="event-title">{this.props.event_title}</h2>
+                    <p className="event-date">{this.props.e_created_on}</p>
                 </header>
 
                 <div className="event-gallery">
@@ -51,7 +50,7 @@ class Event extends Component {
                 </div>
 
                 <div className="event-content">
-                    <p>Vestibulum feugiat condimentum magna a tincidunt. Pellentesque nec blandit ligula. Praesent efficitur maximus mollis. Suspendisse dictum rhoncus tellus eu ullamcorper. Praesent ac tincidunt ex, sed sagittis justo. Suspendisse pharetra auctor quam nec fringilla. Donec non turpis aliquam, ultricies arcu sed, facilisis sapien. Sed nec eros sed est tincidunt laoreet eget quis risus. In laoreet neque quis tortor malesuada, vitae blandit risus cursus. In dictum dignissim metus sed bibendum. Proin purus turpis, malesuada ac volutpat id, tincidunt eu ante. Maecenas mollis leo et nisi viverra dapibus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+                    <p>{this.props.event_description}</p>
 
                     <div className="event-comments-section">
                         <div className="event-comments-header">12 comments</div>
