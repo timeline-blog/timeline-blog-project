@@ -7,18 +7,7 @@ import { getStoriesByUser } from "../../ducks/reducers/previewsReducer";
 
 import StoryPreview from "../StoryPreview";
 
-import { connect } from 'react-redux';
-import { getStoriesByUser } from '../../ducks/reducers/previewsReducer';
-
 class User extends Component {
-<<<<<<< HEAD
-  componentDidMount(){
-    this.props.getStoriesByUser(3);
-  }
-
-  render() {
-    console.log('this.props.storiesByUser', this.props.storiesByUser)
-=======
   componentDidMount() {
     this.props.getStoriesByUser(1);
   }
@@ -45,7 +34,6 @@ class User extends Component {
       );
     });
 
->>>>>>> master
     return (
       <div className="outer-wrap profile-wrap">
         <div className="inner-wrap">
@@ -69,18 +57,6 @@ class User extends Component {
 }
 
 const mapStateToProps = state => {
-<<<<<<< HEAD
-  return {
-    storiesByUser: state.previews.storiesByUser
-  };
-};
-
-const mapDispatchToProps = {
-  getStoriesByUser
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(User);
-=======
   return { stories: state.previews.storiesByUser };
 };
 
@@ -88,4 +64,3 @@ export default connect(
   mapStateToProps,
   { getStoriesByUser }
 )(User);
->>>>>>> master
