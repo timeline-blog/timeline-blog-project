@@ -12,7 +12,7 @@ class Login extends Component {
                     </header>
                     <div className="login-form">
                         <div className="google-login">
-                            <button className="btn login-btn">Log In with Google</button>
+                            <a href="http://localhost:3001/auth/google" className="btn login-btn">Log In with Google</a>
                         </div>
 
                         <div className="auth-form-separator">

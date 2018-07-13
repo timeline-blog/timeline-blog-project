@@ -60,17 +60,18 @@ const saveUser=(req,res)=>{
 const googleSignIn=(req,res)=>{
 
     const auth = req.app.get('db').auth;
-
+    
     const { user }= req
 
     auth.google.getUserByEmail([user.emails[0].value])
                 .then(response=>{
-                    if(response){                                   
-                        res.redirect('homepage')
+                    if(response[0]){                                   
+                        res.redirect('http://localhost:3000/#/home')
                     } else{
+
                         auth.google.signUp([user.displayName,user.picture,user.emails[0].value,user.id])
                                     .then(response=>{
-                                        res.redirect('homepage')
+                                        res.redirect('http://localhost:3000/#/home')
                                     })
                     }
                 })

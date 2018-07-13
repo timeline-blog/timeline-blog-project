@@ -94,7 +94,7 @@ app.get("/auth/login", getUser);
 //endpoint for regular user signup
 app.post("/auth/signup", saveUser);
 
-//endpoint for sign in with google
+//endpoint for sign in or sign up with google
 app.get(
   "/auth/google",
   passport.authenticate("google", {
