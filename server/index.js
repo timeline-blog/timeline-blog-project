@@ -40,6 +40,12 @@ const {
   getProfile,
   editUser
 } = require(`${__dirname}/controllers/profileCtrl`);
+const {
+  getComments,
+  addComment,
+  editComment,
+  deleteComment
+} = require(`${__dirname}/controllers/commentCtrl`);
 
 massive(process.env.CONNECTION_STRING)
   .then(db => {
@@ -112,6 +118,12 @@ app.put("/api/story/:story_id", editStory);
 app.delete("/api/story/:story_id", deleteStory);
 app.post("/api/like", addLike);
 app.post("/api/like", unlike);
+
+//comments endpoints
+app.get("/api/comments/:event_id", getComments);
+app.post("/api/comments", addComment);
+app.put("/api/comments/:comment_id", editComment);
+app.delete("/api/comments/:comment_id", deleteComment);
 
 //get people you are following
 app.get("/api/people/following/:user_id", getFollowing);
