@@ -65,6 +65,7 @@ class Nav extends Component {
             />
             <NotificationsMenu
               notificationsMode={this.state.notificationsMode}
+              toggleNotificationsMenu={this.toggleNotificationsMenu}
             />
           </div>
 
@@ -75,7 +76,10 @@ class Nav extends Component {
               src=""
               alt=""
             />
-            <HoverMenu hoverMenuMode={this.state.hoverMenuMode} />
+            <HoverMenu 
+              hoverMenuMode={this.state.hoverMenuMode} 
+              toggleHoverMenu={this.toggleHoverMenu}
+            />
           </div>
         </div>
       </div>

@@ -43,9 +43,9 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
     background: #1ac894; }
 
 .negative-btn.btn {
-  background: #d74a4a; }
+  background: #ea6c6c; }
   .negative-btn.btn:hover {
-    background: #dc5f5f; }
+    background: #ed8282; }
 
 .border-btn.btn {
   background: none;
@@ -59,12 +59,12 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
 
 .negative-border-btn.btn {
   background: none;
-  border: 1px solid #d74a4a;
-  color: #d74a4a;
+  border: 1px solid #ea6c6c;
+  color: #ea6c6c;
   font-size: 18px;
   transition: all 0.2s ease-in-out; }
   .negative-border-btn.btn:hover {
-    background: #d74a4a;
+    background: #ea6c6c;
     color: #ffffff; }
 
 .outer-wrap {
@@ -200,6 +200,12 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
     .main-nav .hover-main-wrap div {
       margin-top: 20px;
       border-top: 1px solid #2f2f2f; }
+    .main-nav .hover-main-wrap .logged-in-as {
+      color: #a8a8a8;
+      font-weight: 200;
+      font-size: 14px;
+      display: block;
+      padding: 10px; }
 
 .outer-wrap.landing-wrap {
   min-height: 50vh;
@@ -548,6 +554,8 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
     clear: both;
     border-left: 3px solid #5c5c5c;
     height: 40px; }
+    .events-wrap .connect-line:last-child {
+      display: none; }
 
 .add-event-wrap {
   position: fixed;

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 
 import { getStoryById } from "../../ducks/reducers/storyReducer";
@@ -34,13 +34,16 @@ class Story extends Component {
       var mappedEvents = story.events.map(event => {
         // console.log(event);
         return (
-          <Event
-            key={event.event_id}
-            event_title={event.event_title}
-            event_description={event.event_description}
-            e_created_on={event.e_created_on}
-            event_id={event.event_id}
-          />
+          <Fragment>
+            <Event
+              key={event.event_id}
+              event_title={event.event_title}
+              event_description={event.event_description}
+              e_created_on={event.e_created_on}
+              event_id={event.event_id}
+            />
+            <span className="connect-line"></span>
+          </Fragment>
         );
       });
     }

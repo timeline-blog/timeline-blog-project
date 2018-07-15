@@ -16,6 +16,16 @@ class MyFollowers extends Component {
     this.props.unfollow(follower_id, following_id);
   };
 
+  /**
+   * Each user summary needs to know if logged in user follows the user being displayed:
+   * 1. get logged in user_id
+   * 2. get info for users following logged in user
+   *    this.props.getFollowers( logged in user_id )
+   * 3. since global "following" state is being mapped to props, we can use this.props.following to compare
+   *    user_id of user being displayed with user_id of every user in this.props.following using filter;
+   *    if the filtered array has a result, the UserSummary should take a prop indicating so (a boolean)
+   * 4. UserSummary will need check the boolean to know whether to render "Follow" or "Unfollow"
+   */
   componentDidMount() {
     this.props.getFollowers(1);
     this.props.getFollowing(1);

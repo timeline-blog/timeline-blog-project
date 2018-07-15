@@ -11,6 +11,8 @@ export default function UserSummary(props) {
       {/* 
       *TO DO: this button will be conditionally rendered, in order to be reusable in both Followers and Following
       * It should check if the user of this summary is among the logged in user's followers; if true, show Unfollow, else Follow
+      * for unfollow: className="btn border-btn negative-border-btn"
+      * for follow: className="btn"
       */}
       {props.user_id === props.following_id ? (
         <button
