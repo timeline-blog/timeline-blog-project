@@ -1,6 +1,7 @@
 import React from "react";
 
 export default function UserSummary(props) {
+  console.log(props);
   return (
     <div className="user-summary-wrap">
       <div className="user-info">

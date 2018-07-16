@@ -17,7 +17,7 @@ class Following extends Component {
   }
   render() {
     let followingList = this.props.following.map((follows, index) => {
-      console.log(follows);
+      console.log(follows, "following info");
       return (
         <UserSummary
           key={index}
