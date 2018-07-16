@@ -1,10 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { NavLink } from "react-router-dom";
 import HoverMenu from "./HoverMenu";
 import NotificationsMenu from "./NotificationsMenu";
 
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import faBell from "@fortawesome/fontawesome-pro-light/faBell";
+import NewStoryModal from "./NewStoryModal";
 
 class Nav extends Component {
   constructor() {
@@ -12,11 +13,13 @@ class Nav extends Component {
 
     this.state = {
       hoverMenuMode: "hidden",
-      notificationsMode: "hidden"
+      notificationsMode: "hidden",
+      modalMode: "hidden"
     };
 
     this.toggleHoverMenu = this.toggleHoverMenu.bind(this);
     this.toggleNotificationsMenu = this.toggleNotificationsMenu.bind(this);
+    this.toggleNewStoryModal = this.toggleNewStoryModal.bind(this);
   }
 
   toggleHoverMenu() {
@@ -35,16 +38,25 @@ class Nav extends Component {
     }
   }
 
+  toggleNewStoryModal() {
+    if (this.state.modalMode === "hidden") {
+      this.setState({ modalMode: "visible" });
+    } else {
+      this.setState({ modalMode: "hidden" });
+    } 
+  }
+
   render() {
     return (
-      // *TO DO: conditional rendering depending on whether user is signed in or not
+      <Fragment>
+      {/* *TO DO: conditional rendering depending on whether user is signed in or not */}
       <div className="main-nav">
         <div className="nav-left">
           <NavLink to="/home">Home</NavLink>
           <NavLink to="/discover">Discover</NavLink>
         </div>
         <div className="nav-right">
-          <button className="btn"> + New Story</button>
+          <button onClick={() => this.toggleNewStoryModal()} className="btn"> + New Story</button>
           {/* *TO DO: Notifications will be an icon; will need to remove NavLink since there is no notifications page */}
           <div className="notifications-wrap">
             <FontAwesomeIcon
@@ -53,6 +65,7 @@ class Nav extends Component {
             />
             <NotificationsMenu
               notificationsMode={this.state.notificationsMode}
+              toggleNotificationsMenu={this.toggleNotificationsMenu}
             />
           </div>
 
@@ -63,10 +76,17 @@ class Nav extends Component {
               src=""
               alt=""
             />
-            <HoverMenu hoverMenuMode={this.state.hoverMenuMode} />
+            <HoverMenu 
+              hoverMenuMode={this.state.hoverMenuMode} 
+              toggleHoverMenu={this.toggleHoverMenu}
+            />
           </div>
         </div>
       </div>
+
+      <NewStoryModal modalMode={this.state.modalMode} toggleModal={this.toggleNewStoryModal} />
+
+      </Fragment>
     );
   }
 }

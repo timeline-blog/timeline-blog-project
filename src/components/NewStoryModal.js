@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class NewEventModal extends Component {
+export default class NewStoryModal extends Component {
     // constructor()
     render() {
         return (
@@ -20,7 +20,7 @@ export default class NewEventModal extends Component {
 
                     <div className="field-group">
                         <label htmlFor="">Description</label>
-                        <input type="text" className="main-input"/>
+                        <textarea type="text" rows="3" className="main-input"></textarea>
                     </div>
 
                     <div className="field-group">
@@ -37,7 +37,7 @@ export default class NewEventModal extends Component {
                     </div>
 
                 </div>
-                <button className="btn create-event-btn">Create Event</button>
+                <button className="btn create-event-btn">Create Story</button>
 
             </div>
             </div>
