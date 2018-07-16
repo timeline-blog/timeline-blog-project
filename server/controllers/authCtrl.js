@@ -1,9 +1,15 @@
 const bcrypt = require('bcryptjs');
 
-
+//gets loggin in user
+const getLoggedInUser =(req,res)=>{
+  
+   // console.log('session is ',req.session.user)
+    res.status(200).json(req.session.user)
+}
 
 //gets user details when they login using the regular login
 const getUser=(req,res)=>{
+
 
     const auth = req.app.get('db').auth;
 
@@ -13,8 +19,13 @@ const getUser=(req,res)=>{
    auth.default.getPassword([email])
                 .then(response=>{        
                   if ( bcrypt.compareSync(response[0],password)){
-                      res.redirect('homepage')
+                      auth.default.getLoggedInUser([email])
+                                  .then(response=>{
+                                    req.session.user= response[0]
+                                      res.redirect('homepage')
+                                  })
                   }else{
+
                       res.status(500).json('Wrong username or password')
                   }
                 })
@@ -63,16 +74,18 @@ const googleSignIn=(req,res)=>{
     
     const { user }= req
 
-    console.log(user)
-    console.log(user.picture)
+
     auth.google.getUserByEmail([user.emails[0].value])
                 .then(response=>{
-                    if(response[0]){                                   
+                    if(response[0]){   
+                        req.session.user = response[0]    
+                        console.log('response from db is ',response[0])                            
                         res.redirect('http://localhost:3000/#/home')
                     } else{
 
                         auth.google.signUp([user.displayName,user.photos[0].value,user.emails[0].value,user.id])
                                     .then(response=>{
+                                        req.session.user = response[0]
                                         res.redirect('http://localhost:3000/#/home')
                                     })
                     }
@@ -92,6 +105,7 @@ const logout=(req,res) =>{
 
 
 module.exports={
+    getLoggedInUser,
     getUser,
     saveUser,
     googleSignIn,
