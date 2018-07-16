@@ -4,14 +4,23 @@ import { connect } from "react-redux";
 import { getStoryById } from "../../ducks/reducers/storyReducer";
 import Event from "./Event";
 import NewEventModal from "./NewEventModal";
+import EditStoryModal from "./EditStoryModal";
+import EditEventModal from "./EditEventModal"
+
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import faTrash from "@fortawesome/fontawesome-pro-solid/faTrash";
 
 class Story extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalMode: "hidden"
+      modalMode: "hidden",
+      editModalMode: "hidden",
+      editEventModalMode: "hidden"
     };
     this.toggleModal = this.toggleModal.bind(this);
+    this.toggleEditModal = this.toggleEditModal.bind(this);
+    this.toggleEditEventModal = this.toggleEditEventModal.bind(this);
   }
 
   componentDidMount() {
@@ -20,9 +29,25 @@ class Story extends Component {
 
   toggleModal() {
     if (this.state.modalMode === "hidden") {
-      this.setState({ modalMode: "visible" });
+      this.setState({ modalMode: "visible", editModalMode: "hidden", editEventModalMode: "hidden" });
     } else {
       this.setState({ modalMode: "hidden" });
+    }
+  }
+
+  toggleEditModal() {
+    if (this.state.editModalMode === "hidden") {
+      this.setState({ editModalMode: "visible", modalMode: "hidden", editEventModalMode: "hidden" });
+    } else {
+      this.setState({ editModalMode: "hidden" });
+    }
+  }
+
+  toggleEditEventModal() {
+    if (this.state.editEventModalMode === "hidden") {
+      this.setState({ editEventModalMode: "visible", editModalMode: "hidden", modalMode: "hidden" });
+    } else {
+      this.setState({ editEventModalMode: "hidden" });
     }
   }
 
@@ -41,6 +66,7 @@ class Story extends Component {
               event_description={event.event_description}
               e_created_on={event.e_created_on}
               event_id={event.event_id}
+              toggleEditEventModal={this.toggleEditEventModal}
             />
             <span className="connect-line"></span>
           </Fragment>
@@ -62,12 +88,25 @@ class Story extends Component {
             <div className="follow-info-wrap">
               <button className="follow-btn btn">Like</button>
               <span className="follow-count">{story.like_count}</span>
+
+              {/* *TO DO: only render this if story belongs to logged in user */}
+              <div className="edit-story-links">
+                <span onClick={() => this.toggleEditModal()} className="edit-story-link btn border-btn">Edit Story</span>
+              </div>
             </div>
           </div>
 
           <div className="events-wrap">{mappedEvents}</div>
 
           {/* *TO DO: only display this if story belongs to authorized user */}
+          <div className="delete-story-wrap">
+            <h3 className="delete-title">Delete Story</h3>
+            <button className="btn negative-btn"> 
+              <FontAwesomeIcon icon={faTrash} />
+              {` Delete "${story.story_title}"`}
+            </button>
+          </div>
+
           <div className="add-event-wrap">
             <button
               onClick={() => this.toggleModal()}
@@ -80,6 +119,16 @@ class Story extends Component {
           <NewEventModal
             modalMode={this.state.modalMode}
             toggleModal={this.toggleModal}
+          />
+
+          <EditEventModal
+            editEventModalMode={this.state.editEventModalMode}
+            toggleEditEventModal={this.toggleEditEventModal}
+          />
+
+          <EditStoryModal
+            editModalMode={this.state.editModalMode}
+            toggleEditModal={this.toggleEditModal}
           />
         </div>
       </div>

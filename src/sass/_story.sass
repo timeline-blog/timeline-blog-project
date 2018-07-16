@@ -99,6 +99,26 @@
             font-weight: 200
             letter-spacing: initial
 
+    .follow-info-wrap
+        position: relative
+    
+    .edit-story-links
+        position: absolute
+        bottom: 0
+        right: 0
+        .edit-story-link
+            display: inline-block
+            font-weight: 200
+
+.delete-story-wrap
+    margin: 75px 0 0
+    border-top: 3px dashed $negativeColor
+    .delete-title
+        color: $highContrastColor
+    .btn.negative-btn
+        font-weight: 200
+        padding: 8px 14px
+
 .events-wrap
     margin: 50px auto
 
@@ -120,6 +140,17 @@
         padding: 30px
         border: 3px solid $storySummaryBg
         background: lighten($mainBg, 2%)
+
+        .edit-event-links
+            position: absolute
+            top: 20px
+            right: 20px
+            .btn
+                display: block
+                font-weight: 200
+                width: 100px
+                margin: 0 0 5px
+                font-size: 16px
 
         .event-header
             margin: 0 auto 30px
@@ -253,7 +284,7 @@
 
 .add-event-wrap
     position: fixed
-    bottom: 30px
+    bottom: 10%
     right: -135px
     transition: all 0.2s ease-in-out
     &:hover
@@ -317,6 +348,7 @@
             position: absolute
             top: 15px
             right: 15px
+            padding: 4px 10px 3px
 
         .modal-title
             margin-top: 0
@@ -347,6 +379,10 @@
 
             .btn
                 display: block
+
+            .images-label.btn
+                display: inline-block
+                width: auto
 
         .create-event-btn
             font-size: 20px

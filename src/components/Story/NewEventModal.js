@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
+
 export default class NewEventModal extends Component {
     // constructor()
     render() {
@@ -7,7 +10,9 @@ export default class NewEventModal extends Component {
             <div className={`outer-modal ${this.props.modalMode}`}>
             <div className="inner-modal">
 
-                <button onClick={() => this.props.toggleModal()} className="close-modal border-btn btn">X</button>
+                <button onClick={() => this.props.toggleModal()} className="close-modal border-btn btn">
+                    <FontAwesomeIcon icon={faTimes} />
+                </button>
 
                 <header className="modal-header">
                     <h3 className="modal-title">New Event</h3>
@@ -24,8 +29,8 @@ export default class NewEventModal extends Component {
                     </div>
 
                     <div className="field-group">
-                        <label htmlFor="">Add Images</label>
-                        <button className="btn border-btn">Upload Images</button>
+                        <label className="btn border-btn images-label" htmlFor="">Add Images</label>
+                        {/* <button className="btn border-btn">Upload Images</button> */}
                     </div>
 
                 </div>

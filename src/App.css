@@ -128,6 +128,19 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
         color: #424242; }
       .main-footer .credits-wrap a:last-child::after {
         display: none; }
+  .main-footer .back-to-top {
+    background: rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    font-size: 24px;
+    padding: 4px 14px;
+    position: fixed;
+    z-index: 5;
+    bottom: 20px;
+    right: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out; }
+    .main-footer .back-to-top:hover {
+      background: #5c5c5c; }
 
 .main-nav {
   display: flex;
@@ -151,7 +164,8 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
     .main-nav .notifications-wrap .notifications-hover {
       left: -100%;
       top: 120%;
-      width: 250px; }
+      width: 250px;
+      z-index: 2; }
       .main-nav .notifications-wrap .notifications-hover button {
         padding: 10px;
         text-align: left;
@@ -178,6 +192,7 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
     display: none; }
   .main-nav .hover-main-wrap {
     position: absolute;
+    z-index: 3;
     background: #222222;
     top: 110%;
     left: -150%;
@@ -413,6 +428,26 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
     font-weight: 200;
     letter-spacing: initial; }
 
+.story-header .follow-info-wrap {
+  position: relative; }
+
+.story-header .edit-story-links {
+  position: absolute;
+  bottom: 0;
+  right: 0; }
+  .story-header .edit-story-links .edit-story-link {
+    display: inline-block;
+    font-weight: 200; }
+
+.delete-story-wrap {
+  margin: 75px 0 0;
+  border-top: 3px dashed #ea6c6c; }
+  .delete-story-wrap .delete-title {
+    color: #cccccc; }
+  .delete-story-wrap .btn.negative-btn {
+    font-weight: 200;
+    padding: 8px 14px; }
+
 .events-wrap {
   margin: 50px auto; }
   .events-wrap .event-wrap.expanded .event-content {
@@ -426,6 +461,16 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
     padding: 30px;
     border: 3px solid #5c5c5c;
     background: #383838; }
+    .events-wrap .event-wrap .edit-event-links {
+      position: absolute;
+      top: 20px;
+      right: 20px; }
+      .events-wrap .event-wrap .edit-event-links .btn {
+        display: block;
+        font-weight: 200;
+        width: 100px;
+        margin: 0 0 5px;
+        font-size: 16px; }
     .events-wrap .event-wrap .event-header {
       margin: 0 auto 30px; }
       .events-wrap .event-wrap .event-header .event-title {
@@ -559,7 +604,7 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
 
 .add-event-wrap {
   position: fixed;
-  bottom: 30px;
+  bottom: 10%;
   right: -135px;
   transition: all 0.2s ease-in-out; }
   .add-event-wrap:hover {
@@ -611,7 +656,8 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
     .outer-modal .inner-modal .close-modal {
       position: absolute;
       top: 15px;
-      right: 15px; }
+      right: 15px;
+      padding: 4px 10px 3px; }
     .outer-modal .inner-modal .modal-title {
       margin-top: 0;
       font-size: 22px;
@@ -636,6 +682,9 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
         margin-bottom: 5px; }
       .outer-modal .inner-modal .field-group .btn {
         display: block; }
+      .outer-modal .inner-modal .field-group .images-label.btn {
+        display: inline-block;
+        width: auto; }
     .outer-modal .inner-modal .create-event-btn {
       font-size: 20px;
       text-transform: uppercase;
@@ -697,3 +746,15 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
       margin: 0 20px 0 0;
       background: #5c5c5c;
       border-radius: 50%; }
+
+.category-label {
+  display: inline-block;
+  margin: 0 5px 5px 0;
+  color: #ffffff;
+  padding: 10px 20px;
+  background: #5c5c5c;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out; }
+  .category-label:hover, .category-label.selected {
+    background: #1ddfa5;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6); }
