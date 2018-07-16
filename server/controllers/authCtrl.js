@@ -63,13 +63,15 @@ const googleSignIn=(req,res)=>{
     
     const { user }= req
 
+    console.log(user)
+    console.log(user.picture)
     auth.google.getUserByEmail([user.emails[0].value])
                 .then(response=>{
                     if(response[0]){                                   
                         res.redirect('http://localhost:3000/#/home')
                     } else{
 
-                        auth.google.signUp([user.displayName,user.picture,user.emails[0].value,user.id])
+                        auth.google.signUp([user.displayName,user.photos[0].value,user.emails[0].value,user.id])
                                     .then(response=>{
                                         res.redirect('http://localhost:3000/#/home')
                                     })
