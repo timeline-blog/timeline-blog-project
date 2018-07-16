@@ -7,9 +7,21 @@ import { getStoriesDiscoverAll } from '../ducks/reducers/previewsReducer';
 import StoryPreview from "./StoryPreview";
 
 class Discover extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      selectedCategory: 'All'
+    };
+  }
 
   componentDidMount() {
     this.props.getStoriesDiscoverAll();
+  }
+
+  switchCategory( category ) {
+    // console.log( category );
+    this.setState({ selectedCategory: category });
   }
 
   render() {
@@ -45,6 +57,74 @@ class Discover extends Component {
         <div className="inner-wrap">
           <div className="page-header discover-header">
             <h1 className="page-title">Discover</h1>
+            <div className="categories-wrap">
+              <span 
+                onClick={(e) => this.switchCategory(e.target.innerText)} 
+                className={this.state.selectedCategory === "All" ? "category-label selected" : "category-label"}
+              >
+                All
+              </span>
+              <span 
+                onClick={(e) => this.switchCategory(e.target.innerText)} 
+                className={this.state.selectedCategory === "Travel" ? "category-label selected" : "category-label"}
+              >
+                Travel
+              </span>
+              <span 
+                onClick={(e) => this.switchCategory(e.target.innerText)} 
+                className={this.state.selectedCategory === "Music" ? "category-label selected" : "category-label"}
+              >
+                Music
+              </span>
+              <span 
+                onClick={(e) => this.switchCategory(e.target.innerText)} 
+                className={this.state.selectedCategory === "Food" ? "category-label selected" : "category-label"}
+              >
+                Food
+              </span>
+              <span 
+                onClick={(e) => this.switchCategory(e.target.innerText)} 
+                className={this.state.selectedCategory === "Personal" ? "category-label selected" : "category-label"}
+              >
+                Personal
+              </span>
+              <span 
+                onClick={(e) => this.switchCategory(e.target.innerText)} 
+                className={this.state.selectedCategory === "News" ? "category-label selected" : "category-label"}
+              >
+                News
+              </span>
+              <span 
+                onClick={(e) => this.switchCategory(e.target.innerText)} 
+                className={this.state.selectedCategory === "Sports" ? "category-label selected" : "category-label"}
+              >
+                Sports
+              </span>
+              <span 
+                onClick={(e) => this.switchCategory(e.target.innerText)} 
+                className={this.state.selectedCategory === "Education" ? "category-label selected" : "category-label"}
+              >
+                Education
+              </span>
+              <span 
+                onClick={(e) => this.switchCategory(e.target.innerText)} 
+                className={this.state.selectedCategory === "Art" ? "category-label selected" : "category-label"}
+              >
+                Art
+              </span>
+              <span 
+                onClick={(e) => this.switchCategory(e.target.innerText)} 
+                className={this.state.selectedCategory === "Style" ? "category-label selected" : "category-label"}
+              >
+                Style
+              </span>
+              <span 
+                onClick={(e) => this.switchCategory(e.target.innerText)} 
+                className={this.state.selectedCategory === "Entertainment" ? "category-label selected" : "category-label"}
+              >
+                Entertainment
+              </span>
+            </div>
           </div>
           <div className="story-grid">
             {mappedStories}

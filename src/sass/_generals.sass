@@ -110,3 +110,17 @@ input[type="text"], input[type="password"], input[type="email"], .main-input
                 color: lighten($navBg, 25%)
             &:last-child::after
                 display: none
+
+    .back-to-top
+        background: rgba(255,255,255,0.3)
+        color: #ffffff
+        font-size: 24px
+        padding: 4px 14px
+        position: fixed
+        z-index: 5
+        bottom: 20px
+        right: 15px
+        cursor: pointer
+        transition: all 0.2s ease-in-out
+        &:hover
+            background: $storySummaryBg
