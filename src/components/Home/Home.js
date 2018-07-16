@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
 import _ from 'lodash';
 
+import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import { getLoggedInUser } from '../../ducks/reducers/userReducer'
 import { getStoriesByLikedUser } from '../../ducks/reducers/previewsReducer';
 import StoryPreview from '../StoryPreview';
 
 class Home extends Component {
 
     componentDidMount() {
+        this.props.getLoggedInUser()
         this.props.getStoriesByLikedUser(1)
     }
 
@@ -56,7 +59,10 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => {
-    return {stories: state.previews.storiesByLiked}
+    return {
+        stories: state.previews.storiesByLiked,
+        user: state.user.authedUser
+    }
 };
 
-export default connect(mapStateToProps, {getStoriesByLikedUser})(Home);
+export default connect(mapStateToProps, {getStoriesByLikedUser, getLoggedInUser})(Home);
