@@ -8,8 +8,7 @@ const StoryPreview = (props) => {
         <div className="story-preview-wrap">
             
             <div className="story-pv-author-wrap">
-                <img src={props.avatar} alt="" className="story-pv-author-avatar"/>
-                {/* *TO DO: link path should have user id */}
+                <img src={props.avatar} alt={props.display_name} className="story-pv-author-avatar"/>
                 <Link to={`/profile/${props.user_id}`}>{props.display_name}</Link>
             </div>
 

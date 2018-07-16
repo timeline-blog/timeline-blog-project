@@ -16,9 +16,9 @@ class Discover extends Component {
 
     const stories = _.map(this.props.stories);
     const sorted = _.sortBy(stories, [function(story) {return story[0].like_count}]).reverse();
-    console.log('SORTED!!!   ',sorted);
+    // console.log('SORTED!!!   ',sorted);
     const mappedStories = sorted.map(story => {
-      // console.log(story);
+      console.log(story);
       return(
         <StoryPreview 
           key = {story[0].story_id}

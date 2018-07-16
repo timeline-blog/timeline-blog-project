@@ -32,7 +32,19 @@ const editUser = (req, res) => {
     .catch(err => console.log(err));
 };
 
+const getUserById = (req, res) => {
+  const { user_id } = req.params;
+
+  req.app.get('db')
+    .profile.getUserById(user_id)
+    .then(response => {
+      console.log('profile response     ',response);
+      res.status(200).json(response)})
+    .catch(err => console.log(err));
+};
+
 module.exports = {
   getProfile,
-  editUser
+  editUser,
+  getUserById
 };

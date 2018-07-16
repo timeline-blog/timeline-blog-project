@@ -1,0 +1,1 @@
+SELECT display_name, bio, avatar, follower_count FROM users WHERE user_id = $1;
