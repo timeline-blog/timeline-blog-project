@@ -12,6 +12,7 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 const {
+  getLoggedInUser,
   getUser,
   saveUser,
   googleSignIn,
@@ -93,6 +94,8 @@ passport.use(
     }
   )
 );
+//get logged in user
+app.get('/auth/loggedIn',getLoggedInUser)
 
 //endpoint for regular user login
 app.get("/auth/login", getUser);
