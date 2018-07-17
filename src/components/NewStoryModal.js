@@ -123,4 +123,3 @@ export default class NewStoryModal extends Component {
         );
     }
 }
-

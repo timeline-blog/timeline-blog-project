@@ -1,15 +1,19 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
+<<<<<<< HEAD
 
 import ImageCompressor from 'image-compressor.js'
 
+=======
+import ImageCompressor from 'image-compressor.js';
+>>>>>>> 9e12db9d59641b239f055b2702bcd35579a1192d
 
 import { getStoryById, deleteStory } from "../../ducks/reducers/storyReducer";
 
 import Event from "./Event";
 import NewEventModal from "./NewEventModal";
 import EditStoryModal from "./EditStoryModal";
-import EditEventModal from "./EditEventModal"
+import EditEventModal from "./EditEventModal";
 
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import faTrash from "@fortawesome/fontawesome-pro-solid/faTrash";
@@ -40,15 +44,14 @@ class Story extends Component {
     this.setState({eventDescription: value})
   }
 
-
-    _handleImageChange=(e)=>{ 
-        if(this.state.images.length==4){
-            return
-        }
-        let arr = []
-        let id = 7; //the id should come from the story or event
-        let reader = new FileReader()
-        let img =e.target.files[0];
+  _handleImageChange=(e)=>{
+    if(this.state.images.length==4){
+        return
+    };
+    let arr = [];
+    let id = 7; //the id should come from the story or event
+    let reader = new FileReader();
+    let img =e.target.files[0];
     //    console.log('normal img ', img)
     //       let resized = [];
     //       resized = this.state.resizedImages.slice();
@@ -56,42 +59,41 @@ class Story extends Component {
     //      this.setState({resizedImages: resized})
     
 
-        let that = this;
-       new  ImageCompressor(img, {
-          quality: .3,//signifies how much quality you want on the photo
-          success(result) {
-          let newArr =   that.state.resizedImages.slice();
-         // console.log('image arr after resize ',result)
-            newArr.push(result)
-           that.setState({
-             resizedImages: newArr
-           })
-          }
-       }) 
-       reader.addEventListener("load",()=>{
-           arr = this.state.images.slice();
-           id++    
-           arr.push({
-             id: id,
-             url: reader.result,
-           })
-           this.setState({
-             
-             images: arr
-           }) 
-       }) 
-       img && reader.readAsDataURL(img)
+    let that = this;
+    new ImageCompressor(img, {
+      quality: .3,//signifies how much quality you want on the photo
+      success(result) {
+      let newArr =   that.state.resizedImages.slice();
+      // console.log('image arr after resize ',result)
+        newArr.push(result)
+        that.setState({
+          resizedImages: newArr
+        })
       }
+    });
+    reader.addEventListener("load",()=>{
+        arr = this.state.images.slice();
+        id++    
+        arr.push({
+          id: id,
+          url: reader.result,
+        })
+        this.setState({
+          
+          images: arr
+        }) 
+    });
+    img && reader.readAsDataURL(img);
+  }
 
-      removeImages=(index)=>{
-          let arr = this.state.images.slice();
-          let arr2 = this.state.resizedImages.slice()
-           arr.splice(index, 1)
-           arr2.splice(index,1)
-           this.setState({images: arr})
-           this.setState({resizedImages: arr2})
-
-      }
+  removeImages=(index)=>{
+    let arr = this.state.images.slice();
+    let arr2 = this.state.resizedImages.slice();
+      arr.splice(index, 1);
+      arr2.splice(index,1);
+      this.setState({images: arr});
+      this.setState({resizedImages: arr2});
+  }
 
   componentDidMount() {
     this.props.getStoryById(this.props.match.params.story_id);
@@ -130,6 +132,7 @@ class Story extends Component {
     // console.log(this.props);
 
     const { story } = this.props;
+    const { user } = this.props;
     
     if (story.events) {
       var mappedEvents = story.events.map(event => {
@@ -182,14 +185,14 @@ class Story extends Component {
             </button>
           </div>
 
-          <div className="add-event-wrap">
+          {user.user_id===story.user_id&&(<div className="add-event-wrap">
             <button
               onClick={() => this.toggleModal()}
               className="add-event-btn btn"
             >
               <strong>+</strong> New Event
             </button>
-          </div>
+          </div>)}
 
           <NewEventModal
             modalMode={this.state.modalMode}
@@ -221,8 +224,10 @@ class Story extends Component {
   }
 }
 
+
 const mapStateToProps = state => {
-  return { story: state.story.selectedStory };
+  return { story: state.story.selectedStory,
+            user: state.user.authedUser };
 };
 
 export default connect(

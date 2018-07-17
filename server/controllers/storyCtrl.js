@@ -8,12 +8,14 @@ const getStory = (req,res) =>{
 
   story.getStoryById([story_id])
     .then(storys=>{
+     
       story.getEventByStory([storys[0].story_id])
         .then(events=>{
           if(events[0]){
             story.getImagesByEvent([events[0].event_id])
               .then(images=>{
                 let obj ={
+                  user_id: storys[0].user_id,
                   story_title: storys[0].story_title,
                   story_description: storys[0].story_description,
                   story_category: storys[0].story_category,
@@ -27,6 +29,7 @@ const getStory = (req,res) =>{
               })
           } else {
             let obj ={
+              user_id: storys[0].user_id,
               story_title: storys[0].story_title,
               story_description: storys[0].story_description,
               story_category: storys[0].story_category,
