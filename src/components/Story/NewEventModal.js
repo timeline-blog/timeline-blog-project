@@ -14,6 +14,7 @@ export default class NewEventModal extends Component {
         this.state={
             imgUrl: []
         }
+       
     }
 
     startUploadManually =()=>{
@@ -31,17 +32,18 @@ export default class NewEventModal extends Component {
        }
 
        handleUploadSuccess=(filenmae)=>{
+    
          firebase.storage()
                     .ref('events')
                     .child(filenmae)
                     .getDownloadURL()
                     .then(url=>{
+                        console.log('they')
                         let img = this.state.imgUrl.slice();
                         img.push(url)
                         this.setState({imgUrl: img})
                     })
 
-                   
                     console.log('hi')
 
                 
@@ -50,17 +52,22 @@ export default class NewEventModal extends Component {
        createEvent =()=>{
            this.props.resizedImages.forEach(element=>{ 
                this.FileUploader.startUpload(element)   
+               console.log('doing')
             })
 
-           
-            
-            
-           const test = () =>{
-                console.log('hi')
+           function soso(story_id,title,desc,img){
+               let obj={
+                   story_id,
+                   title,
+                   desc,
+                   img
+               }
+               console.log(obj)
            }
-
-           _.debounce(test,3000)
+            setTimeout(()=>soso(this.props.story_id,this.props.title,this.props.eventDescription,this.state.imgUrl), 3000)
+            console.log('agege')
            
+            
        }
 
     
