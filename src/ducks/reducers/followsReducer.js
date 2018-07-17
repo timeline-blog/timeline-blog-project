@@ -20,6 +20,7 @@ export function getFollowing(user_id) {
 }
 
 export function addFollow(follower_id, following_id) {
+  console.log("addfollow invoked", follower_id, following_id);
   return {
     type: ADD_FOLLOW,
     payload: axios.post("/api/people/follow", { follower_id, following_id })
