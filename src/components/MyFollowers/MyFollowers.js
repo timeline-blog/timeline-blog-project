@@ -4,17 +4,54 @@ import { connect } from "react-redux";
 import {
   getFollowers,
   getFollowing,
-  unfollow
+  unfollow,
+  addFollow
 } from "../../ducks/reducers/followsReducer";
 
 class MyFollowers extends Component {
   constructor() {
     super();
-    this.state = { followers: [], following: [] };
+    this.state = { 
+      followersList: [], 
+      followingList: [] 
+    };
+
+    this.handleAddFollow = this.handleAddFollow.bind(this);
+    this.handleUnfollow = this.handleUnfollow.bind(this);
+    this.updateFollowingList = this.updateFollowingList.bind(this);
+    this.updateFollowersList = this.updateFollowersList.bind(this);
   }
-  actionHandler = (follower_id, following_id) => {
-    this.props.unfollow(follower_id, following_id);
-  };
+  
+  componentDidMount() {
+    this.props.getFollowers(1)
+      .then( () => this.updateFollowersList() )
+
+    this.props.getFollowing(1)
+      .then( () => this.updateFollowingList() )
+  }
+
+  updateFollowersList() {
+    this.setState({ followersList: this.props.followers })
+  }
+  
+  updateFollowingList() {
+    this.setState({ followingList: this.props.following })
+  }
+
+  handleAddFollow(follower_id, following_id) {
+    this.props.addFollow(follower_id, following_id)
+      .then( () => {
+        this.props.getFollowing(1).then( () => this.updateFollowingList() )
+      } );
+  }
+
+  handleUnfollow(follower_id, following_id) {
+    console.log('handle unfollow invoked')
+    this.props.unfollow(follower_id, following_id)
+      .then( () => {
+        this.props.getFollowing(1).then( () => this.updateFollowingList() )
+      } );
+  }
 
   /**
    * Each user summary needs to know if logged in user follows the user being displayed:
@@ -26,26 +63,19 @@ class MyFollowers extends Component {
    *    if the filtered array has a result, the UserSummary should take a prop indicating so (a boolean)
    * 4. UserSummary will need check the boolean to know whether to render "Follow" or "Unfollow"
    */
-  componentDidMount() {
-    this.props.getFollowers(1);
-    this.props.getFollowing(1);
-  }
+
   render() {
-    console.log(
-      this.props.followers,
-      " followers",
-      this.props.following,
-      "following"
-    );
-    let followersList = this.props.followers.map((follows, index) => {
+    let followersList = this.state.followersList.map((follows, index) => {
       return (
         <UserSummary
           key={index}
           userid={follows.user_id}
           display_name={follows.display_name}
           avatar={follows.avatar}
-          actionHandler={this.unfollow}
-          following_id={follows.user_id}
+          unfollow={this.handleUnfollow}
+          addFollow={this.handleAddFollow}
+          user_id={follows.user_id}
+          followingList={this.state.followingList}
         />
       );
     });
@@ -79,5 +109,5 @@ const mapStateToProps = state => {
 };
 export default connect(
   mapStateToProps,
-  { getFollowers, getFollowing, unfollow }
+  { getFollowers, getFollowing, unfollow, addFollow }
 )(MyFollowers);

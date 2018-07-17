@@ -356,8 +356,8 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
     display: block;
     background: #1ddfa5;
     height: 200px;
-    background-size: cover 100%;
-    background-position: center;
+    background-size: 100%;
+    background-position: top center;
     background-repeat: no-repeat; }
   .story-preview-wrap .story-pv-header .story-pv-title {
     position: absolute;
@@ -680,6 +680,8 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
       .outer-modal .inner-modal .field-group label {
         font-size: 18px;
         margin-bottom: 5px; }
+      .outer-modal .inner-modal .field-group .center-label {
+        text-align: center; }
       .outer-modal .inner-modal .field-group .btn {
         display: block; }
       .outer-modal .inner-modal .field-group .images-label.btn {
@@ -689,9 +691,14 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
       font-size: 20px;
       text-transform: uppercase;
       padding: 8px 14px; }
+    .outer-modal .inner-modal .categories-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center; }
     .outer-modal .inner-modal .category-selector {
       display: inline-block;
-      margin: 0 5px 0 0;
+      margin: 0 5px 10px 0;
       color: #ffffff;
       padding: 3px 8px;
       background: #5c5c5c;

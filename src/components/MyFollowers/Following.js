@@ -1,30 +1,53 @@
 import React, { Component } from "react";
 import UserSummary from "./UserSummary";
 import { connect } from "react-redux";
-import { getFollowing } from "../../ducks/reducers/followsReducer";
+import { getFollowing, unfollow, addFollow } from "../../ducks/reducers/followsReducer";
 
 class Following extends Component {
   constructor() {
     super();
-    this.state = { following: [] };
-  }
-  actionHandler = (follower_id, following_id) => {
-    this.props.unfollow(follower_id, following_id);
-  };
+    this.state = { followingList: [] };
 
-  componentDidMount() {
-    this.props.getFollowing(1);
+    this.handleAddFollow = this.handleAddFollow.bind(this);
+    this.handleUnfollow = this.handleUnfollow.bind(this);
+    this.updateFollowingList = this.updateFollowingList.bind(this);
   }
+  
+  componentDidMount() {
+    this.props.getFollowing(1)
+      .then( () => this.updateFollowingList() )
+  }
+  
+  updateFollowingList() {
+    this.setState({ followingList: this.props.following })
+  }
+
+  handleAddFollow(follower_id, following_id) {
+    this.props.addFollow(follower_id, following_id)
+      .then( () => {
+        this.props.getFollowing(1).then( () => this.updateFollowingList() )
+      } );
+  }
+
+  handleUnfollow(follower_id, following_id) {
+    this.props.unfollow(follower_id, following_id)
+      .then( () => {
+        this.props.getFollowing(1).then( () => this.updateFollowingList() )
+      } );
+  }
+
   render() {
-    let followingList = this.props.following.map((follows, index) => {
-      console.log(follows);
+    let followingList = this.state.followingList.map((follows, index) => {
+      // console.log(follows);
       return (
         <UserSummary
           key={index}
           display_name={follows.display_name}
           avatar={follows.avatar}
-          actionHandler={this.unfollow}
-          following_id={follows.user_id}
+          unfollow={this.handleUnfollow}
+          addFollow={this.handleAddFollow}
+          user_id={follows.user_id}
+          followingList={this.state.followingList}
         />
       );
     });
@@ -56,5 +79,5 @@ const mapStateToProps = state => {
 };
 export default connect(
   mapStateToProps,
-  { getFollowing }
+  { getFollowing, unfollow, addFollow }
 )(Following);

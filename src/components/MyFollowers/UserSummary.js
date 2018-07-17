@@ -1,6 +1,7 @@
 import React from "react";
 
 export default function UserSummary(props) {
+  let filtered = props.followingList.filter(user => user.user_id === props.user_id)
   return (
     <div className="user-summary-wrap">
       <div className="user-info">
@@ -14,10 +15,10 @@ export default function UserSummary(props) {
       * for unfollow: className="btn border-btn negative-border-btn"
       * for follow: className="btn"
       */}
-      {props.user_id === props.following_id ? (
+      {filtered[0] ? (
         <button
-          onClick={(user_id, following_id) =>
-            props.actionHandler(1, props.following_id)
+          onClick={() =>
+            props.unfollow(1, props.user_id)
           }
           className="btn border-btn negative-border-btn"
         >
@@ -25,10 +26,10 @@ export default function UserSummary(props) {
         </button>
       ) : (
         <button
-          onClick={(user_id, following_id) =>
-            props.actionHandler(1, props.following_id)
+          onClick={() =>
+            props.addFollow(1, props.user_id)
           }
-          className="btn border-btn negative-border-btn"
+          className="btn"
         >
           Follow
         </button>

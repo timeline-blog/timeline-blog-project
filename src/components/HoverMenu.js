@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
+
+import { connect } from 'react-redux';
 
 class HoverMenu extends Component {
   render() {
@@ -6,23 +9,31 @@ class HoverMenu extends Component {
       <div
         className={`hover-main-wrap account-hover ${this.props.hoverMenuMode}`}
       >
-        <a href="/profile/:user_id">
+        {/* <Link to={`/profile/${this.props.authedUser.user_id}`}> */}
+        <Link to="/profile/1">
           <button onClick={() => this.props.toggleHoverMenu()}>My Profile</button>
-        </a>
-        <a href="/#/following">
+        </Link>
+        <Link to="/following">
           <button onClick={() => this.props.toggleHoverMenu()}>Following</button>
-        </a>
-        <a href="/#/followers">
+        </Link>
+        <Link to="/followers">
           <button onClick={() => this.props.toggleHoverMenu()}>Followers</button>
-        </a>
+        </Link>
         <div>
           <span className="logged-in-as">Logged in as: <strong>display_name</strong></span>
-          <a href="/">
+          <Link to="/">
             <button>Logout</button>
-          </a>
+          </Link>
         </div>
       </div>
     );
   }
 }
-export default HoverMenu;
+
+const mapStateToProps = state => {
+  return {
+    authedUser: state.user.authedUser
+  };
+};
+
+export default connect(mapStateToProps)(HoverMenu);

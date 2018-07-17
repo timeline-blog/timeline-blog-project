@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 
 import ImageCompressor from 'image-compressor.js'
-import { getStoryById } from "../../ducks/reducers/storyReducer";
 
 
 import { getStoryById, deleteStory } from "../../ducks/reducers/storyReducer";
@@ -122,15 +121,10 @@ class Story extends Component {
     }
   }
 
-  
-  render() {
-    
-    
-
-
   deleteStoryHandler() {
     this.props.deleteStory(this.props.match.params.story_id)
   }
+  
 
   render() {
     // console.log(this.props);
