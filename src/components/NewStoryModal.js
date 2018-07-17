@@ -1,7 +1,33 @@
 import React, { Component } from 'react';
 
 export default class NewStoryModal extends Component {
-    // constructor()
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            storyTitleField: '', 
+            storyDescriptionField: '', 
+            selectedCategory: ''
+        };
+
+        this.switchCategory = this.switchCategory.bind(this);
+        this.changeStoryTitleField = this.changeStoryTitleField.bind(this);
+        this.changeStoryDescriptionField = this.changeStoryDescriptionField.bind(this);
+    }
+
+    switchCategory( category ) {
+        this.setState({ selectedCategory: category });
+    }
+
+    changeStoryTitleField( value ) {
+        this.setState({ storyTitleField: value });
+    }
+
+    changeStoryDescriptionField( value ) {
+        this.setState({ storyDescriptionField: value });
+    }
+
+
     render() {
         return (
             <div className={`outer-modal ${this.props.modalMode}`}>
@@ -24,15 +50,68 @@ export default class NewStoryModal extends Component {
                     </div>
 
                     <div className="field-group">
-                        <label htmlFor="">Category</label>
+                        <label className="center-label" htmlFor="">Category</label>
                         <div className="categories-wrap">
-                            <span className="category-selector selected">Category</span>
-                            <span className="category-selector">Category</span>
-                            <span className="category-selector">Category</span>
-                            <span className="category-selector">Category</span>
-                            <span className="category-selector">Category</span>
-                            <span className="category-selector">Category</span>
-                            <span className="category-selector">Category</span>
+                            <span 
+                                className={this.state.selectedCategory === "Travel" ? "category-selector selected" : "category-selector"}
+                                onClick={(e) => this.switchCategory(e.target.innerText)}
+                            >
+                                Travel
+                            </span>
+                            <span 
+                                className={this.state.selectedCategory === "Music" ? "category-selector selected" : "category-selector"}
+                                onClick={(e) => this.switchCategory(e.target.innerText)}
+                            >
+                                Music
+                            </span>
+                            <span 
+                                className={this.state.selectedCategory === "Food" ? "category-selector selected" : "category-selector"}
+                                onClick={(e) => this.switchCategory(e.target.innerText)}
+                            >
+                                Food
+                            </span>
+                            <span 
+                                className={this.state.selectedCategory === "Personal" ? "category-selector selected" : "category-selector"}
+                                onClick={(e) => this.switchCategory(e.target.innerText)}
+                            >
+                                Personal
+                            </span>
+                            <span 
+                                className={this.state.selectedCategory === "News" ? "category-selector selected" : "category-selector"}
+                                onClick={(e) => this.switchCategory(e.target.innerText)}
+                            >
+                                News
+                            </span>
+                            <span 
+                                className={this.state.selectedCategory === "Sport" ? "category-selector selected" : "category-selector"}
+                                onClick={(e) => this.switchCategory(e.target.innerText)}
+                            >
+                                Sports
+                            </span>
+                            <span 
+                                className={this.state.selectedCategory === "Education" ? "category-selector selected" : "category-selector"}
+                                onClick={(e) => this.switchCategory(e.target.innerText)}
+                            >
+                                Education
+                            </span>
+                            <span 
+                                className={this.state.selectedCategory === "Art" ? "category-selector selected" : "category-selector"}
+                                onClick={(e) => this.switchCategory(e.target.innerText)}
+                            >
+                                Art
+                            </span>
+                            <span 
+                                className={this.state.selectedCategory === "Style" ? "category-selector selected" : "category-selector"}
+                                onClick={(e) => this.switchCategory(e.target.innerText)}
+                            >
+                                Style
+                            </span>
+                            <span 
+                                className={this.state.selectedCategory === "Entertainment" ? "category-selector selected" : "category-selector"}
+                                onClick={(e) => this.switchCategory(e.target.innerText)}
+                            >
+                                Entertainment
+                            </span>
                         </div>
                     </div>
 
@@ -44,4 +123,3 @@ export default class NewStoryModal extends Component {
         );
     }
 }
-
