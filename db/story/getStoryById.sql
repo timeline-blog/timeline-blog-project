@@ -1,4 +1,4 @@
-SELECT s.story_title, s.story_description, s.story_category, s.like_count, s.story_id, u.display_name, u.avatar FROM stories s
+SELECT s.user_id, s.story_title, s.story_description, s.story_category, s.like_count, s.story_id, u.display_name, u.avatar FROM stories s
 INNER JOIN users u ON s.user_id = u.user_id
 WHERE s.story_id = $1;
 

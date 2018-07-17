@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 
 import ImageCompressor from 'image-compressor.js'
-import { getStoryById } from "../../ducks/reducers/storyReducer";
 
 
 import { getStoryById, deleteStory } from "../../ducks/reducers/storyReducer";
@@ -123,8 +122,7 @@ class Story extends Component {
   }
 
   
-  render() {
-    
+
     
 
 
@@ -136,6 +134,7 @@ class Story extends Component {
     // console.log(this.props);
 
     const { story } = this.props;
+    const { user } = this.props;
     
     if (story.events) {
       var mappedEvents = story.events.map(event => {
@@ -188,14 +187,14 @@ class Story extends Component {
             </button>
           </div>
 
-          <div className="add-event-wrap">
+          {user.user_id===story.user_id&&(<div className="add-event-wrap">
             <button
               onClick={() => this.toggleModal()}
               className="add-event-btn btn"
             >
               <strong>+</strong> New Event
             </button>
-          </div>
+          </div>)}
 
           <NewEventModal
             modalMode={this.state.modalMode}
@@ -228,7 +227,8 @@ class Story extends Component {
 }
 
 const mapStateToProps = state => {
-  return { story: state.story.selectedStory };
+  return { story: state.story.selectedStory,
+            user: state.user.authedUser };
 };
 
 export default connect(
