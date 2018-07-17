@@ -39,7 +39,8 @@ const {
 } = require(`${__dirname}/controllers/discoverCtrl`);
 const {
   getProfile,
-  editUser
+  editUser,
+  getUserById
 } = require(`${__dirname}/controllers/profileCtrl`);
 const {
   getComments,
@@ -151,6 +152,7 @@ app.get("/api/discover/all", getAll);
 //profile page
 app.get("/api/profile/:user_id", getProfile);
 app.put("/api/user/:user_id", editUser);
+app.get("/api/user/:user_id", getUserById);
 
 //logout
 app.get("/auth/logout", logout);

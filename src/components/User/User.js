@@ -4,18 +4,23 @@ import { connect } from "react-redux";
 import _ from "lodash";
 
 import { getStoriesByUser } from "../../ducks/reducers/previewsReducer";
+import { getUserById } from '../../ducks/reducers/userReducer';
 
 import StoryPreview from "../StoryPreview";
 
 class User extends Component {
   componentDidMount() {
-    this.props.getStoriesByUser(1);
-  }
+    this.props.getUserById(this.props.match.params.user_id)
+    this.props.getStoriesByUser(this.props.match.params.user_id);
+  };
 
   render() {
+    // console.log('Props!!!   ', this.props);
+
+    const { display_name, bio, avatar, follower_count } = this.props.profileInfo
     const stories = _.map(this.props.stories);
     const mappedStories = stories.map(story => {
-      // console.log(story);
+
       return (
         <StoryPreview
           key={story[0].story_id}
@@ -38,15 +43,22 @@ class User extends Component {
       <div className="outer-wrap profile-wrap">
         <div className="inner-wrap">
           <div className="page-header profile-header">
-            <img className="profile-avatar" src="" alt="" />
-            <h1 className="page-title profile-title">User's name</h1>
+            <img className="profile-avatar" src={avatar} alt="" />
+            <h1 className="page-title profile-title">{display_name}</h1>
             <p className="page-description profile-description">
-              Brief Description of user
+              {bio}
             </p>
-            <div className="follow-info-wrap">
-              <button className="follow-btn btn">Follow</button>
-              <span className="follow-count">225</span>
-            </div>
+            {(this.props.user.user_id) ? 
+              <div className="follow-info-wrap">
+                <button className="follow-btn btn">Follow</button>
+                <span className="follow-count">{follower_count}</span>
+              </div>
+              : <div className="follow-info-wrap">
+                  <p className="follow-btn btn">Followers</p>
+                  {/* Needs styled!!!! */}
+                  <span className="follow-count">{follower_count}</span>
+                </div>
+            }
           </div>
 
           <div className="story-grid">{mappedStories}</div>
@@ -57,10 +69,14 @@ class User extends Component {
 }
 
 const mapStateToProps = state => {
-  return { stories: state.previews.storiesByUser };
+  return { 
+    stories: state.previews.storiesByUser,
+    user: state.user.authedUser,
+    profileInfo: state.user.profileUser 
+  };
 };
 
 export default connect(
   mapStateToProps,
-  { getStoriesByUser }
+  { getStoriesByUser, getUserById }
 )(User);

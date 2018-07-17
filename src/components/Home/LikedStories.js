@@ -4,16 +4,19 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import { getStoriesByFollowing } from '../../ducks/reducers/previewsReducer';
+import { getLoggedInUser } from '../../ducks/reducers/userReducer';
 
 import StoryPreview from "../StoryPreview";
 
 class LikedStories extends Component {
 
   componentDidMount() {
-    this.props.getStoriesByFollowing(1)
+    this.props.getLoggedInUser();
+    this.props.getStoriesByFollowing(this.props.user.user_id);
   }
 
   render() {
+    console.log(this.props);
 
     const stories = _.map(this.props.stories)
     const mappedStories = stories.map(story => {
@@ -62,7 +65,10 @@ class LikedStories extends Component {
 }
 
 const mapStateToProps = state => {
-  return {stories: state.previews.storiesByFollowing}
+  return {
+    stories: state.previews.storiesByFollowing,
+    user: state.user.authedUser
+  }
 };
 
-export default connect(mapStateToProps, {getStoriesByFollowing})(LikedStories);
+export default connect(mapStateToProps, {getStoriesByFollowing, getLoggedInUser})(LikedStories);

@@ -15,14 +15,14 @@ class Landing extends Component {
             <header className="welcome-header">
               {/* big logo */}
 
-              {/* <div className="login-wrap">
+              <div className="login-wrap">
                 <Link to="/signup" className="btn login-btn">
                   Sign Up
                 </Link>
                 <Link to="/login" className="btn border-btn login-btn">
                   Log In
                 </Link>
-              </div> */}
+              </div>
 
             </header>
           </section>

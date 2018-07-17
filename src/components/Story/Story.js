@@ -1,7 +1,12 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
+
 import ImageCompressor from 'image-compressor.js'
 import { getStoryById } from "../../ducks/reducers/storyReducer";
+
+
+import { getStoryById, deleteStory } from "../../ducks/reducers/storyReducer";
+
 import Event from "./Event";
 import NewEventModal from "./NewEventModal";
 import EditStoryModal from "./EditStoryModal";
@@ -25,6 +30,7 @@ class Story extends Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.toggleEditModal = this.toggleEditModal.bind(this);
     this.toggleEditEventModal = this.toggleEditEventModal.bind(this);
+    this.deleteStoryHandler = this.deleteStoryHandler.bind(this);
   }
 
   eventTitleChange=(value)=>{
@@ -115,19 +121,28 @@ class Story extends Component {
       this.setState({ editEventModalMode: "hidden" });
     }
   }
+
   
   render() {
     
     
+
+
+  deleteStoryHandler() {
+    this.props.deleteStory(this.props.match.params.story_id)
+  }
+
+  render() {
+    // console.log(this.props);
+
     const { story } = this.props;
     
     if (story.events) {
       var mappedEvents = story.events.map(event => {
         // console.log(event);
         return (
-          <Fragment>
+          <Fragment key={event.event_id}>
             <Event
-              key={event.event_id}
               event_title={event.event_title}
               event_description={event.event_description}
               e_created_on={event.e_created_on}
@@ -167,7 +182,7 @@ class Story extends Component {
           {/* *TO DO: only display this if story belongs to authorized user */}
           <div className="delete-story-wrap">
             <h3 className="delete-title">Delete Story</h3>
-            <button className="btn negative-btn"> 
+            <button className="btn negative-btn" onClick={() => this.deleteStoryHandler()}> 
               <FontAwesomeIcon icon={faTrash} />
               {` Delete "${story.story_title}"`}
             </button>
@@ -218,5 +233,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getStoryById }
+  { getStoryById, deleteStory }
 )(Story);
