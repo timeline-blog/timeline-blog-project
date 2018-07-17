@@ -75,7 +75,7 @@ class Story extends Component {
              images: arr
            }) 
        }) 
-        reader.readAsDataURL(img)
+       img && reader.readAsDataURL(img)
       }
 
       removeImages=(index)=>{
@@ -115,11 +115,12 @@ class Story extends Component {
       this.setState({ editEventModalMode: "hidden" });
     }
   }
-
+  
   render() {
-
+    
+    
     const { story } = this.props;
-
+    
     if (story.events) {
       var mappedEvents = story.events.map(event => {
         // console.log(event);
@@ -190,8 +191,9 @@ class Story extends Component {
             removeImages={this.removeImages}
             images={this.state.images}
             resizedImages={this.state.resizedImages}
-            title={this.state.title}
+            title={this.state.eventTitle}
             eventDescription={this.state.eventDescription}
+            story_id={this.props.match.params.story_id}
 
           />
 
