@@ -1,7 +1,12 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 
+import ImageCompressor from 'image-compressor.js'
+import { getStoryById } from "../../ducks/reducers/storyReducer";
+
+
 import { getStoryById, deleteStory } from "../../ducks/reducers/storyReducer";
+
 import Event from "./Event";
 import NewEventModal from "./NewEventModal";
 import EditStoryModal from "./EditStoryModal";
@@ -16,13 +21,78 @@ class Story extends Component {
     this.state = {
       modalMode: "hidden",
       editModalMode: "hidden",
-      editEventModalMode: "hidden"
+      editEventModalMode: "hidden",
+      eventTitle: '',
+      eventDescription: '',
+      images: [],
+      resizedImages: [],
     };
     this.toggleModal = this.toggleModal.bind(this);
     this.toggleEditModal = this.toggleEditModal.bind(this);
     this.toggleEditEventModal = this.toggleEditEventModal.bind(this);
     this.deleteStoryHandler = this.deleteStoryHandler.bind(this);
   }
+
+  eventTitleChange=(value)=>{
+    this.setState({eventTitle: value})
+  }
+
+  eventDescriptionChange=(value)=>{
+    this.setState({eventDescription: value})
+  }
+
+
+    _handleImageChange=(e)=>{ 
+        if(this.state.images.length==4){
+            return
+        }
+        let arr = []
+        let id = 7; //the id should come from the story or event
+        let reader = new FileReader()
+        let img =e.target.files[0];
+    //    console.log('normal img ', img)
+    //       let resized = [];
+    //       resized = this.state.resizedImages.slice();
+    //       resized.push(img)
+    //      this.setState({resizedImages: resized})
+    
+
+        let that = this;
+       new  ImageCompressor(img, {
+          quality: .3,//signifies how much quality you want on the photo
+          success(result) {
+          let newArr =   that.state.resizedImages.slice();
+         // console.log('image arr after resize ',result)
+            newArr.push(result)
+           that.setState({
+             resizedImages: newArr
+           })
+          }
+       }) 
+       reader.addEventListener("load",()=>{
+           arr = this.state.images.slice();
+           id++    
+           arr.push({
+             id: id,
+             url: reader.result,
+           })
+           this.setState({
+             
+             images: arr
+           }) 
+       }) 
+       img && reader.readAsDataURL(img)
+      }
+
+      removeImages=(index)=>{
+          let arr = this.state.images.slice();
+          let arr2 = this.state.resizedImages.slice()
+           arr.splice(index, 1)
+           arr2.splice(index,1)
+           this.setState({images: arr})
+           this.setState({resizedImages: arr2})
+
+      }
 
   componentDidMount() {
     this.props.getStoryById(this.props.match.params.story_id);
@@ -52,14 +122,21 @@ class Story extends Component {
     }
   }
 
+  
+  render() {
+    
+    
+
+
   deleteStoryHandler() {
     this.props.deleteStory(this.props.match.params.story_id)
   }
 
   render() {
     // console.log(this.props);
-    const { story } = this.props;
 
+    const { story } = this.props;
+    
     if (story.events) {
       var mappedEvents = story.events.map(event => {
         // console.log(event);
@@ -123,6 +200,16 @@ class Story extends Component {
           <NewEventModal
             modalMode={this.state.modalMode}
             toggleModal={this.toggleModal}
+            _handleImageChange={this._handleImageChange}
+            eventTitleChange={this.eventTitleChange}
+            eventDescriptionChange={this.eventDescriptionChange}
+            removeImages={this.removeImages}
+            images={this.state.images}
+            resizedImages={this.state.resizedImages}
+            title={this.state.eventTitle}
+            eventDescription={this.state.eventDescription}
+            story_id={this.props.match.params.story_id}
+
           />
 
           <EditEventModal

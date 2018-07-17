@@ -20,7 +20,7 @@ class Event extends Component {
     }
 
     render() {
-        console.log('EVENT PROPS!!! ', this.props);
+        
         return (
             <div className={`event-wrap ${this.state.eventState}`}>
                 <span className="connector top-connector"></span>
