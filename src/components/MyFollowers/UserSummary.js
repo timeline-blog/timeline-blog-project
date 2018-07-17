@@ -10,14 +10,21 @@ class UserSummary extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      followersList: []
+      followButton: ""
     };
   }
-  render() {
-    console.log(this.props);
+  componentDidMount() {
     let isFollowing = this.props.following.filter(
       user => this.props.userid === user.userid
     );
+    if (isFollowing[0]) {
+      this.setState({ followButton: "unfollow" });
+    } else {
+      this.setState({ followButton: "follow" });
+    }
+  }
+  render() {
+    console.log(this.props);
 
     return (
       <div className="user-summary-wrap">
@@ -32,13 +39,15 @@ class UserSummary extends Component {
       * for unfollow: className="btn border-btn negative-border-btn"
       * for follow: className="btn"
     */}
-        {isFollowing[0] ? (
+        {this.state.followButton === "unfollow" ? (
           <button
             onClick={() =>
-              this.props.unfollow(
-                this.props.authedUser.user_id,
-                this.props.following_id
-              )
+              this.props
+                .unfollow(
+                  this.props.authedUser.user_id,
+                  this.props.following_id
+                )
+                .then(() => this.setState({ followButton: "follow" }))
             }
             className="btn border-btn negative-border-btn"
           >
@@ -47,10 +56,12 @@ class UserSummary extends Component {
         ) : (
           <button
             onClick={() =>
-              this.props.handleAddFollow(
-                this.props.authedUser.user_id,
-                this.props.following_id
-              )
+              this.props
+                .addFollow(
+                  this.props.authedUser.user_id,
+                  this.props.following_id
+                )
+                .then(() => this.setState({ followButton: "unfollow" }))
             }
             className="btn "
           >
