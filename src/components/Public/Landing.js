@@ -14,6 +14,7 @@ class Landing extends Component {
           <section className="welcome-wrap">
             <header className="welcome-header">
               {/* big logo */}
+
               <div className="login-wrap">
                 <Link to="/signup" className="btn login-btn">
                   Sign Up
@@ -22,6 +23,7 @@ class Landing extends Component {
                   Log In
                 </Link>
               </div>
+
             </header>
           </section>
         </div>

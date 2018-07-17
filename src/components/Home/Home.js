@@ -4,18 +4,19 @@ import _ from 'lodash';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { getLoggedInUser } from '../../ducks/reducers/userReducer'
+import { getLoggedInUser } from '../../ducks/reducers/userReducer';
 import { getStoriesByLikedUser } from '../../ducks/reducers/previewsReducer';
 import StoryPreview from '../StoryPreview';
 
 class Home extends Component {
 
     componentDidMount() {
-        this.props.getLoggedInUser()
-        this.props.getStoriesByLikedUser(1)
+        this.props.getLoggedInUser();
+        this.props.getStoriesByLikedUser(this.props.user.user_id);
     }
 
     render() {
+        console.log(this.props);
 
         const stories = _.map(this.props.stories)
         const mappedStories = stories.map(story => {

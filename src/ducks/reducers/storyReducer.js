@@ -45,6 +45,7 @@ export function editStory(
 }
 
 export function deleteStory(story_id) {
+  console.log(story_id);
   return {
     type: DELETE_STORY,
     payload: axios.delete(`/api/story/${story_id}`)
@@ -63,9 +64,10 @@ const initialState = {
 export default function storyReducer(state = initialState, action) {
   switch (action.type) {
     case `${GET_STORY_BY_ID}_FULFILLED`:
+    const { data } = action.payload
       return {
         ...state,
-        selectedStory: action.payload.data
+        selectedStory: data
       };
     case `${CREATE_STORY}_FULFILLED`:
       return { ...state };
