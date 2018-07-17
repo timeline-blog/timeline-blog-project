@@ -15,7 +15,7 @@ class User extends Component {
   };
 
   render() {
-    console.log('Props!!!   ', this.props);
+    // console.log('Props!!!   ', this.props);
 
     const { display_name, bio, avatar, follower_count } = this.props.profileInfo
     const stories = _.map(this.props.stories);
@@ -48,10 +48,17 @@ class User extends Component {
             <p className="page-description profile-description">
               {bio}
             </p>
-            <div className="follow-info-wrap">
-              <button className="follow-btn btn">Follow</button>
-              <span className="follow-count">{follower_count}</span>
-            </div>
+            {(this.props.user.user_id) ? 
+              <div className="follow-info-wrap">
+                <button className="follow-btn btn">Follow</button>
+                <span className="follow-count">{follower_count}</span>
+              </div>
+              : <div className="follow-info-wrap">
+                  <p className="follow-btn btn">Followers</p>
+                  {/* Needs styled!!!! */}
+                  <span className="follow-count">{follower_count}</span>
+                </div>
+            }
           </div>
 
           <div className="story-grid">{mappedStories}</div>
