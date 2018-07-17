@@ -3,7 +3,8 @@ import UserSummary from "./UserSummary";
 import { connect } from "react-redux";
 import {
   getFollowers,
-  getFollowing
+  getFollowing,
+  addFollow
 } from "../../ducks/reducers/followsReducer";
 import { getLoggedInUser } from "../../ducks/reducers/userReducer";
 
@@ -11,6 +12,8 @@ class MyFollowers extends Component {
   constructor() {
     super();
     this.state = { followers: [], following: [], authedUser: [] };
+
+    this.handleAddFollow = this.handleAddFollow.bind(this);
   }
   /**
    * Each user summary needs to know if logged in user follows the user being displayed:
@@ -26,6 +29,13 @@ class MyFollowers extends Component {
     this.props.getFollowers(this.props.user.user_id);
     this.props.getFollowing(this.props.user.user_id);
   }
+
+  handleAddFollow(user_id, follower_id) {
+    this.props.addFollow(user_id, follower_id).then(response => {
+      console.log(response);
+    });
+  }
+
   render() {
     console.log(this.props.user.user_id);
     let followersList = this.props.followers.map((follows, index) => {
@@ -38,6 +48,7 @@ class MyFollowers extends Component {
           following_id={follows.user_id}
           user_id={this.props.user.user_id}
           following={this.props.following}
+          handleAddFollow={this.handleAddFollow}
         />
       );
     });
@@ -74,5 +85,5 @@ const mapStateToProps = state => {
 };
 export default connect(
   mapStateToProps,
-  { getFollowers, getFollowing, getLoggedInUser }
+  { getFollowers, getFollowing, getLoggedInUser, addFollow }
 )(MyFollowers);

@@ -9,6 +9,9 @@ import { connect } from "react-redux";
 class UserSummary extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      followersList: []
+    };
   }
   render() {
     console.log(this.props);
@@ -33,7 +36,7 @@ class UserSummary extends Component {
           <button
             onClick={() =>
               this.props.unfollow(
-                this.props.user.authedUser.user_id,
+                this.props.authedUser.user_id,
                 this.props.following_id
               )
             }
@@ -44,12 +47,10 @@ class UserSummary extends Component {
         ) : (
           <button
             onClick={() =>
-              this.props
-                .addFollow(
-                  this.props.user.authedUser.user_id,
-                  this.props.following_id
-                )
-                .then(() => this.props.getFollowers())
+              this.props.handleAddFollow(
+                this.props.authedUser.user_id,
+                this.props.following_id
+              )
             }
             className="btn "
           >
@@ -61,7 +62,10 @@ class UserSummary extends Component {
   }
 }
 const mapStateToProps = state => {
-  return { ...state };
+  return {
+    authedUser: state.user.authedUser,
+    followersList: state.follows.followers
+  };
 };
 export default connect(
   mapStateToProps,
