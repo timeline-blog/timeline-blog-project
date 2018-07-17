@@ -2,29 +2,27 @@ import React, { Component } from "react";
 import UserSummary from "./UserSummary";
 import { connect } from "react-redux";
 import { getFollowing } from "../../ducks/reducers/followsReducer";
+import { getLoggedInUser } from "../../ducks/reducers/userReducer";
 
 class Following extends Component {
   constructor() {
     super();
-    this.state = { following: [] };
+    this.state = { following: [], authedUser: [] };
   }
-  actionHandler = (follower_id, following_id) => {
-    this.props.unfollow(follower_id, following_id);
-  };
 
   componentDidMount() {
-    this.props.getFollowing(1);
+    this.props.getFollowing(this.props.user.user_id);
   }
   render() {
+    console.log(this.props.user.user_id);
     let followingList = this.props.following.map((follows, index) => {
-      console.log(follows);
       return (
         <UserSummary
           key={index}
           display_name={follows.display_name}
           avatar={follows.avatar}
-          actionHandler={this.unfollow}
           following_id={follows.user_id}
+          following={this.props.following}
         />
       );
     });
@@ -42,7 +40,9 @@ class Following extends Component {
           </div>
 
           <div className="followers-list-wrap">
-            <h3 className="followers-list-title">225 following</h3>
+            <h3 className="followers-list-title">
+              {this.props.following.length} following
+            </h3>
             {followingList}
           </div>
         </div>
@@ -52,9 +52,12 @@ class Following extends Component {
 }
 
 const mapStateToProps = state => {
-  return { following: state.follows.following };
+  return {
+    following: state.follows.following,
+    user: state.user.authedUser
+  };
 };
 export default connect(
   mapStateToProps,
-  { getFollowing }
+  { getFollowing, getLoggedInUser }
 )(Following);

@@ -1,1 +1,1 @@
-INSERT INTO follows (follower_id, following_id) VALUES ($1, $2);
+INSERT INTO user_follows (follower_id, following_id) VALUES ($1, $2);

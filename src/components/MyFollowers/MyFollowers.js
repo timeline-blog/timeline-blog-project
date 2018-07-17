@@ -4,18 +4,17 @@ import { connect } from "react-redux";
 import {
   getFollowers,
   getFollowing,
-  unfollow
+  addFollow
 } from "../../ducks/reducers/followsReducer";
+import { getLoggedInUser } from "../../ducks/reducers/userReducer";
 
 class MyFollowers extends Component {
   constructor() {
     super();
-    this.state = { followers: [], following: [] };
-  }
-  actionHandler = (follower_id, following_id) => {
-    this.props.unfollow(follower_id, following_id);
-  };
+    this.state = { followers: [], following: [], authedUser: [] };
 
+    this.handleAddFollow = this.handleAddFollow.bind(this);
+  }
   /**
    * Each user summary needs to know if logged in user follows the user being displayed:
    * 1. get logged in user_id
@@ -27,16 +26,18 @@ class MyFollowers extends Component {
    * 4. UserSummary will need check the boolean to know whether to render "Follow" or "Unfollow"
    */
   componentDidMount() {
-    this.props.getFollowers(1);
-    this.props.getFollowing(1);
+    this.props.getFollowers(this.props.user.user_id);
+    this.props.getFollowing(this.props.user.user_id);
   }
+
+  handleAddFollow(user_id, follower_id) {
+    this.props.addFollow(user_id, follower_id).then(response => {
+      console.log(response);
+    });
+  }
+
   render() {
-    console.log(
-      this.props.followers,
-      " followers",
-      this.props.following,
-      "following"
-    );
+    console.log(this.props.user.user_id);
     let followersList = this.props.followers.map((follows, index) => {
       return (
         <UserSummary
@@ -44,8 +45,10 @@ class MyFollowers extends Component {
           userid={follows.user_id}
           display_name={follows.display_name}
           avatar={follows.avatar}
-          actionHandler={this.unfollow}
           following_id={follows.user_id}
+          user_id={this.props.user.user_id}
+          following={this.props.following}
+          handleAddFollow={this.handleAddFollow}
         />
       );
     });
@@ -63,7 +66,9 @@ class MyFollowers extends Component {
           </div>
 
           <div className="followers-list-wrap">
-            <h3 className="followers-list-title">225 followers</h3>
+            <h3 className="followers-list-title">
+              {this.props.followers.length} followers
+            </h3>
           </div>
           {followersList}
         </div>
@@ -74,10 +79,11 @@ class MyFollowers extends Component {
 const mapStateToProps = state => {
   return {
     followers: state.follows.followers,
-    following: state.follows.following
+    following: state.follows.following,
+    user: state.user.authedUser
   };
 };
 export default connect(
   mapStateToProps,
-  { getFollowers, getFollowing, unfollow }
+  { getFollowers, getFollowing, getLoggedInUser, addFollow }
 )(MyFollowers);
