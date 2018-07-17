@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const StoryPreview = (props) => {
-    // console.log('props: ', props);
+    console.log('props: ', props);
 
     return (
         <div className="story-preview-wrap">
@@ -13,7 +13,11 @@ const StoryPreview = (props) => {
             </div>
 
             <div className="story-pv-header">
-                <div className="story-pv-image" style={{ backgroundImage: "url('https://images.pexels.com/photos/257360/pexels-photo-257360.jpeg?auto=compress&cs=tinysrgb&h=350')" }}/>
+                {props.url !== 'No image' ? 
+                    <div className="story-pv-image" style={{ backgroundImage: `url(${props.url})` }}/>  
+                    :
+                    <div className="story-pv-image" style={{ backgroundImage: "url('https://images.pexels.com/photos/257360/pexels-photo-257360.jpeg?auto=compress&cs=tinysrgb&h=350')" }}/> 
+                    }
                 <div className="story-pv-title">
                     {props.story_title}
                 </div>

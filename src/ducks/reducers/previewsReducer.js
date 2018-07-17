@@ -35,7 +35,7 @@ export function getStoriesDiscoverAll() {
   };
 }
 
-export function geStoriesByCategory(category) {
+export function getStoriesByCategory(category) {
   return {
     type: GET_STORIES_BY_CATEGORY,
     payload: axios.get(`/api/discover/sort/${category}`)
