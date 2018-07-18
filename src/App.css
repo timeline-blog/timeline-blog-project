@@ -682,6 +682,13 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
         margin-bottom: 5px; }
       .outer-modal .inner-modal .field-group .center-label {
         text-align: center; }
+      .outer-modal .inner-modal .field-group .char-counter {
+        display: block;
+        text-align: right;
+        font-weight: 200;
+        font-size: 14px;
+        margin: 5px 0 0;
+        color: #bbbbbb; }
       .outer-modal .inner-modal .field-group .btn {
         display: block; }
       .outer-modal .inner-modal .field-group .images-label.btn {
