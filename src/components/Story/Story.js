@@ -1,12 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-<<<<<<< HEAD
-
-import ImageCompressor from 'image-compressor.js'
-
-=======
 import ImageCompressor from 'image-compressor.js';
->>>>>>> 9e12db9d59641b239f055b2702bcd35579a1192d
 
 import { getStoryById, deleteStory } from "../../ducks/reducers/storyReducer";
 
