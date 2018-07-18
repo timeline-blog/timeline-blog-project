@@ -120,6 +120,7 @@ class Story extends Component {
   deleteStoryHandler() {
     this.props.deleteStory(this.props.match.params.story_id)
   }
+  
 
   render() {
     // console.log(this.props);

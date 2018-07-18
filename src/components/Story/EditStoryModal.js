@@ -66,7 +66,7 @@ export default class EditStoryModal extends Component {
                     </div>
 
                     <div className="field-group">
-                        <label htmlFor="">Category</label>
+                        <label className="center-label" htmlFor="">Category</label>
                         <div className="categories-wrap">
                             {/* <span className="category-selector selected">All</span> */}
                             <span 

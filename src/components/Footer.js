@@ -3,6 +3,8 @@ import React from "react";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import faAngleUp from "@fortawesome/fontawesome-pro-light/faAngleUp";
 
+import * as Scroll from 'react-scroll';
+
 export default function Footer() {
   return (
     <div className="main-footer">
@@ -16,7 +18,7 @@ export default function Footer() {
         <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/bryan-espinosa-38489b166/">Bryan Espinosa</a>
       </div>
 
-      <div className="back-to-top">
+      <div onClick={() => Scroll.animateScroll.scrollToTop()} className="back-to-top">
         <FontAwesomeIcon icon={faAngleUp} />
       </div>
     </div>

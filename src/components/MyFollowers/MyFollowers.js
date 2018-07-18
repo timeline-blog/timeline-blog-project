@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import {
   getFollowers,
   getFollowing,
+  unfollow,
   addFollow
 } from "../../ducks/reducers/followsReducer";
 import { getLoggedInUser } from "../../ducks/reducers/userReducer";
@@ -11,10 +12,48 @@ import { getLoggedInUser } from "../../ducks/reducers/userReducer";
 class MyFollowers extends Component {
   constructor() {
     super();
-    this.state = { followers: [], following: [], authedUser: [] };
+    this.state = { 
+      followersList: [], 
+      followingList: [] 
+    };
 
     this.handleAddFollow = this.handleAddFollow.bind(this);
+    this.handleUnfollow = this.handleUnfollow.bind(this);
+    this.updateFollowingList = this.updateFollowingList.bind(this);
+    this.updateFollowersList = this.updateFollowersList.bind(this);
   }
+  
+  componentDidMount() {
+    this.props.getFollowers(1)
+      .then( () => this.updateFollowersList() )
+
+    this.props.getFollowing(1)
+      .then( () => this.updateFollowingList() )
+  }
+
+  updateFollowersList() {
+    this.setState({ followersList: this.props.followers })
+  }
+  
+  updateFollowingList() {
+    this.setState({ followingList: this.props.following })
+  }
+
+  handleAddFollow(follower_id, following_id) {
+    this.props.addFollow(follower_id, following_id)
+      .then( () => {
+        this.props.getFollowing(1).then( () => this.updateFollowingList() )
+      } );
+  }
+
+  handleUnfollow(follower_id, following_id) {
+    console.log('handle unfollow invoked')
+    this.props.unfollow(follower_id, following_id)
+      .then( () => {
+        this.props.getFollowing(1).then( () => this.updateFollowingList() )
+      } );
+  }
+
   /**
    * Each user summary needs to know if logged in user follows the user being displayed:
    * 1. get logged in user_id
@@ -25,30 +64,19 @@ class MyFollowers extends Component {
    *    if the filtered array has a result, the UserSummary should take a prop indicating so (a boolean)
    * 4. UserSummary will need check the boolean to know whether to render "Follow" or "Unfollow"
    */
-  componentDidMount() {
-    this.props.getFollowers(this.props.user.user_id);
-    this.props.getFollowing(this.props.user.user_id);
-  }
-
-  handleAddFollow(user_id, follower_id) {
-    this.props.addFollow(user_id, follower_id).then(response => {
-      console.log(response);
-    });
-  }
 
   render() {
-    console.log(this.props.user.user_id);
-    let followersList = this.props.followers.map((follows, index) => {
+    let followersList = this.state.followersList.map((follows, index) => {
       return (
         <UserSummary
           key={index}
           userid={follows.user_id}
           display_name={follows.display_name}
           avatar={follows.avatar}
-          following_id={follows.user_id}
-          user_id={this.props.user.user_id}
-          following={this.props.following}
-          handleAddFollow={this.handleAddFollow}
+          unfollow={this.handleUnfollow}
+          addFollow={this.handleAddFollow}
+          user_id={follows.user_id}
+          followingList={this.state.followingList}
         />
       );
     });
@@ -85,5 +113,5 @@ const mapStateToProps = state => {
 };
 export default connect(
   mapStateToProps,
-  { getFollowers, getFollowing, getLoggedInUser, addFollow }
+  { getFollowers, getFollowing, unfollow, addFollow }
 )(MyFollowers);
