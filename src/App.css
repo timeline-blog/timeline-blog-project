@@ -694,6 +694,11 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
       .outer-modal .inner-modal .field-group .images-label.btn {
         display: inline-block;
         width: auto; }
+      .outer-modal .inner-modal .field-group .images-label.btn.disabled {
+        background: #5c5c5c;
+        border-color: #5c5c5c;
+        color: darkgray;
+        cursor: default; }
     .outer-modal .inner-modal .create-event-btn {
       font-size: 20px;
       text-transform: uppercase;
