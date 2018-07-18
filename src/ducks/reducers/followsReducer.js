@@ -4,6 +4,8 @@ const GET_FOLLOWERS = "GET_FOLLOWERS";
 const GET_FOLLOWING = "GET_FOLLOWING";
 const ADD_FOLLOW = "ADD_FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
+const FOLLOW_CHECK = "FOLLOW_CHECK";
+const GET_FOLLOWER_COUNT = "GET_FOLLOWER_COUNT";
 
 export function getFollowers(user_id) {
   return {
@@ -33,12 +35,31 @@ export function unfollow(follower_id, following_id) {
   };
 }
 
+export function followCheck(follower_id, following_id) {
+  return {
+    type: FOLLOW_CHECK,
+    payload: axios.post("/api/followcheck", { follower_id, following_id })
+  };
+}
+
+export function getFollowerCount(user_id) {
+  return {
+    type: GET_FOLLOWER_COUNT,
+    payload: axios.get(`/api/followercount/${user_id}`)
+  };
+}
+
 const initialState = {
   followers: [],
-  following: []
+  following: [],
+  followCheck: {},
+  followerCount: 0
 };
 
 export default function followsReducer(state = initialState, action) {
+  // console.log('PAYLOAD!!!    ', action.payload);
+  // console.log('TYPE!!!    ', action.type);
+
   switch (action.type) {
     case `${GET_FOLLOWERS}_FULFILLED`:
       return { ...state, followers: action.payload.data };
@@ -47,6 +68,16 @@ export default function followsReducer(state = initialState, action) {
     case `${ADD_FOLLOW}_FULFILLED`:
     case `${UNFOLLOW}_FULFILLED`:
       return { ...state };
+    case `${FOLLOW_CHECK}_FULFILLED`:
+      return {
+        ...state,
+        followCheck: action.payload.data[0]
+      };
+    case `${GET_FOLLOWER_COUNT}_FULFILLED`:
+      return {
+        ...state,
+        followerCount: action.payload.data[0].count
+      };
     default:
       return state;
   }

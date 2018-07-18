@@ -37,9 +37,25 @@ const unfollow = (req, res) => {
   });
 };
 
+const followCheck = (req, res) => {
+  req.app.get('db')
+  .follows.followCheck([req.body.follower_id, req.body.following_id])
+  .then(response => res.status(200).json(response))
+  .catch(err => console.log(err));
+};
+
+const getFollowerCount = (req, res) => {
+  req.app.get('db')
+  .follows.getFollowerCount([req.params.user_id])
+  .then(response => res.status(200).json(response))
+  .catch(err => console.log(err));
+};
+
 module.exports = {
   getFollowing,
   getFollowers,
   addFollow,
-  unfollow
+  unfollow,
+  followCheck,
+  getFollowerCount
 };
