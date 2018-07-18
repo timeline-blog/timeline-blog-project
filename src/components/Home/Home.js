@@ -11,8 +11,8 @@ import StoryPreview from '../StoryPreview';
 class Home extends Component {
 
     componentDidMount() {
-        this.props.getLoggedInUser();
-        this.props.getStoriesByLikedUser(this.props.user.user_id);
+        this.props.getLoggedInUser().then(() => this.props.getStoriesByLikedUser(this.props.user.user_id));
+        
     }
 
     render() {

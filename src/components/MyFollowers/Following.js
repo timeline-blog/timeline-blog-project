@@ -65,7 +65,9 @@ class Following extends Component {
           </div>
 
           <div className="followers-list-wrap">
-            <h3 className="followers-list-title">225 following</h3>
+            <h3 className="followers-list-title">
+              {this.props.following.length} following
+            </h3>
             {followingList}
           </div>
         </div>
@@ -75,7 +77,10 @@ class Following extends Component {
 }
 
 const mapStateToProps = state => {
-  return { following: state.follows.following };
+  return {
+    following: state.follows.following,
+    user: state.user.authedUser
+  };
 };
 export default connect(
   mapStateToProps,

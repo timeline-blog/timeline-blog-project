@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const StoryPreview = (props) => {
-    console.log('props: ', props);
+    // console.log('props: ', props);
 
     return (
         <div className="story-preview-wrap">

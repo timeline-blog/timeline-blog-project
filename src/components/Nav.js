@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from "react";
 import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
 import HoverMenu from "./HoverMenu";
 import NotificationsMenu from "./NotificationsMenu";
-
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import faBell from "@fortawesome/fontawesome-pro-light/faBell";
+
 import NewStoryModal from "./NewStoryModal";
 
 class Nav extends Component {
@@ -55,6 +56,9 @@ class Nav extends Component {
   }
 
   render() {
+    // console.log('NAV Props!!!    ', this.props);
+    const { user } = this.props;
+
     return (
       <Fragment>
       {/* *TO DO: conditional rendering depending on whether user is signed in or not */}
@@ -64,10 +68,13 @@ class Nav extends Component {
           <NavLink onClick={() => this.hideAllMenus()} to="/discover">Discover</NavLink>
         </div>
         <div className="nav-right">
-          {/* *TO DO: all content in nav-right will be conditionally rendered */}
+  
+          {
+            (user.user_id) ?
+          (<Fragment>
           <button onClick={() => this.toggleNewStoryModal()} className="btn"> + New Story</button>
-          {/* *TO DO: Notifications will be an icon; will need to remove NavLink since there is no notifications page */}
-          <div className="notifications-wrap">
+          
+          {/* <div className="notifications-wrap">
             <FontAwesomeIcon
               onClick={() => this.toggleNotificationsMenu()}
               icon={faBell}
@@ -76,20 +83,26 @@ class Nav extends Component {
               notificationsMode={this.state.notificationsMode}
               toggleNotificationsMenu={this.toggleNotificationsMenu}
             />
-          </div>
+          </div> */}
 
           <div className="account-links-wrap">
             <img
               onClick={() => this.toggleHoverMenu()}
               className="navatar"
-              src=""
-              alt=""
+              src={user.avatar}
+              alt={user.display_name}
             />
             <HoverMenu 
               hoverMenuMode={this.state.hoverMenuMode} 
               toggleHoverMenu={this.toggleHoverMenu}
             />
           </div>
+          </Fragment>) :
+          (<div className="nav-left">
+            <NavLink onClick={() => this.hideAllMenus()} to="/login">Login</NavLink>
+            <NavLink onClick={() => this.hideAllMenus()} to="/signup">Sign Up</NavLink>
+          </div>)
+        }
         </div>
       </div>
 
@@ -100,4 +113,9 @@ class Nav extends Component {
   }
 }
 
-export default Nav;
+const mapStateToProps = state => {
+  return {
+    user: state.user.authedUser
+  }
+};
+export default connect(mapStateToProps)(Nav);
