@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { connect } from "react-redux";
 import Comment from './Comment';
 
 class Event extends Component {
@@ -20,16 +20,16 @@ class Event extends Component {
     }
 
     render() {
-        
+        const { user } = this.props;
         return (
             <div className={`event-wrap ${this.state.eventState}`}>
                 <span className="connector top-connector"></span>
 
                 {/* *TO DO: only render if story belongs to logged in user */}
-                <div className="edit-event-links">
+               { <div className="edit-event-links">
                     <button onClick={() => this.props.toggleEditEventModal()} className="btn">Edit Event</button>
                     <button className="btn negative-border-btn">Delete Event</button>
-                </div>
+                </div>}
 
                 <header className="event-header">
                     <h2 className="event-title">{this.props.event_title}</h2>
@@ -90,4 +90,10 @@ class Event extends Component {
     }
 }
 
-export default Event;
+const mapStateToProps =(state)=>{
+    return{
+        user: state.user.authedUser
+    }
+}
+
+export default connect(mapStateToProps,null)(Event);

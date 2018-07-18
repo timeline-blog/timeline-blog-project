@@ -11,6 +11,7 @@ const GoogleStrategy = require("passport-google-oauth20");
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+const { createEvent } = require(`${__dirname}/controllers/eventCtrl`)
 const {
   getLoggedInUser,
   getUser,
@@ -144,6 +145,9 @@ app.post("/api/people/follow", addFollow);
 
 //unfollow a user
 app.post("/api/people/unfollow", unfollow);
+
+//event controller
+app.post('/api/event/:story_id',createEvent)
 
 //home following
 app.get("/api/home/:user_id", getHome);

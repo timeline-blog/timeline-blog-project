@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import _ from 'lodash'
+import axios from 'axios'
+import moment from 'moment'
+import { connect } from 'react-redux'
 
 import FileUploader from 'react-firebase-file-uploader'
 import firebase from '../../firebase'
@@ -7,7 +9,8 @@ import firebase from '../../firebase'
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
 
-export default class NewEventModal extends Component {
+
+ class NewEventModal extends Component {
 
     constructor(){
         super()
@@ -20,7 +23,6 @@ export default class NewEventModal extends Component {
     startUploadManually =()=>{
        // this is to save the image upon successful upload
          this.props.resizedImages.forEach(element=>{
-   
            this.FileUploader.startUpload(element)       
          })
         //  this.props.resizedImages.forEach(element=>{
@@ -42,29 +44,39 @@ export default class NewEventModal extends Component {
                         let img = this.state.imgUrl.slice();
                         img.push(url)
                         this.setState({imgUrl: img})
+                        
                     })
-
-                    console.log('hi')
-
-                
+                    console.log('hi') 
        }
 
        createEvent =()=>{
+           if(this.props.title===''||this.props.eventDescription===''){
+               return;
+           }
            this.props.resizedImages.forEach(element=>{ 
                this.FileUploader.startUpload(element)   
                console.log('doing')
             })
-
-           function soso(story_id,title,desc,img){
+                let that = this;
+           function soso(story_id,title,desc,img,user_id){
+               let createdAt = moment().format('MM/DD/YY, hh:mm')
                let obj={
+                   story_id,
+                   createdAt,
                    story_id,
                    title,
                    desc,
-                   img
+                   img,
+                   user_id
                }
-               console.log(obj)
+               axios.post(`/api/event/${story_id}`, obj)
+                     .then(response=>{
+                        
+                         that.props && that.props.toggleModal()
+                        })
+              
            }
-            setTimeout(()=>soso(this.props.story_id,this.props.title,this.props.eventDescription,this.state.imgUrl), 3000)
+            setTimeout(()=>soso(this.props.story_id,this.props.title,this.props.eventDescription,this.state.imgUrl, this.props.user.user_id), 3000)
             console.log('agege')
            
             
@@ -86,12 +98,12 @@ export default class NewEventModal extends Component {
                     <div className="modal-body">
                         <div className="field-group">
                             <label htmlFor="">Event Title</label>
-                            <input onChange={e=>this.props.eventTitleChange(e.target.value)} type="text" className="main-input"/>
+                            <input value={this.props.title} onChange={e=>this.props.eventTitleChange(e.target.value)} type="text" className="main-input"/>
                         </div>
 
                         <div className="field-group">
                             <label htmlFor="">Content</label>
-                            <textarea onChange={e=>this.props.eventDescriptionChange(e.target.value)} type="text" rows="8" className="main-input"/>
+                            <textarea value={this.props.eventDescription} onChange={e=>this.props.eventDescriptionChange(e.target.value)} type="text" rows="8" className="main-input"/>
                         </div>
 
                         <div className="field-group">
@@ -121,3 +133,10 @@ export default class NewEventModal extends Component {
     }
 }
 
+const mapStateToProps=state=>{
+    return{
+        user: state.user.authedUser
+    }
+}
+
+export default connect(mapStateToProps,null)(NewEventModal)
