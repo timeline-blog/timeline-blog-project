@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
+
 export default class NewStoryModal extends Component {
     constructor(props) {
         super(props);
@@ -39,15 +42,15 @@ export default class NewStoryModal extends Component {
     }
     
     handleTitleChange( value ) {
-        this.updateTitleCharsRemaining( value );
-        if ( (this.titleMaxChars - value.length) > 0 ) {
+        if ( (this.titleMaxChars - value.length) >= 0 ) {
+            this.updateTitleCharsRemaining( value );
             this.setState({ storyTitleField: value });
         }
     }
     
     handleDescriptionChange( value ) {
-        this.updateDescriptionCharsRemaining( value );
-        if ( (this.descriptionMaxChars - value.length) > 0 ) {
+        if ( (this.descriptionMaxChars - value.length) >= 0 ) {
+            this.updateDescriptionCharsRemaining( value );
             this.setState({ storyDescriptionField: value });
         }
     }
@@ -58,7 +61,9 @@ export default class NewStoryModal extends Component {
             <div className={`outer-modal ${this.props.modalMode}`}>
             <div className="inner-modal">
 
-                <button onClick={() => this.props.toggleModal()} className="close-modal border-btn btn">X</button>
+                <button onClick={() => this.props.toggleModal()} className="close-modal border-btn btn">
+                    <FontAwesomeIcon icon={faTimes} />
+                </button>
 
                 <header className="modal-header">
                     <h3 className="modal-title">New Story</h3>
