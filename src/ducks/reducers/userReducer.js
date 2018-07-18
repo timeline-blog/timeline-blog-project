@@ -1,8 +1,9 @@
 import axios from "axios";
 
 const EDIT_USER = "EDIT_USER";
-const GET_LOGGEDIN_USER = 'GET_LOGGEDIN_USER';
+const GET_LOGGEDIN_USER = "GET_LOGGEDIN_USER";
 const GET_USER_BY_ID = "GET_USER_BY_ID";
+const CLEAR_USER = "CLEAR_USER";
 
 export function editUser(display_name, bio, avatar, user_id) {
   return {
@@ -25,13 +26,20 @@ export function getUserById(user_id) {
   }
 };
 
+export function clearUser() {
+  return {
+    type: CLEAR_USER,
+    payload: {}
+  };
+}
+
 const initialState = {
   authedUser: {},
   profileUser: {}
 };
 
 export default function userReducer(state = initialState, action) {
- console.log(action.payload)
+//  console.log(action.payload)
   switch (action.type) {
     case `${EDIT_USER}_FULFILLED`:
       return { ...state };
@@ -47,6 +55,12 @@ export default function userReducer(state = initialState, action) {
       return {
         ...state, 
         profileUser: action.payload.data[0]
+      }
+
+    case `${CLEAR_USER}_FULFILLED`:
+      return {
+        ...state, 
+        authedUser: action.payload
       }
 
     default:

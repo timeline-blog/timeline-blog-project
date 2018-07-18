@@ -178,7 +178,9 @@ class Story extends Component {
             </button>
           </div>)}
 
+
           {user.user_id&&(user.user_id===story.user_id)&&(<div className="add-event-wrap">
+
             <button
               onClick={() => this.toggleModal()}
               className="add-event-btn btn"
