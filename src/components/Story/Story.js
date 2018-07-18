@@ -97,7 +97,7 @@ class Story extends Component {
     if (this.state.modalMode === "hidden") {
       this.setState({ modalMode: "visible", editModalMode: "hidden", editEventModalMode: "hidden" });
     } else {
-      this.setState({ modalMode: "hidden" });
+      this.setState({ modalMode: "hidden", eventTitle:'', eventDescription: '',images: [],resizedImages: [] });
     }
   }
 
@@ -161,25 +161,27 @@ class Story extends Component {
               <button className="follow-btn btn">Like</button>
               <span className="follow-count">{story.like_count}</span>
 
-              {/* *TO DO: only render this if story belongs to logged in user */}
-              <div className="edit-story-links">
+              {/* *TO DO: only render this if story belongs to logged in user DONE*/}
+             { user.user_id&&(user.user_id===story.user_id)&& (<div className="edit-story-links">
                 <span onClick={() => this.toggleEditModal()} className="edit-story-link btn border-btn">Edit Story</span>
-              </div>
+              </div>)}
             </div>
           </div>
 
           <div className="events-wrap">{mappedEvents}</div>
 
-          {/* *TO DO: only display this if story belongs to authorized user */}
-          <div className="delete-story-wrap">
+          {/* *TO DO: only display this if story belongs to authorized user DONE */}
+          { user.user_id&&(user.user_id===story.user_id)&& (<div className="delete-story-wrap">
             <h3 className="delete-title">Delete Story</h3>
             <button className="btn negative-btn" onClick={() => this.deleteStoryHandler()}> 
               <FontAwesomeIcon icon={faTrash} />
               {` Delete "${story.story_title}"`}
             </button>
-          </div>
+          </div>)}
 
-          {user.user_id===story.user_id&&(<div className="add-event-wrap">
+
+          {user.user_id&&(user.user_id===story.user_id)&&(<div className="add-event-wrap">
+
             <button
               onClick={() => this.toggleModal()}
               className="add-event-btn btn"

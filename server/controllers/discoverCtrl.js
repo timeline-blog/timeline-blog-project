@@ -11,6 +11,7 @@ const getFiltered = (req, res) => {
           .then(event => {
             discover.getFilteredImage([category])
               .then(image => {
+                
                 let obj=[...story,...event,...image]
                 let result = groupBy(obj,(elem)=>{
                   return elem.story_id

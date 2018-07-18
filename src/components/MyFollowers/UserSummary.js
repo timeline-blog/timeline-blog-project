@@ -1,6 +1,12 @@
-import React from "react";
+import React, { Component } from "react";
+import {
+  addFollow,
+  unfollow,
+  getFollowers
+} from "../../ducks/reducers/followsReducer";
+import { connect } from "react-redux";
 
-export default function UserSummary(props) {
+function UserSummary(props) {
   let filtered = props.followingList.filter(user => user.user_id === props.user_id)
   return (
     <div className="user-summary-wrap">
@@ -9,7 +15,7 @@ export default function UserSummary(props) {
         <span>{props.display_name}</span>
       </div>
 
-      {/* 
+        {/* 
       *TO DO: this button will be conditionally rendered, in order to be reusable in both Followers and Following
       * It should check if the user of this summary is among the logged in user's followers; if true, show Unfollow, else Follow
       * for unfollow: className="btn border-btn negative-border-btn"
@@ -37,3 +43,13 @@ export default function UserSummary(props) {
     </div>
   );
 }
+const mapStateToProps = state => {
+  return {
+    authedUser: state.user.authedUser,
+    followersList: state.follows.followers
+  };
+};
+export default connect(
+  mapStateToProps,
+  { addFollow, unfollow, getFollowers }
+)(UserSummary);

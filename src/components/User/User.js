@@ -5,17 +5,20 @@ import _ from "lodash";
 
 import { getStoriesByUser } from "../../ducks/reducers/previewsReducer";
 import { getUserById } from '../../ducks/reducers/userReducer';
+import { followCheck, getFollowerCount } from '../../ducks/reducers/followsReducer';
 
 import StoryPreview from "../StoryPreview";
 
 class User extends Component {
   componentDidMount() {
+    this.props.getFollowerCount(this.props.match.params.user_id);
     this.props.getUserById(this.props.match.params.user_id)
     this.props.getStoriesByUser(this.props.match.params.user_id);
+    this.props.followCheck(this.props.user.user_id, this.props.match.params.user_id);
   };
 
   render() {
-    // console.log('Props!!!   ', this.props);
+    console.log('Props!!!   ', this.props);
 
     const { display_name, bio, avatar, follower_count } = this.props.profileInfo
     const stories = _.map(this.props.stories);
@@ -48,15 +51,15 @@ class User extends Component {
             <p className="page-description profile-description">
               {bio}
             </p>
-            {(this.props.user.user_id) ? 
+            {(this.props.user.user_id && !this.props.followCheck) ? 
               <div className="follow-info-wrap">
                 <button className="follow-btn btn">Follow</button>
                 <span className="follow-count">{follower_count}</span>
               </div>
               : <div className="follow-info-wrap">
-                  <p className="follow-btn btn">Followers</p>
+                  <span className="follow-btn btn">Followers</span>
                   {/* Needs styled!!!! */}
-                  <span className="follow-count">{follower_count}</span>
+                  <span className="follow-count">{this.props.followerCount}</span>
                 </div>
             }
           </div>
@@ -72,11 +75,13 @@ const mapStateToProps = state => {
   return { 
     stories: state.previews.storiesByUser,
     user: state.user.authedUser,
-    profileInfo: state.user.profileUser 
+    profileInfo: state.user.profileUser,
+    followingCheck: state.follows.followCheck,
+    followerCount: state.follows.followerCount
   };
 };
 
 export default connect(
   mapStateToProps,
-  { getStoriesByUser, getUserById }
+  { getStoriesByUser, getUserById, followCheck, getFollowerCount }
 )(User);

@@ -1,16 +1,19 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { connect } from 'react-redux';
+import { clearUser } from '../ducks/reducers/userReducer';
 
 class HoverMenu extends Component {
   render() {
+    // console.log('HOVER props!!!   ', this.props);
+    const {user} = this.props;
+
     return (
       <div
         className={`hover-main-wrap account-hover ${this.props.hoverMenuMode}`}
       >
-        {/* <Link to={`/profile/${this.props.authedUser.user_id}`}> */}
-        <Link to="/profile/1">
+        <Link to={`/profile/${user.user_id}`}>
           <button onClick={() => this.props.toggleHoverMenu()}>My Profile</button>
         </Link>
         <Link to="/following">
@@ -20,9 +23,9 @@ class HoverMenu extends Component {
           <button onClick={() => this.props.toggleHoverMenu()}>Followers</button>
         </Link>
         <div>
-          <span className="logged-in-as">Logged in as: <strong>display_name</strong></span>
+          <span className="logged-in-as">Logged in as: <strong>{user.display_name}</strong></span>
           <Link to="/">
-            <button>Logout</button>
+            <button onClick={() => this.props.toggleHoverMenu()}>Logout</button>
           </Link>
         </div>
       </div>
@@ -32,8 +35,7 @@ class HoverMenu extends Component {
 
 const mapStateToProps = state => {
   return {
-    authedUser: state.user.authedUser
-  };
+    user: state.user.authedUser
+  }
 };
-
-export default connect(mapStateToProps)(HoverMenu);
+export default connect(mapStateToProps, {clearUser})(HoverMenu);

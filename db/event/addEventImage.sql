@@ -1,0 +1,1 @@
+INSERT INTO images (event_id, url, story_id ) VALUES ($1,$2,$3);
