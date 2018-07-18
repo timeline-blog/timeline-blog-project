@@ -1,1 +1,1 @@
-INSERT INTO events ( event_title, event_description, e_created_on, story_id ) VALUES ();
+INSERT INTO events ( event_title, event_description, e_created_on, user_id, story_id ) VALUES ($1,$2,$3,$4,$5) RETURNING *;
