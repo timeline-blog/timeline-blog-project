@@ -140,4 +140,3 @@ export default class EditStoryModal extends Component {
         );
     }
 }
-
