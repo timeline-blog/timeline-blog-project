@@ -28,6 +28,7 @@ class Following extends Component {
   }
 
   handleAddFollow(follower_id, following_id) {
+    console.log("addFollow invoked");
     this.props.addFollow(follower_id, following_id).then(() => {
       this.props
         .getFollowing(this.props.user.user_id)
@@ -36,6 +37,7 @@ class Following extends Component {
   }
 
   handleUnfollow(follower_id, following_id) {
+    console.log("unfollow invoked");
     this.props.unfollow(follower_id, following_id).then(() => {
       this.props
         .getFollowing(this.props.user.user_id)

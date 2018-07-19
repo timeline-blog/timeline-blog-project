@@ -28,7 +28,8 @@ class Story extends Component {
       eventTitle: "",
       eventDescription: "",
       images: [],
-      resizedImages: []
+      resizedImages: [],
+      uploadButtonStatus: "active"
     };
     this.toggleModal = this.toggleModal.bind(this);
     this.toggleEditModal = this.toggleEditModal.bind(this);
@@ -46,7 +47,12 @@ class Story extends Component {
 
   _handleImageChange = e => {
     if (this.state.images.length == 4) {
+      // this.setState({ uploadButtonStatus: 'disabled' })
+      console.log("limit exceeded: ", this.state.images.length);
       return;
+    } else {
+      // this.setState({ uploadButtonStatus: 'active' })
+      console.log("this.state.images.length: ", this.state.images.length);
     }
     let arr = [];
     let id = 7; //the id should come from the story or event
@@ -77,6 +83,11 @@ class Story extends Component {
         id: id,
         url: reader.result
       });
+      console.log("arr: ", arr.length);
+      if (arr.length == 4) {
+        console.log("condition met");
+        this.setState({ uploadButtonStatus: "disabled" });
+      }
       this.setState({
         images: arr
       });
@@ -85,6 +96,9 @@ class Story extends Component {
   };
 
   removeImages = index => {
+    if (this.state.uploadButtonStatus === "disabled") {
+      this.setState({ uploadButtonStatus: "active" });
+    }
     let arr = this.state.images.slice();
     let arr2 = this.state.resizedImages.slice();
     arr.splice(index, 1);
@@ -264,6 +278,7 @@ class Story extends Component {
             title={this.state.eventTitle}
             eventDescription={this.state.eventDescription}
             story_id={this.props.match.params.story_id}
+            uploadButtonStatus={this.state.uploadButtonStatus}
           />
 
           <EditEventModal

@@ -42,6 +42,7 @@ class MyFollowers extends Component {
   }
 
   handleAddFollow(follower_id, following_id) {
+    console.log("handle addFollow invoked");
     this.props.addFollow(follower_id, following_id).then(() => {
       this.props
         .getFollowing(this.props.user.user_id)

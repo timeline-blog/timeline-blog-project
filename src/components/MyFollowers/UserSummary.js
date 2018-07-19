@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 
 function UserSummary(props) {
   let filtered = props.followingList.filter(user => user.user_id === props.user_id)
+  console.log('filtered: ', filtered);
   return (
     <div className="user-summary-wrap">
       <div className="user-info">
@@ -24,7 +25,7 @@ function UserSummary(props) {
       {filtered[0] ? (
         <button
           onClick={() =>
-            props.unfollow(1, props.user_id)
+            props.unfollow(props.authedUser.user_id, props.user_id)
           }
           className="btn border-btn negative-border-btn"
         >
@@ -33,7 +34,7 @@ function UserSummary(props) {
       ) : (
         <button
           onClick={() =>
-            props.addFollow(1, props.user_id)
+            props.addFollow(props.authedUser.user_id, props.user_id)
           }
           className="btn"
         >
@@ -50,6 +51,6 @@ const mapStateToProps = state => {
   };
 };
 export default connect(
-  mapStateToProps,
-  { addFollow, unfollow, getFollowers }
+  mapStateToProps
+  // { addFollow, unfollow, getFollowers }
 )(UserSummary);

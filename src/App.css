@@ -682,11 +682,23 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
         margin-bottom: 5px; }
       .outer-modal .inner-modal .field-group .center-label {
         text-align: center; }
+      .outer-modal .inner-modal .field-group .char-counter {
+        display: block;
+        text-align: right;
+        font-weight: 200;
+        font-size: 14px;
+        margin: 5px 0 0;
+        color: #bbbbbb; }
       .outer-modal .inner-modal .field-group .btn {
         display: block; }
       .outer-modal .inner-modal .field-group .images-label.btn {
         display: inline-block;
         width: auto; }
+      .outer-modal .inner-modal .field-group .images-label.btn.disabled {
+        background: #5c5c5c;
+        border-color: #5c5c5c;
+        color: darkgray;
+        cursor: default; }
     .outer-modal .inner-modal .create-event-btn {
       font-size: 20px;
       text-transform: uppercase;

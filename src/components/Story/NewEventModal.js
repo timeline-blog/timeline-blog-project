@@ -15,8 +15,13 @@ import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
     constructor(){
         super()
         this.state={
-            imgUrl: []
-        }
+            imgUrl: [],
+            eventTitleField: '',
+            eventDescriptionField: '',
+            titleCharsRemaining: 40,
+        };
+
+        this.titleMaxChars = 40;
        
     }
 
@@ -46,7 +51,6 @@ import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
                         this.setState({imgUrl: img})
                         
                     })
-                    console.log('hi') 
        }
 
        createEvent =()=>{
@@ -55,7 +59,6 @@ import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
            }
            this.props.resizedImages.forEach(element=>{ 
                this.FileUploader.startUpload(element)   
-               console.log('doing')
             })
                 let that = this;
            function soso(story_id,title,desc,img,user_id){
@@ -76,14 +79,29 @@ import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
                         })
               
            }
-            setTimeout(()=>soso(this.props.story_id,this.props.title,this.props.eventDescription,this.state.imgUrl, this.props.user.user_id), 3000)
+            setTimeout(()=>soso(this.props.story_id,this.state.eventTitleField,this.props.eventDescription,this.state.imgUrl, this.props.user.user_id), 3000)
             console.log('agege')
            
             
        }
 
+    updateTitleCharsRemaining( value ) {
+        this.setState({ titleCharsRemaining: this.titleMaxChars - value.length });
+        // console.log('value: ', value);
+        // console.log('value.length: ', value.length);
+        // console.log('titleCharsRemaining: ', this.titleMaxChars - value.length);
+    }
+
+    handleTitleChange( value ) {
+        if ( (this.titleMaxChars - value.length) >= 0 ) {
+            this.updateTitleCharsRemaining( value );
+            this.setState({ eventTitleField: value });
+        }
+    }
+
     
     render() {
+        console.log( this.state.eventTitleField )
         return (
             <div className={`outer-modal ${this.props.modalMode}`}>
                 <div className="inner-modal">
@@ -98,22 +116,33 @@ import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
                     <div className="modal-body">
                         <div className="field-group">
                             <label htmlFor="">Event Title</label>
-                            <input value={this.props.title} onChange={e=>this.props.eventTitleChange(e.target.value)} type="text" className="main-input"/>
+                            <input 
+                                value={this.state.eventTitleField} 
+                                onChange={e=>this.handleTitleChange(e.target.value)} 
+                                type="text" className="main-input"
+                            />
+                            <span className="char-counter">{this.state.titleCharsRemaining} characters left</span>
                         </div>
 
                         <div className="field-group">
                             <label htmlFor="">Content</label>
-                            <textarea value={this.props.eventDescription} onChange={e=>this.props.eventDescriptionChange(e.target.value)} type="text" rows="8" className="main-input"/>
+                            <textarea 
+                                value={this.props.eventDescription} 
+                                onChange={e=>this.props.eventDescriptionChange(e.target.value)} 
+                                type="text" 
+                                rows="8" 
+                                className="main-input"/>
                         </div>
 
                         <div className="field-group">
                     
-                        <label className="btn border-btn images-label">
+                        <label className={`btn border-btn images-label ${this.props.uploadButtonStatus}`}>
                             Add Images
                             <FileUploader 
                                 hidden //this prop hides the defualt button. you can then wrap it in a custom label tag
                                 accept="image/*"
                                 name="avatar"
+                                disabled={this.props.uploadButtonStatus === 'disabled' ? true : false }
                                 storageRef={firebase.storage().ref('events')}
                                 onChange={e=>this.props._handleImageChange(e)}
                                 ref ={instance=>{this.FileUploader=instance}}
