@@ -5,24 +5,15 @@ const createEvent =(req,res) =>{
 
   const event = req.app.get('db').event;
   //user_id, event title, event desc, created on
-    event.addEvent([title,desc,createdAt,user_id,story_id,img])
-            .then(response=>res.status(200).json('done'))
-}
 
-const deleteEvent =(req,res)=>{
-    const { event_id } = req.params
-    const event = req.app.get('db').event;
-   
-      event.deleteEvent([event_id])
-           .then(response=>{
-             res.status(200).json('done')
-           })
-           .catch(console.log)
-   
+    event.addEvent([title,desc,createdAt,user_id,story_id])
+            .then(response=>{
+                  event.addEventImage([response[0].event_id,img,response[0].story_id])
+                       .then(response=>res.status(200).json('done'))
+            })
 }
 
 
 module.exports={
-  createEvent,
-  deleteEvent
+  createEvent
 }

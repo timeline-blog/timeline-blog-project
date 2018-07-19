@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
 
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
 
-
-class EditEventModal extends Component {
+export default class EditEventModal extends Component {
     constructor(props) {
         super(props);
 
@@ -16,7 +14,6 @@ class EditEventModal extends Component {
         };
     }
 
-
     changeTitleField( value ) {
         this.setState({ eventTitleField: value });
     }
@@ -26,7 +23,6 @@ class EditEventModal extends Component {
     }
 
     render() {
-        
         return (
             <div className={`outer-modal ${this.props.editEventModalMode}`}>
             <div className="inner-modal">
@@ -69,17 +65,8 @@ class EditEventModal extends Component {
                 <button className="btn create-event-btn">Save Changes</button>
 
             </div>
-
             </div>
         );
     }
 }
-
-const mapStateToProps=state=>{
-    return{
-        story: state.story.selectedStory
-    }
-}
-
-export default connect(mapStateToProps,null)(EditEventModal)
 

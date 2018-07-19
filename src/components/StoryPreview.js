@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import moment from 'moment'
 
 const StoryPreview = (props) => {
     // console.log('props: ', props);
@@ -33,7 +32,7 @@ const StoryPreview = (props) => {
                     <span className="story-pv-subtitle">First Event</span>
                     <div className="story-pv-event">
                         <p>{props.event_title}</p>
-                        <span>{moment(props.e_created_on).from(moment().format("MM/DD/YY, hh:mm"))}</span>
+                        <span>{props.e_created_on}</span>
                     </div>
                 </div>
             </div>
