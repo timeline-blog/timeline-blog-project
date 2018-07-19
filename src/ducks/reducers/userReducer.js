@@ -8,7 +8,7 @@ const CLEAR_USER = "CLEAR_USER";
 export function editUser(display_name, bio, avatar, user_id) {
   return {
     type: EDIT_USER,
-    payload: axios.put(`/api/user/${user_id}`, display_name, bio, avatar)
+    payload: axios.put(`/api/user/${user_id}`, {display_name, bio, avatar})
   };
 };
 

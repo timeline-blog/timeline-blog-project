@@ -40,13 +40,13 @@ import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
                     .child(filenmae)
                     .getDownloadURL()
                     .then(url=>{
-                        console.log('they')
+                        // console.log('they')
                         let img = this.state.imgUrl.slice();
                         img.push(url)
                         this.setState({imgUrl: img})
                         
                     })
-                    console.log('hi') 
+                    // console.log('hi') 
        }
 
        createEvent =()=>{
@@ -55,7 +55,7 @@ import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
            }
            this.props.resizedImages.forEach(element=>{ 
                this.FileUploader.startUpload(element)   
-               console.log('doing')
+            //    console.log('doing')
             })
                 let that = this;
            function soso(story_id,title,desc,img,user_id){
@@ -77,7 +77,7 @@ import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
               
            }
             setTimeout(()=>soso(this.props.story_id,this.props.title,this.props.eventDescription,this.state.imgUrl, this.props.user.user_id), 3000)
-            console.log('agege')
+            // console.log('agege')
            
             
        }

@@ -1,7 +1,7 @@
 const { groupBy } = require('lodash');
 
 const getHome = (req,res) => {
-  console.log(req.params);
+  // console.log(req.params);
 
   const { user_id } = req.params;
   const home = req.app.get('db').home.following

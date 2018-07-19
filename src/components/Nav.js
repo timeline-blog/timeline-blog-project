@@ -2,9 +2,9 @@ import React, { Component, Fragment } from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import HoverMenu from "./HoverMenu";
-import NotificationsMenu from "./NotificationsMenu";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import faBell from "@fortawesome/fontawesome-pro-light/faBell";
+// import NotificationsMenu from "./NotificationsMenu";
+// import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+// import faBell from "@fortawesome/fontawesome-pro-light/faBell";
 
 import NewStoryModal from "./NewStoryModal";
 

@@ -47,7 +47,7 @@ class MyFollowers extends Component {
   }
 
   handleUnfollow(follower_id, following_id) {
-    console.log('handle unfollow invoked')
+    // console.log('handle unfollow invoked');
     this.props.unfollow(follower_id, following_id)
       .then( () => {
         this.props.getFollowing(1).then( () => this.updateFollowingList() )

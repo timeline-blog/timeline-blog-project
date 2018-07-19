@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import { clearUser } from '../ducks/reducers/userReducer';
 
 class HoverMenu extends Component {
+
   render() {
     // console.log('HOVER props!!!   ', this.props);
     const {user} = this.props;
@@ -24,9 +25,9 @@ class HoverMenu extends Component {
         </Link>
         <div>
           <span className="logged-in-as">Logged in as: <strong>{user.display_name}</strong></span>
-          <Link to="/">
+          <a href='http://localhost:3001/auth/logout'>
             <button onClick={() => this.props.toggleHoverMenu()}>Logout</button>
-          </Link>
+          </a>
         </div>
       </div>
     );
@@ -38,4 +39,4 @@ const mapStateToProps = state => {
     user: state.user.authedUser
   }
 };
-export default connect(mapStateToProps, {clearUser})(HoverMenu);
+export default withRouter(connect(mapStateToProps, {clearUser})(HoverMenu));
