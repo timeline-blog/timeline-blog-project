@@ -3,12 +3,18 @@ const getStory = (req,res) =>{
   const story = req.app.get('db').story;
 
   const { story_id } = req.params
+const getStory = (req,res) =>{
 
-  story.getStoryById([story_id]).then(storys => {
-    story.getEventByStory([storys[0].story_id]).then(events => {
-      if (events[0]) {
-        story.getImagesByEvent([events[0].event_id]).then(images => {
-          let obj = {
+  const story = req.app.get('db').story;
+
+  const { story_id } = req.params
+
+  story.getStoryById([story_id])
+    .then(storys=>{
+     
+      story.getEventByStory([story_id])
+        .then(events=>{
+          res.status(200).json({
             user_id: storys[0].user_id,
             story_title: storys[0].story_title,
             story_description: storys[0].story_description,
@@ -18,9 +24,10 @@ const getStory = (req,res) =>{
             avatar: storys[0].avatar,
             events:[...events]
           })
+
+    
         })
     })
-
 };
 
 const addStory = (req, res) => {
