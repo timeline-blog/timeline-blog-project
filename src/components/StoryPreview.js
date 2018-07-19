@@ -26,7 +26,7 @@ const StoryPreview = (props) => {
 
             <div className="story-pv-body">
                 <div className="story-pv-stats">
-                    <Link className="story-pv-category" to="/category/category-name">{props.story_category}</Link>
+                    <span className="story-pv-category" to="/category/category-name">{props.story_category}</span>
                     <span className="story-pv-likes-count"><strong>{props.like_count}</strong> likes</span>
                 </div>
                 <div className="story-pv-info">

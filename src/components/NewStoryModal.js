@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
+
 export default class NewStoryModal extends Component {
     constructor(props) {
         super(props);
@@ -7,24 +10,49 @@ export default class NewStoryModal extends Component {
         this.state = {
             storyTitleField: '', 
             storyDescriptionField: '', 
-            selectedCategory: ''
+            selectedCategory: '',
+            titleCharsRemaining: 40,
+            descriptionCharsRemaining: 300
         };
 
+        this.titleMaxChars = 40;
+        this.descriptionMaxChars = 300;
+
         this.switchCategory = this.switchCategory.bind(this);
-        this.changeStoryTitleField = this.changeStoryTitleField.bind(this);
-        this.changeStoryDescriptionField = this.changeStoryDescriptionField.bind(this);
+        this.updateTitleCharsRemaining = this.updateTitleCharsRemaining.bind(this);
+        this.updateDescriptionCharsRemaining = this.updateDescriptionCharsRemaining.bind(this);
+        this.handleTitleChange = this.handleTitleChange.bind(this);
+        this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     }
 
     switchCategory( category ) {
         this.setState({ selectedCategory: category });
     }
 
-    changeStoryTitleField( value ) {
-        this.setState({ storyTitleField: value });
+    updateTitleCharsRemaining( value ) {
+        this.setState({
+            titleCharsRemaining: this.titleMaxChars - value.length
+        })
     }
-
-    changeStoryDescriptionField( value ) {
-        this.setState({ storyDescriptionField: value });
+    
+    updateDescriptionCharsRemaining( value ) {
+        this.setState({
+            descriptionCharsRemaining: this.descriptionMaxChars - value.length
+        })
+    }
+    
+    handleTitleChange( value ) {
+        if ( (this.titleMaxChars - value.length) >= 0 ) {
+            this.updateTitleCharsRemaining( value );
+            this.setState({ storyTitleField: value });
+        }
+    }
+    
+    handleDescriptionChange( value ) {
+        if ( (this.descriptionMaxChars - value.length) >= 0 ) {
+            this.updateDescriptionCharsRemaining( value );
+            this.setState({ storyDescriptionField: value });
+        }
     }
 
 
@@ -33,7 +61,9 @@ export default class NewStoryModal extends Component {
             <div className={`outer-modal ${this.props.modalMode}`}>
             <div className="inner-modal">
 
-                <button onClick={() => this.props.toggleModal()} className="close-modal border-btn btn">X</button>
+                <button onClick={() => this.props.toggleModal()} className="close-modal border-btn btn">
+                    <FontAwesomeIcon icon={faTimes} />
+                </button>
 
                 <header className="modal-header">
                     <h3 className="modal-title">New Story</h3>
@@ -41,12 +71,24 @@ export default class NewStoryModal extends Component {
                 <div className="modal-body">
                     <div className="field-group">
                         <label htmlFor="">Story Title</label>
-                        <input type="text" className="main-input"/>
+                        <input 
+                            onChange={(e) => this.handleTitleChange(e.target.value)} 
+                            type="text" 
+                            className="main-input"
+                            value={this.state.storyTitleField}/>
+                        <span className="char-counter">{this.state.titleCharsRemaining} characters left</span>
                     </div>
 
                     <div className="field-group">
                         <label htmlFor="">Description</label>
-                        <textarea type="text" rows="3" className="main-input"></textarea>
+                        <textarea 
+                            onChange={(e) => this.handleDescriptionChange(e.target.value)}
+                            type="text" 
+                            rows="3" 
+                            className="main-input"
+                            value={this.state.storyDescriptionField}>
+                        </textarea>
+                        <span className="char-counter">{this.state.descriptionCharsRemaining} characters left</span>
                     </div>
 
                     <div className="field-group">

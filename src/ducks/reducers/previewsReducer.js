@@ -14,7 +14,7 @@ export function getStoriesByFollowing(user_id) {
 }
 
 export function getStoriesByLikedUser(user_id) {
-  console.log('USER ID!!!   ', user_id);
+  // console.log('USER ID!!!   ', user_id);
   return {
     type: GET_STORIES_BY_LIKED,
     payload: axios.get(`/api/home/${user_id}`)
@@ -50,8 +50,8 @@ const initialState = {
 };
 
 export default function previewsReducer(state = initialState, action) {
-  console.log('PAYLOAD!!!    ', action.payload);
-  console.log('TYPE!!!    ', action.type);
+  // console.log('PAYLOAD!!!    ', action.payload);
+  // console.log('TYPE!!!    ', action.type);
   switch (action.type) {
     case `${GET_STORIES_BY_FOLLOWING}_FULFILLED`:
       return { ...state, storiesByFollowing: action.payload.data };

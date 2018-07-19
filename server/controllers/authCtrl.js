@@ -79,7 +79,7 @@ const googleSignIn=(req,res)=>{
                 .then(response=>{
                     if(response[0]){   
                         req.session.user = response[0]    
-                        console.log('response from db is ',response[0])                            
+                        // console.log('response from db is ',response[0])                            
                         res.redirect('http://localhost:3000/#/home')
                     } else{
 
@@ -97,8 +97,8 @@ const googleSignIn=(req,res)=>{
 }
 
 const logout=(req,res) =>{
-    req.session.destory(()=>{
-        res.redirect('/')
+    req.session.destroy(()=>{
+        res.redirect('http://localhost:3000/#/home')
     })
 
 }

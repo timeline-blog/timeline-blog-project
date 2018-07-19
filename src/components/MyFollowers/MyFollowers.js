@@ -12,9 +12,9 @@ import { getLoggedInUser } from "../../ducks/reducers/userReducer";
 class MyFollowers extends Component {
   constructor() {
     super();
-    this.state = { 
-      followersList: [], 
-      followingList: [] 
+    this.state = {
+      followersList: [],
+      followingList: []
     };
 
     this.handleAddFollow = this.handleAddFollow.bind(this);
@@ -22,36 +22,49 @@ class MyFollowers extends Component {
     this.updateFollowingList = this.updateFollowingList.bind(this);
     this.updateFollowersList = this.updateFollowersList.bind(this);
   }
-  
-  componentDidMount() {
-    this.props.getFollowers(1)
-      .then( () => this.updateFollowersList() )
 
-    this.props.getFollowing(1)
-      .then( () => this.updateFollowingList() )
+  componentDidMount() {
+    this.props
+      .getFollowers(this.props.user.user_id)
+      .then(() => this.updateFollowersList());
+
+    this.props
+      .getFollowing(this.props.user.user_id)
+      .then(() => this.updateFollowingList());
   }
 
   updateFollowersList() {
-    this.setState({ followersList: this.props.followers })
+    this.setState({ followersList: this.props.followers });
   }
-  
+
   updateFollowingList() {
-    this.setState({ followingList: this.props.following })
+    this.setState({ followingList: this.props.following });
   }
 
   handleAddFollow(follower_id, following_id) {
-    this.props.addFollow(follower_id, following_id)
-      .then( () => {
-        this.props.getFollowing(1).then( () => this.updateFollowingList() )
-      } );
+    console.log("handle addFollow invoked");
+    this.props.addFollow(follower_id, following_id).then(() => {
+      this.props
+        .getFollowing(this.props.user.user_id)
+        .then(() => this.updateFollowingList());
+    });
   }
 
   handleUnfollow(follower_id, following_id) {
-    console.log('handle unfollow invoked')
+<<<<<<< HEAD
+    // console.log('handle unfollow invoked');
     this.props.unfollow(follower_id, following_id)
       .then( () => {
         this.props.getFollowing(1).then( () => this.updateFollowingList() )
       } );
+=======
+    console.log("handle unfollow invoked");
+    this.props.unfollow(follower_id, following_id).then(() => {
+      this.props
+        .getFollowing(this.props.user.user_id)
+        .then(() => this.updateFollowingList());
+    });
+>>>>>>> master
   }
 
   /**

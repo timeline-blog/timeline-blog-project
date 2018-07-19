@@ -38,8 +38,8 @@ class Discover extends Component {
 
   render() {
 
-    console.log(this.state);
-    console.log(this.props);
+    // console.log(this.state);
+    // console.log(this.props);
 
     const stories = _.map(this.state.storiesList);
     const sorted = _.sortBy(stories, [function(story) {return story[0].like_count}]).reverse();

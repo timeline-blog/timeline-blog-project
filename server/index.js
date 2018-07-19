@@ -11,7 +11,9 @@ const GoogleStrategy = require("passport-google-oauth20");
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+
 const { createEvent,deleteEvent } = require(`${__dirname}/controllers/eventCtrl`)
+
 const {
   getLoggedInUser,
   getUser,
@@ -25,7 +27,8 @@ const {
   editStory,
   deleteStory,
   addLike,
-  unlike
+  unlike,
+  likeCount
 } = require(`${__dirname}/controllers/storyCtrl`);
 const {
   getFollowing,
@@ -99,7 +102,7 @@ passport.use(
   )
 );
 //get logged in user
-app.get('/auth/loggedIn',getLoggedInUser)
+app.get("/auth/loggedIn", getLoggedInUser);
 
 //endpoint for regular user login
 app.get("/auth/login", getUser);
@@ -124,7 +127,10 @@ app.post("/api/story", addStory);
 app.put("/api/story/:story_id", editStory);
 app.delete("/api/story/:story_id", deleteStory);
 app.post("/api/like", addLike);
-app.post("/api/like", unlike);
+app.delete("/api/unlike/:user_id", unlike);
+
+//like count
+app.get("/api/like/:story_id", likeCount);
 
 //comments endpoints
 app.get("/api/comments/:event_id", getComments);
