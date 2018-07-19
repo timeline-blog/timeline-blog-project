@@ -1,7 +1,8 @@
-const getStory = (req, res) => {
-  const story = req.app.get("db").story;
+const getStory = (req,res) =>{
 
-  const { story_id } = req.params;
+  const story = req.app.get('db').story;
+
+  const { story_id } = req.params
 
   story.getStoryById([story_id])
     .then(storys=>{
@@ -19,6 +20,7 @@ const getStory = (req, res) => {
             events:[...events]
           })
 
+    
         })
     })
 };
@@ -117,4 +119,4 @@ module.exports = {
   addLike,
   unlike,
   likeCount
-};
+}
