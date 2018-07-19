@@ -24,10 +24,10 @@ class MyFollowers extends Component {
   }
   
   componentDidMount() {
-    this.props.getFollowers(1)
+    this.props.getFollowers(this.props.user.user_id)
       .then( () => this.updateFollowersList() )
 
-    this.props.getFollowing(1)
+    this.props.getFollowing(this.props.user.user_id)
       .then( () => this.updateFollowingList() )
   }
 
@@ -40,9 +40,10 @@ class MyFollowers extends Component {
   }
 
   handleAddFollow(follower_id, following_id) {
+    console.log( 'handle addFollow invoked')
     this.props.addFollow(follower_id, following_id)
       .then( () => {
-        this.props.getFollowing(1).then( () => this.updateFollowingList() )
+        this.props.getFollowing(this.props.user.user_id).then( () => this.updateFollowingList() )
       } );
   }
 
@@ -50,7 +51,7 @@ class MyFollowers extends Component {
     console.log('handle unfollow invoked')
     this.props.unfollow(follower_id, following_id)
       .then( () => {
-        this.props.getFollowing(1).then( () => this.updateFollowingList() )
+        this.props.getFollowing(this.props.user.user_id).then( () => this.updateFollowingList() )
       } );
   }
 
