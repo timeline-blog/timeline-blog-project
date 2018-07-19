@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import UserSummary from "./UserSummary";
 import { connect } from "react-redux";
-import { getFollowing, unfollow, addFollow } from "../../ducks/reducers/followsReducer";
+import {
+  getFollowing,
+  unfollow,
+  addFollow
+} from "../../ducks/reducers/followsReducer";
 
 class Following extends Component {
   constructor() {
@@ -12,30 +16,33 @@ class Following extends Component {
     this.handleUnfollow = this.handleUnfollow.bind(this);
     this.updateFollowingList = this.updateFollowingList.bind(this);
   }
-  
+
   componentDidMount() {
-    this.props.getFollowing(this.props.user.user_id)
-      .then( () => this.updateFollowingList() )
+    this.props
+      .getFollowing(this.props.user.user_id)
+      .then(() => this.updateFollowingList());
   }
-  
+
   updateFollowingList() {
-    this.setState({ followingList: this.props.following })
+    this.setState({ followingList: this.props.following });
   }
 
   handleAddFollow(follower_id, following_id) {
-    console.log( 'addFollow invoked');
-    this.props.addFollow(follower_id, following_id)
-      .then( () => {
-        this.props.getFollowing(this.props.user.user_id).then( () => this.updateFollowingList() )
-      } );
+    console.log("addFollow invoked");
+    this.props.addFollow(follower_id, following_id).then(() => {
+      this.props
+        .getFollowing(this.props.user.user_id)
+        .then(() => this.updateFollowingList());
+    });
   }
 
   handleUnfollow(follower_id, following_id) {
-    console.log( 'unfollow invoked');
-    this.props.unfollow(follower_id, following_id)
-      .then( () => {
-        this.props.getFollowing(this.props.user.user_id).then( () => this.updateFollowingList() )
-      } );
+    console.log("unfollow invoked");
+    this.props.unfollow(follower_id, following_id).then(() => {
+      this.props
+        .getFollowing(this.props.user.user_id)
+        .then(() => this.updateFollowingList());
+    });
   }
 
   render() {
