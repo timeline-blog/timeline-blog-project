@@ -16,7 +16,7 @@ class Home extends Component {
     }
 
     render() {
-        console.log(this.props);
+        // console.log(this.props);
 
         const stories = _.map(this.props.stories)
         const mappedStories = stories.map(story => {

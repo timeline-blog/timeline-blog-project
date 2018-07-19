@@ -23,12 +23,17 @@ const getProfile = (req, res) => {
 
 const editUser = (req, res) => {
 
+
   const { display_name, bio, avatar } = req.body;
+  // console.log('req.body: ', req.body);
   const { user_id } = req.params;
 
   req.app.get('db')
     .profile.editUser([display_name, bio, avatar, user_id])
-    .then(response => res.status(200).json(response))
+    .then(response => {
+      // console.log('edit response', response);
+      res.status(200).json(response);
+    })
     .catch(err => console.log(err));
 };
 
@@ -38,7 +43,7 @@ const getUserById = (req, res) => {
   req.app.get('db')
     .profile.getUserById(user_id)
     .then(response => {
-      console.log('profile response     ',response);
+      // console.log('profile response     ',response);
       res.status(200).json(response)})
     .catch(err => console.log(err));
 };

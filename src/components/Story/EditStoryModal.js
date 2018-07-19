@@ -19,7 +19,7 @@ export default class EditStoryModal extends Component {
     }
 
     switchCategory( category ) {
-        console.log(category)
+        // console.log(category);
         this.setState({ selectedCategory: category });
     }
 
