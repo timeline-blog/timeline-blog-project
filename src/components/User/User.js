@@ -52,7 +52,7 @@ class User extends Component {
   };
 
   render() {
-    // console.log('Props!!!   ', this.props);
+    console.log('Props!!!   ', this.props);
 
     const { display_name, bio, avatar } = this.props.profileInfo
     const stories = _.map(this.props.stories);
@@ -85,19 +85,25 @@ class User extends Component {
             <p className="page-description profile-description">
               {bio}
             </p>
-            {(this.props.user.user_id === this.props.match.params.user_id) ?
+            {(this.props.user.user_id == this.props.match.params.user_id) ?
               <button onClick={() => this.toggleEditProfileModal()} className="btn"> + Edit Profile</button>
               : null}
-            {(this.props.user.user_id && !this.props.followingCheck) && (this.props.user.user_id === this.props.match.params.user_id) ? 
-              <div className="follow-info-wrap">
-                <button className="follow-btn btn" onClick={() => this.followHandler()}>Follow</button>
-                <span className="follow-count">{this.props.followerCount}</span>
-              </div>
-              : <div className="follow-info-wrap">
+            {(this.props.user.user_id == this.props.match.params.user_id) ? 
+                <div className="follow-info-wrap">
                   <span className="follow-btn btn">Followers</span>
-                  {/* Needs styled!!!! */}
                   <span className="follow-count">{this.props.followerCount}</span>
-                </div>}
+                </div>
+              : (this.props.user.user_id && !this.props.followingCheck) ? 
+                <div className="follow-info-wrap">
+                  <button className="follow-btn btn" onClick={() => this.followHandler()}>Follow</button>
+                  <span className="follow-count">{this.props.followerCount}</span>
+                </div>
+              : (!this.props.user.user_id || this.props.followingCheck) ? 
+                <div className="follow-info-wrap">
+                  <span className="follow-btn btn">Followers</span>
+                  <span className="follow-count">{this.props.followerCount}</span>
+                </div>
+              : null}
           </div>
 
           <div className="story-grid">{mappedStories}</div>
