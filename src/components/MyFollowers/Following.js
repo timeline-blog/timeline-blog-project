@@ -14,7 +14,7 @@ class Following extends Component {
   }
   
   componentDidMount() {
-    this.props.getFollowing(1)
+    this.props.getFollowing(this.props.user.user_id)
       .then( () => this.updateFollowingList() )
   }
   
@@ -23,16 +23,18 @@ class Following extends Component {
   }
 
   handleAddFollow(follower_id, following_id) {
+    console.log( 'addFollow invoked');
     this.props.addFollow(follower_id, following_id)
       .then( () => {
-        this.props.getFollowing(1).then( () => this.updateFollowingList() )
+        this.props.getFollowing(this.props.user.user_id).then( () => this.updateFollowingList() )
       } );
   }
 
   handleUnfollow(follower_id, following_id) {
+    console.log( 'unfollow invoked');
     this.props.unfollow(follower_id, following_id)
       .then( () => {
-        this.props.getFollowing(1).then( () => this.updateFollowingList() )
+        this.props.getFollowing(this.props.user.user_id).then( () => this.updateFollowingList() )
       } );
   }
 
