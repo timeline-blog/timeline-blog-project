@@ -1,26 +1,31 @@
 import React, { Component } from "react";
-import UserSummary from "./UserSummary";
 import { connect } from "react-redux";
+import UserSummary from "./UserSummary";
+import _ from 'lodash';
 import {
   getFollowers,
   getFollowing,
   unfollow,
-  addFollow
+  addFollow,
+  searchUsers
 } from "../../ducks/reducers/followsReducer";
-import { getLoggedInUser } from "../../ducks/reducers/userReducer";
 
 class MyFollowers extends Component {
   constructor() {
     super();
     this.state = {
       followersList: [],
-      followingList: []
+      followingList: [],
+      input: '',
+      isOpen: false
     };
 
     this.handleAddFollow = this.handleAddFollow.bind(this);
     this.handleUnfollow = this.handleUnfollow.bind(this);
     this.updateFollowingList = this.updateFollowingList.bind(this);
     this.updateFollowersList = this.updateFollowersList.bind(this);
+    this.submitHandler = this.submitHandler.bind(this);
+    this.searchHandler = this.searchHandler.bind(this);
   }
 
   componentDidMount() {
@@ -42,7 +47,6 @@ class MyFollowers extends Component {
   }
 
   handleAddFollow(follower_id, following_id) {
-    console.log("handle addFollow invoked");
     this.props.addFollow(follower_id, following_id).then(() => {
       this.props
         .getFollowing(this.props.user.user_id)
@@ -58,6 +62,35 @@ class MyFollowers extends Component {
     });
   }
 
+  searchHandler(e){
+    this.setState({
+      input: e.target.value
+    })
+  };
+
+  submitHandler(e){
+    // console.log(e.target.value);
+
+    this.setState({
+      input: e.target.value
+    });
+    {
+      if(this.state.input !== ''){
+        this.props.searchUsers(this.state.input);
+        // setTimeout(()=>this.props.searchUsers(this.state.input),1000);
+        this.setState({
+          isOpen: true
+        });
+      }
+      else {
+        this.props.searchUsers(null);
+        this.setState({
+          isOpen: false
+        })
+      }
+    }
+  };
+
   /**
    * Each user summary needs to know if logged in user follows the user being displayed:
    * 1. get logged in user_id
@@ -70,10 +103,11 @@ class MyFollowers extends Component {
    */
 
   render() {
-    let followersList = this.state.followersList.map((follows, index) => {
+    console.log(this.state);
+    let followersList = this.state.followersList.map((follows) => {
       return (
         <UserSummary
-          key={index}
+          key={follows.user_id}
           userid={follows.user_id}
           display_name={follows.display_name}
           avatar={follows.avatar}
@@ -84,16 +118,35 @@ class MyFollowers extends Component {
         />
       );
     });
+
+    const searchResults = this.props.searchResults.map((user) => {
+      return (
+        <UserSummary
+          key={user.user_id}
+          userid={user.user_id}
+          display_name={user.display_name}
+          avatar={user.avatar}
+          unfollow={this.handleUnfollow}
+          addFollow={this.handleAddFollow}
+          user_id={user.user_id}
+          followingList={this.state.followingList}
+        />
+      )
+    });
+    
+
     return (
       <div className="outer-wrap followers-wrap">
         <div className="inner-wrap">
           <div className="page-header followers-header">
             <h1 className="page-title">My Followers</h1>
-
             <input
               type="text"
               className="main-input"
               placeholder="Search users..."
+              value={this.state.input}
+              onChange={(e)=>{this.searchHandler(e)}}
+              onKeyPress={(e)=>{this.submitHandler(e)}}
             />
           </div>
 
@@ -102,6 +155,7 @@ class MyFollowers extends Component {
               {this.props.followers.length} followers
             </h3>
           </div>
+          {this.state.isOpen ? searchResults : null}
           {followersList}
         </div>
       </div>
@@ -112,10 +166,11 @@ const mapStateToProps = state => {
   return {
     followers: state.follows.followers,
     following: state.follows.following,
-    user: state.user.authedUser
+    user: state.user.authedUser,
+    searchResults: state.follows.searchResults
   };
 };
 export default connect(
   mapStateToProps,
-  { getFollowers, getFollowing, unfollow, addFollow }
+  { getFollowers, getFollowing, unfollow, addFollow, searchUsers }
 )(MyFollowers);

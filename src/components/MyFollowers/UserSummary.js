@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 
 function UserSummary(props) {
   let filtered = props.followingList.filter(user => user.user_id === props.user_id)
-  console.log('filtered: ', filtered);
+  // console.log('filtered: ', filtered);
   return (
     <div className="user-summary-wrap">
       <div className="user-info">
