@@ -78,8 +78,10 @@ import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
                         })
               
            }
-
-            setTimeout(()=>soso(this.props.story_id,this.state.eventTitleField,this.props.eventDescription,this.state.imgUrl, this.props.user.user_id), 2000)         
+            setTimeout(()=>soso(this.props.story_id,this.state.eventTitleField,this.props.eventDescription,this.state.imgUrl, this.props.user.user_id), 3000)
+            console.log('agege')
+           
+            
        }
 
     updateTitleCharsRemaining( value ) {
