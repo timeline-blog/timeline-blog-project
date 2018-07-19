@@ -1,15 +1,25 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import _ from "lodash";
 
 import { getStoriesByUser } from "../../ducks/reducers/previewsReducer";
 import { getUserById } from '../../ducks/reducers/userReducer';
-import { followCheck, getFollowerCount } from '../../ducks/reducers/followsReducer';
+import { followCheck, getFollowerCount, addFollow } from '../../ducks/reducers/followsReducer';
 
 import StoryPreview from "../StoryPreview";
+import EditProfileModal from './EditProfileModal';
 
 class User extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      modalMode: "hidden"
+    }
+    this.toggleEditProfileModal = this.toggleEditProfileModal.bind(this);
+    this.followHandler = this.followHandler.bind(this);
+  }
+
   componentDidMount() {
     this.props.getFollowerCount(this.props.match.params.user_id);
     this.props.getUserById(this.props.match.params.user_id)
@@ -17,10 +27,34 @@ class User extends Component {
     this.props.followCheck(this.props.user.user_id, this.props.match.params.user_id);
   };
 
-  render() {
-    console.log('Props!!!   ', this.props);
+  componentDidUpdate(prevProps) {
 
-    const { display_name, bio, avatar, follower_count } = this.props.profileInfo
+    if(this.props.match.params.user_id !== prevProps.match.params.user_id){
+      this.props.getFollowerCount(this.props.match.params.user_id);
+      this.props.getUserById(this.props.match.params.user_id)
+      this.props.getStoriesByUser(this.props.match.params.user_id);
+      this.props.followCheck(this.props.user.user_id, this.props.match.params.user_id);
+    }
+  };
+
+  toggleEditProfileModal() {
+    if (this.state.modalMode === "hidden") {
+      this.setState({ modalMode: "visible" });
+    } else {
+      this.setState({ modalMode: "hidden" });
+    } 
+  };
+
+  followHandler() {
+    this.props.addFollow(this.props.user.user_id, this.props.match.params.user_id)
+      .then(() => this.props.followCheck(this.props.user.user_id, this.props.match.params.user_id))
+      .then(() => this.props.getFollowerCount(this.props.match.params.user_id));
+  };
+
+  render() {
+    // console.log('Props!!!   ', this.props);
+
+    const { display_name, bio, avatar } = this.props.profileInfo
     const stories = _.map(this.props.stories);
     const mappedStories = stories.map(story => {
 
@@ -51,20 +85,23 @@ class User extends Component {
             <p className="page-description profile-description">
               {bio}
             </p>
-            {(this.props.user.user_id && !this.props.followCheck) ? 
+            {(this.props.user.user_id === this.props.match.params.user_id) ?
+              <button onClick={() => this.toggleEditProfileModal()} className="btn"> + Edit Profile</button>
+              : null}
+            {(this.props.user.user_id && !this.props.followingCheck) && (this.props.user.user_id === this.props.match.params.user_id) ? 
               <div className="follow-info-wrap">
-                <button className="follow-btn btn">Follow</button>
-                <span className="follow-count">{follower_count}</span>
+                <button className="follow-btn btn" onClick={() => this.followHandler()}>Follow</button>
+                <span className="follow-count">{this.props.followerCount}</span>
               </div>
               : <div className="follow-info-wrap">
                   <span className="follow-btn btn">Followers</span>
                   {/* Needs styled!!!! */}
                   <span className="follow-count">{this.props.followerCount}</span>
-                </div>
-            }
+                </div>}
           </div>
 
           <div className="story-grid">{mappedStories}</div>
+          <EditProfileModal modalMode={this.state.modalMode} toggleModal={this.toggleEditProfileModal} />
         </div>
       </div>
     );
@@ -83,5 +120,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getStoriesByUser, getUserById, followCheck, getFollowerCount }
+  { getStoriesByUser, getUserById, followCheck, getFollowerCount, addFollow }
 )(User);

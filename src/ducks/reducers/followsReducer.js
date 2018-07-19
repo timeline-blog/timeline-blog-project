@@ -22,7 +22,10 @@ export function getFollowing(user_id) {
 }
 
 export function addFollow(follower_id, following_id) {
+<<<<<<< HEAD
+=======
   // console.log( 'addFollow invoked on followsReducer: ', follower_id, following_id );
+>>>>>>> master
   return {
     type: ADD_FOLLOW,
     payload: axios.post("/api/people/follow", { follower_id, following_id })
