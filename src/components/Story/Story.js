@@ -30,7 +30,7 @@ class Story extends Component {
       images: [],
       resizedImages: [],
 
-      event_id: 0
+      event_id: 0,
 
       uploadButtonStatus: "active"
 
