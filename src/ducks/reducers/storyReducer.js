@@ -45,10 +45,33 @@ export function editStory(
 }
 
 export function deleteStory(story_id) {
-  console.log(story_id);
   return {
     type: DELETE_STORY,
     payload: axios.delete(`/api/story/${story_id}`)
+  };
+}
+
+export function likeCount(story_id) {
+  return {
+    type: LIKE_COUNT,
+    payload: axios.get(`/api/like/${story_id}`)
+  };
+}
+
+export function addLike(user_id, story_id) {
+  console.log(user_id, story_id, "addlike");
+  return {
+    type: ADD_LIKE,
+    payload: axios.post("/api/like", { user_id, story_id })
+  };
+}
+
+export function unlike(user_id, story_id) {
+  return {
+    type: UNLIKE,
+    payload: axios.delete(
+      `/api/unlike?user_id=${user_id}&?story_id=${story_id}`
+    )
   };
 }
 
@@ -56,24 +79,38 @@ const GET_STORY_BY_ID = "GET_STORY_BY_ID";
 const CREATE_STORY = "CREATE_STORY";
 const EDIT_STORY = "EDIT_STORY";
 const DELETE_STORY = "DELETE_STORY";
+const LIKE_COUNT = "LIKE_COUNT";
+const ADD_LIKE = "ADD_LIKE";
+const UNLIKE = "UNLIKE";
 
 const initialState = {
-  selectedStory: {}
+  selectedStory: {},
+  likeCount: 0
 };
 
 export default function storyReducer(state = initialState, action) {
+  // console.log(action.payload)
+
   switch (action.type) {
     case `${GET_STORY_BY_ID}_FULFILLED`:
-    const { data } = action.payload
       return {
         ...state,
-        selectedStory: data
+        selectedStory: action.payload.data
       };
     case `${CREATE_STORY}_FULFILLED`:
       return { ...state };
     case `${EDIT_STORY}_FULFILLED`:
       return { ...state };
     case `${DELETE_STORY}_FULFILLED`:
+      return { ...state };
+    case `${LIKE_COUNT}_FULFILLED`:
+      return {
+        ...state,
+        likeCount: action.payload.data[0].count
+      };
+    case `${ADD_LIKE}_FULFILLED`:
+      return { ...state };
+    case `${UNLIKE}_FULFILLED`:
       return { ...state };
     default:
       return state;
