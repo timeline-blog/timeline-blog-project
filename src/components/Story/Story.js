@@ -1,8 +1,14 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import ImageCompressor from 'image-compressor.js';
+import ImageCompressor from "image-compressor.js";
 
-import { getStoryById, deleteStory } from "../../ducks/reducers/storyReducer";
+import {
+  getStoryById,
+  deleteStory,
+  likeCount,
+  addLike,
+  unlike
+} from "../../ducks/reducers/storyReducer";
 
 import Event from "./Event";
 import NewEventModal from "./NewEventModal";
@@ -19,10 +25,11 @@ class Story extends Component {
       modalMode: "hidden",
       editModalMode: "hidden",
       editEventModalMode: "hidden",
-      eventTitle: '',
-      eventDescription: '',
+      eventTitle: "",
+      eventDescription: "",
       images: [],
       resizedImages: [],
+      uploadButtonStatus: "active"
     };
     this.toggleModal = this.toggleModal.bind(this);
     this.toggleEditModal = this.toggleEditModal.bind(this);
@@ -30,80 +37,106 @@ class Story extends Component {
     this.deleteStoryHandler = this.deleteStoryHandler.bind(this);
   }
 
-  eventTitleChange=(value)=>{
-    this.setState({eventTitle: value})
-  }
+  eventTitleChange = value => {
+    this.setState({ eventTitle: value });
+  };
 
-  eventDescriptionChange=(value)=>{
-    this.setState({eventDescription: value})
-  }
+  eventDescriptionChange = value => {
+    this.setState({ eventDescription: value });
+  };
 
-  _handleImageChange=(e)=>{
-    if(this.state.images.length==4){
-        return
-    };
+  _handleImageChange = e => {
+    if (this.state.images.length == 4) {
+      // this.setState({ uploadButtonStatus: 'disabled' })
+      console.log("limit exceeded: ", this.state.images.length);
+      return;
+    } else {
+      // this.setState({ uploadButtonStatus: 'active' })
+      console.log("this.state.images.length: ", this.state.images.length);
+    }
     let arr = [];
     let id = 7; //the id should come from the story or event
     let reader = new FileReader();
-    let img =e.target.files[0];
+    let img = e.target.files[0];
     //    console.log('normal img ', img)
     //       let resized = [];
     //       resized = this.state.resizedImages.slice();
     //       resized.push(img)
     //      this.setState({resizedImages: resized})
-    
 
     let that = this;
     new ImageCompressor(img, {
-      quality: .3,//signifies how much quality you want on the photo
+      quality: 0.3, //signifies how much quality you want on the photo
       success(result) {
-      let newArr =   that.state.resizedImages.slice();
-      // console.log('image arr after resize ',result)
-        newArr.push(result)
+        let newArr = that.state.resizedImages.slice();
+        // console.log('image arr after resize ',result)
+        newArr.push(result);
         that.setState({
           resizedImages: newArr
-        })
+        });
       }
     });
-    reader.addEventListener("load",()=>{
-        arr = this.state.images.slice();
-        id++    
-        arr.push({
-          id: id,
-          url: reader.result,
-        })
-        this.setState({
-          
-          images: arr
-        }) 
+    reader.addEventListener("load", () => {
+      arr = this.state.images.slice();
+      id++;
+      arr.push({
+        id: id,
+        url: reader.result
+      });
+      console.log("arr: ", arr.length);
+      if (arr.length == 4) {
+        console.log("condition met");
+        this.setState({ uploadButtonStatus: "disabled" });
+      }
+      this.setState({
+        images: arr
+      });
     });
     img && reader.readAsDataURL(img);
-  }
+  };
 
-  removeImages=(index)=>{
+  removeImages = index => {
+    if (this.state.uploadButtonStatus === "disabled") {
+      this.setState({ uploadButtonStatus: "active" });
+    }
     let arr = this.state.images.slice();
     let arr2 = this.state.resizedImages.slice();
-      arr.splice(index, 1);
-      arr2.splice(index,1);
-      this.setState({images: arr});
-      this.setState({resizedImages: arr2});
-  }
+    arr.splice(index, 1);
+    arr2.splice(index, 1);
+    this.setState({ images: arr });
+    this.setState({ resizedImages: arr2 });
+  };
 
   componentDidMount() {
     this.props.getStoryById(this.props.match.params.story_id);
+    this.props.likeCount(this.props.match.params.story_id);
   }
 
   toggleModal() {
     if (this.state.modalMode === "hidden") {
-      this.setState({ modalMode: "visible", editModalMode: "hidden", editEventModalMode: "hidden" });
+      this.setState({
+        modalMode: "visible",
+        editModalMode: "hidden",
+        editEventModalMode: "hidden"
+      });
     } else {
-      this.setState({ modalMode: "hidden", eventTitle:'', eventDescription: '',images: [],resizedImages: [] });
+      this.setState({
+        modalMode: "hidden",
+        eventTitle: "",
+        eventDescription: "",
+        images: [],
+        resizedImages: []
+      });
     }
   }
 
   toggleEditModal() {
     if (this.state.editModalMode === "hidden") {
-      this.setState({ editModalMode: "visible", modalMode: "hidden", editEventModalMode: "hidden" });
+      this.setState({
+        editModalMode: "visible",
+        modalMode: "hidden",
+        editEventModalMode: "hidden"
+      });
     } else {
       this.setState({ editModalMode: "hidden" });
     }
@@ -111,23 +144,39 @@ class Story extends Component {
 
   toggleEditEventModal() {
     if (this.state.editEventModalMode === "hidden") {
-      this.setState({ editEventModalMode: "visible", editModalMode: "hidden", modalMode: "hidden" });
+      this.setState({
+        editEventModalMode: "visible",
+        editModalMode: "hidden",
+        modalMode: "hidden"
+      });
     } else {
       this.setState({ editEventModalMode: "hidden" });
     }
   }
 
   deleteStoryHandler() {
-    this.props.deleteStory(this.props.match.params.story_id)
+    this.props.deleteStory(this.props.match.params.story_id);
   }
-  
+
+  addLikeHandler() {
+    console.log("handler fired");
+    this.props
+      .addLike(this.props.user.user_id, this.props.match.params.story_id)
+      .then(() => this.props.likeCount(this.props.match.params.story_id));
+  }
+
+  unlikeHandler() {
+    this.props
+      .unlike(this.props.user.user_id, this.props.match.params.story_id)
+      .then(() => this.props.likeCount(this.props.match.params.story_id));
+  }
 
   render() {
-    // console.log(this.props);
+    console.log(this.props);
 
     const { story } = this.props;
     const { user } = this.props;
-    
+
     if (story.events) {
       var mappedEvents = story.events.map(event => {
         // console.log(event);
@@ -140,7 +189,7 @@ class Story extends Component {
               event_id={event.event_id}
               toggleEditEventModal={this.toggleEditEventModal}
             />
-            <span className="connect-line"></span>
+            <span className="connect-line" />
           </Fragment>
         );
       });
@@ -158,37 +207,64 @@ class Story extends Component {
               {story.story_description}
             </p>
             <div className="follow-info-wrap">
-              <button className="follow-btn btn">Like</button>
-              <span className="follow-count">{story.like_count}</span>
+              {this.props.user.user_id ? (
+                <button
+                  onClick={() => {
+                    console.log("clicked"), this.addLikeHandler();
+                  }}
+                  className="follow-btn btn"
+                >
+                  Like
+                </button>
+              ) : (
+                <div>Likes</div>
+              )}
+              {/* {this.props.user.user_id && } */}
+              <span className="follow-count">{this.props.likes}</span>
 
               {/* *TO DO: only render this if story belongs to logged in user DONE*/}
-             { user.user_id&&(user.user_id===story.user_id)&& (<div className="edit-story-links">
-                <span onClick={() => this.toggleEditModal()} className="edit-story-link btn border-btn">Edit Story</span>
-              </div>)}
+              {user.user_id &&
+                user.user_id === story.user_id && (
+                  <div className="edit-story-links">
+                    <span
+                      onClick={() => this.toggleEditModal()}
+                      className="edit-story-link btn border-btn"
+                    >
+                      Edit Story
+                    </span>
+                  </div>
+                )}
             </div>
           </div>
 
           <div className="events-wrap">{mappedEvents}</div>
 
           {/* *TO DO: only display this if story belongs to authorized user DONE */}
-          { user.user_id&&(user.user_id===story.user_id)&& (<div className="delete-story-wrap">
-            <h3 className="delete-title">Delete Story</h3>
-            <button className="btn negative-btn" onClick={() => this.deleteStoryHandler()}> 
-              <FontAwesomeIcon icon={faTrash} />
-              {` Delete "${story.story_title}"`}
-            </button>
-          </div>)}
+          {user.user_id &&
+            user.user_id === story.user_id && (
+              <div className="delete-story-wrap">
+                <h3 className="delete-title">Delete Story</h3>
+                <button
+                  className="btn negative-btn"
+                  onClick={() => this.deleteStoryHandler()}
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                  {` Delete "${story.story_title}"`}
+                </button>
+              </div>
+            )}
 
-
-          {user.user_id&&(user.user_id===story.user_id)&&(<div className="add-event-wrap">
-
-            <button
-              onClick={() => this.toggleModal()}
-              className="add-event-btn btn"
-            >
-              <strong>+</strong> New Event
-            </button>
-          </div>)}
+          {user.user_id &&
+            user.user_id === story.user_id && (
+              <div className="add-event-wrap">
+                <button
+                  onClick={() => this.toggleModal()}
+                  className="add-event-btn btn"
+                >
+                  <strong>+</strong> New Event
+                </button>
+              </div>
+            )}
 
           <NewEventModal
             modalMode={this.state.modalMode}
@@ -202,7 +278,7 @@ class Story extends Component {
             title={this.state.eventTitle}
             eventDescription={this.state.eventDescription}
             story_id={this.props.match.params.story_id}
-
+            uploadButtonStatus={this.state.uploadButtonStatus}
           />
 
           <EditEventModal
@@ -220,13 +296,15 @@ class Story extends Component {
   }
 }
 
-
 const mapStateToProps = state => {
-  return { story: state.story.selectedStory,
-            user: state.user.authedUser };
+  return {
+    story: state.story.selectedStory,
+    user: state.user.authedUser,
+    likes: state.story.likeCount
+  };
 };
 
 export default connect(
   mapStateToProps,
-  { getStoryById, deleteStory }
+  { getStoryById, deleteStory, likeCount, addLike, unlike }
 )(Story);
