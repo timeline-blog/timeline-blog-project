@@ -45,10 +45,6 @@ export function editStory(
 }
 
 export function deleteStory(story_id) {
-<<<<<<< HEAD
-  // console.log(story_id);
-=======
->>>>>>> master
   return {
     type: DELETE_STORY,
     payload: axios.delete(`/api/story/${story_id}`)

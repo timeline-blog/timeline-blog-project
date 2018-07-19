@@ -53,11 +53,20 @@ const getFollowerCount = (req, res) => {
   .catch(err => console.log(err));
 };
 
+const searchUsers = (req, res) => {
+  // console.log(req.params);
+  req.app.get('db')
+    .follows.searchUsers(req.params.name)
+    .then(response => res.status(200).json(response))
+    .catch(err => console.log(err));
+};
+
 module.exports = {
   getFollowing,
   getFollowers,
   addFollow,
   unfollow,
   followCheck,
-  getFollowerCount
+  getFollowerCount,
+  searchUsers
 };
