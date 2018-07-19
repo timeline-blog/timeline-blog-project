@@ -23,6 +23,7 @@ class Story extends Component {
       eventDescription: '',
       images: [],
       resizedImages: [],
+      event_id: 0
     };
     this.toggleModal = this.toggleModal.bind(this);
     this.toggleEditModal = this.toggleEditModal.bind(this);
@@ -99,9 +100,10 @@ class Story extends Component {
     } else {
       this.setState({ modalMode: "hidden", eventTitle:'', eventDescription: '',images: [],resizedImages: [] });
     }
+    this.props.getStoryById(this.props.match.params.story_id);
   }
 
-  toggleEditModal() {
+  toggleEditModal(event_id) {
     if (this.state.editModalMode === "hidden") {
       this.setState({ editModalMode: "visible", modalMode: "hidden", editEventModalMode: "hidden" });
     } else {
@@ -109,9 +111,9 @@ class Story extends Component {
     }
   }
 
-  toggleEditEventModal() {
+  toggleEditEventModal(event_id) {
     if (this.state.editEventModalMode === "hidden") {
-      this.setState({ editEventModalMode: "visible", editModalMode: "hidden", modalMode: "hidden" });
+      this.setState({ editEventModalMode: "visible", editModalMode: "hidden", modalMode: "hidden",event_id });
     } else {
       this.setState({ editEventModalMode: "hidden" });
     }
@@ -129,11 +131,16 @@ class Story extends Component {
     const { user } = this.props;
     
     if (story.events) {
-      var mappedEvents = story.events.map(event => {
+      var mappedEvents = story.events.reverse().map((event,index) => {
         // console.log(event);
         return (
           <Fragment key={event.event_id}>
             <Event
+              editEventModalMode={this.state.editEventModalMode}
+              story_id={this.props.match.params.story_id}
+              event_id={event.event_id}
+              images={event.e_urls}
+              story_userid={story.user_id}
               event_title={event.event_title}
               event_description={event.event_description}
               e_created_on={event.e_created_on}
@@ -202,13 +209,9 @@ class Story extends Component {
             title={this.state.eventTitle}
             eventDescription={this.state.eventDescription}
             story_id={this.props.match.params.story_id}
-
           />
 
-          <EditEventModal
-            editEventModalMode={this.state.editEventModalMode}
-            toggleEditEventModal={this.toggleEditEventModal}
-          />
+         
 
           <EditStoryModal
             editModalMode={this.state.editModalMode}
