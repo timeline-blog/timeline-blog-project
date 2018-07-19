@@ -765,6 +765,9 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
       margin: 0 20px 0 0;
       background: #5c5c5c;
       border-radius: 50%; }
+  .followers-wrap .user-summary-wrap .btn {
+    font-size: 18px;
+    min-width: 100px; }
 
 .category-label {
   display: inline-block;
