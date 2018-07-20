@@ -96,7 +96,16 @@ class Event extends Component {
                 <EditEventModal
                     editEventModalMode={this.props.editEventModalMode}
                     toggleEditEventModal={this.props.toggleEditEventModal}
-                    selectedEvent={this.props.selectedEvent}
+                    event_title={this.props.title}
+                    event_description={this.props.eventDescription}
+                    eventTitleChange={this.props.eventTitleChange}
+                    eventDescriptionChange={this.props.eventDescriptionChange}
+                    eventImages={this.props.eventImages}
+                    _handleImageChange={this.props._handleImageChange}
+                    removeImages={this.props.removeImages}
+                    resizedImages={this.props.resizedImages}
+                    uploadButtonStatus={this.state.uploadButtonStatus}
+                    updateEventImages={this.props.updateEventImages}
                  />
             </div>
         );
