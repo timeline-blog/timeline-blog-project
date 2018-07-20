@@ -5,11 +5,14 @@ import moment from 'moment'
 const StoryPreview = (props) => {
     // console.log('props: ', props);
 
+    let shortEventTitle = props.event_title.length < 28 ? props.event_title : props.event_title.substring(0, 25) + '...';
     return (
         <div className="story-preview-wrap">
             
             <div className="story-pv-author-wrap">
-                <img src={props.avatar} alt={props.display_name} className="story-pv-author-avatar"/>
+                <Link to={`/profile/${props.user_id}`}>
+                    <img src={props.avatar} alt={props.display_name} className="story-pv-author-avatar"/>
+                </Link>
                 <Link to={`/profile/${props.user_id}`}>{props.display_name}</Link>
             </div>
 
@@ -32,7 +35,8 @@ const StoryPreview = (props) => {
                 <div className="story-pv-info">
                     <span className="story-pv-subtitle">First Event</span>
                     <div className="story-pv-event">
-                        <p>{props.event_title}</p>
+                        {/* <p>{props.event_title}</p> */}
+                        <p>{shortEventTitle}</p>
                         <span>{moment(props.e_created_on).from(moment().format("MM/DD/YY, hh:mm"))}</span>
                     </div>
                 </div>

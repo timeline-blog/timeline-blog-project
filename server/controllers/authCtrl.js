@@ -22,7 +22,7 @@ const getUser=(req,res)=>{
                       auth.default.getLoggedInUser([email])
                                   .then(response=>{
                                     req.session.user= response[0]
-                                      res.redirect('homepage')
+                                      res.redirect('http://localhost:3000/#/home')
                                   })
                   }else{
 
@@ -48,16 +48,22 @@ const saveUser=(req,res)=>{
     const auth = req.app.get('db').auth;
 
     //get user details from req.body, for now, let's assume password is 1234
-      const { username,password,email } = req.body 
-    let  image= "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+      const { display_name,password,email } = req.body 
+    let avatar = "http://maurojflores.com/wp-content/uploads/2018/07/blank-profile-picture-973460_960_720-300x300.png"
 
     let salt = bcrypt.genSaltSync(10)
     let hash = bcrypt.hashSync(password,salt)
 
-    auth.default.signUp([username,image,email,hash])
+    auth.default.signUp([display_name,avatar,email,hash])
                 .then(response=>{
-                    res.redirect('homepage')
+                    req.session.user = response[0];
+                    res.status(200).json(response);
                 })
+                .catch( err => {
+                    console.log(err.detail);
+                    let errMessage = err.detail;
+                    res.status(500).json({errMessage});
+                });
 
 
      //hash the password 10 signifies the number of times you want the salt applied
@@ -98,7 +104,7 @@ const googleSignIn=(req,res)=>{
 
 const logout=(req,res) =>{
     req.session.destroy(()=>{
-        res.redirect('http://localhost:3000/#/home')
+        res.redirect('http://localhost:3000/#/')
     })
 
 }

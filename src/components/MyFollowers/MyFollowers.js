@@ -24,14 +24,18 @@ class MyFollowers extends Component {
   }
 
   componentDidMount() {
-    this.props
-      .getFollowers(this.props.user.user_id)
-      .then(() => this.updateFollowersList());
-
-    this.props
-      .getFollowing(this.props.user.user_id)
-      .then(() => this.updateFollowingList());
-  }
+    // if (!this.props.user.user_id) {
+      this.props.getLoggedInUser().then( () => {
+        this.props
+        .getFollowers(this.props.user.user_id)
+        .then(() => this.updateFollowersList());
+  
+        this.props
+          .getFollowing(this.props.user.user_id)
+          .then(() => this.updateFollowingList());
+        } );
+    }
+  // }
 
   updateFollowersList() {
     this.setState({ followersList: this.props.followers });
@@ -102,8 +106,8 @@ class MyFollowers extends Component {
             <h3 className="followers-list-title">
               {this.props.followers.length} followers
             </h3>
+            {followersList}
           </div>
-          {followersList}
         </div>
       </div>
     );
@@ -118,5 +122,5 @@ const mapStateToProps = state => {
 };
 export default connect(
   mapStateToProps,
-  { getFollowers, getFollowing, unfollow, addFollow }
+  { getFollowers, getFollowing, unfollow, addFollow, getLoggedInUser }
 )(MyFollowers);

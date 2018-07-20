@@ -26,8 +26,9 @@ class Nav extends Component {
   }
 
   componentDidMount() {
-    this.props.getLoggedInUser().then( response => console.log( 'logged in user: ', this.props.user ) );
-    // console.log( 'logged in user: ', this.props.user )
+    if (!this.props.user.user_id) {
+      this.props.getLoggedInUser();
+    }
   }
 
   toggleHoverMenu() {

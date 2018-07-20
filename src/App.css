@@ -313,6 +313,10 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
       .outer-wrap.login-wrap .login-form a:last-child:hover {
         text-decoration: underline; }
 
+.login-wrap .error-message {
+  font-size: 20px;
+  color: #ea6c6c; }
+
 .home-header .home-tab {
   font-size: 18px;
   display: inline-block;
@@ -402,7 +406,8 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
       font-size: 20px; }
       .story-preview-wrap .story-pv-body .story-pv-info .story-pv-event p {
         margin: 0;
-        font-weight: 200; }
+        font-weight: 200;
+        font-size: 16.5px; }
       .story-preview-wrap .story-pv-body .story-pv-info .story-pv-event span {
         font-size: 13px;
         color: #a2a2a2; }
