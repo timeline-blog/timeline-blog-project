@@ -31,11 +31,7 @@ import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
          this.props.resizedImages.forEach(element=>{
            this.FileUploader.startUpload(element)       
          })
-        //  this.props.resizedImages.forEach(element=>{
-        //     console.log(element)
-        //     console.log(element.name)
-        //     this.FileUploader.startUpload(element)  
-        //  })
+       
 
        }
 
@@ -98,7 +94,7 @@ import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
 
     
     render() {
-        console.log( this.state.eventTitleField )
+      //  console.log( this.state.eventTitleField )
         return (
             <div className={`outer-modal ${this.props.modalMode}`}>
                 <div className="inner-modal">
