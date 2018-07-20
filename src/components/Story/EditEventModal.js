@@ -12,9 +12,11 @@ class EditEventModal extends Component {
         this.state = {
             eventTitleField: 'Event Title Here',
             eventContentField: 'Event Content here',
-            eventImages: []
+            eventImages: [],
+            event_id: this.props.eventID
         };
     }
+
 
 
     changeTitleField( value ) {
@@ -26,7 +28,8 @@ class EditEventModal extends Component {
     }
 
     render() {
-        
+          
+            this.props.selectedEvent[0] && this.props.selectedEvent[0].title;
         return (
             <div className={`outer-modal ${this.props.editEventModalMode}`}>
             <div className="inner-modal">
@@ -45,7 +48,7 @@ class EditEventModal extends Component {
                             type="text" 
                             className="main-input"
                             onChange={(e) => this.changeTitleField(e.target.value)}
-                            value={this.state.eventTitleField}
+                            value={this.props.selectedEvent[0]&&this.props.selectedEvent[0].event_title}
                         />
                     </div>
 
@@ -56,7 +59,7 @@ class EditEventModal extends Component {
                             rows="8" 
                             className="main-input"
                             onChange={(e) => this.changeContentField(e.target.value)}
-                            value={this.state.eventContentField}
+                            value={this.props.selectedEvent[0]&&this.props.selectedEvent[0].event_description}
                         />
                     </div>
 
@@ -82,4 +85,3 @@ const mapStateToProps=state=>{
 }
 
 export default connect(mapStateToProps,null)(EditEventModal)
-

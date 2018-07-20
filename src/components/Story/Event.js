@@ -1,12 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import moment from 'moment'
+import axios from 'axios'
+import EditEventModal from './EditEventModal'
+
+
+
+import { getStoryById } from "../../ducks/reducers/storyReducer";
 import Comment from './Comment';
 
 class Event extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            eventState: 'collapsed'
+            eventState: 'collapsed',
+            eventTitleField: 'Event Title Here',
+            eventContentField: 'Event Content here',
+            eventImages: []
         };
         this.collapseExpand = this.collapseExpand.bind( this );
     }
@@ -33,26 +43,14 @@ class Event extends Component {
 
                 <header className="event-header">
                     <h2 className="event-title">{this.props.event_title}</h2>
-                    <p className="event-date">{this.props.e_created_on}</p>
+                    <p className="event-date">{moment(this.props.e_created_on).from(moment().format("MM/DD/YY, hh:mm"))}</p>
                 </header>
 
                 <div className="event-gallery">
-                    <div 
-                        className="event-image" 
-                        style={{ backgroundImage: 'url(https://images.pexels.com/photos/257360/pexels-photo-257360.jpeg?auto=compress&cs=tinysrgb&h=350)'}}>
-                    </div>
-                    <div 
-                        className="event-image" 
-                        style={{ backgroundImage: 'url(https://images.pexels.com/photos/257360/pexels-photo-257360.jpeg?auto=compress&cs=tinysrgb&h=350)'}}>
-                    </div>
-                    <div 
-                        className="event-image" 
-                        style={{ backgroundImage: 'url(https://images.pexels.com/photos/257360/pexels-photo-257360.jpeg?auto=compress&cs=tinysrgb&h=350)'}}>
-                    </div>
-                    <div 
-                        className="event-image" 
-                        style={{ backgroundImage: 'url(https://images.pexels.com/photos/257360/pexels-photo-257360.jpeg?auto=compress&cs=tinysrgb&h=350)'}}>
-                    </div>
+                {this.props.images&&this.props.images.map((element,index)=>{
+                    return (<div key={index} className="event-image" style={{ backgroundImage:`url(${element})`}}></div>)
+                })}
+                   
                 </div>
 
                 <div className="event-content">
@@ -85,6 +83,12 @@ class Event extends Component {
                 </div>
 
                 <span className="connector bottom-connector"></span>
+               
+                <EditEventModal
+                    editEventModalMode={this.props.editEventModalMode}
+                    toggleEditEventModal={this.props.toggleEditEventModal}
+                    selectedEvent={this.props.selectedEvent}
+                 />
             </div>
         );
     }

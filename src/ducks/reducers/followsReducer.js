@@ -6,6 +6,7 @@ const ADD_FOLLOW = "ADD_FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
 const FOLLOW_CHECK = "FOLLOW_CHECK";
 const GET_FOLLOWER_COUNT = "GET_FOLLOWER_COUNT";
+const SEARCH_USERS = "SEARCH_USERS";
 
 export function getFollowers(user_id) {
   return {
@@ -51,16 +52,25 @@ export function getFollowerCount(user_id) {
   };
 }
 
+export function searchUsers(name) {
+  console.log('name: ', name);
+  return {
+    type: SEARCH_USERS,
+    payload: axios.get(`/api/user/search/${name}`)
+  };
+}
+
 const initialState = {
   followers: [],
   following: [],
   followCheck: {},
-  followerCount: 0
+  followerCount: 0,
+  searchResults: []
 };
 
 export default function followsReducer(state = initialState, action) {
-  // console.log('PAYLOAD!!!    ', action.payload);
-  // console.log('TYPE!!!    ', action.type);
+  console.log('PAYLOAD!!!    ', action.payload);
+  console.log('TYPE!!!    ', action.type);
 
   switch (action.type) {
     case `${GET_FOLLOWERS}_FULFILLED`:
@@ -79,6 +89,11 @@ export default function followsReducer(state = initialState, action) {
       return {
         ...state,
         followerCount: action.payload.data[0].count
+      };
+    case `${SEARCH_USERS}_FULFILLED`:
+      return {
+        ...state,
+        searchResults: action.payload.data
       };
     default:
       return state;

@@ -36,7 +36,8 @@ const {
   addFollow,
   unfollow,
   followCheck,
-  getFollowerCount
+  getFollowerCount,
+  searchUsers
 } = require(`${__dirname}/controllers/followsCtrl`);
 const { getHome, getLiked } = require(`${__dirname}/controllers/homeCtrl`);
 const {
@@ -142,6 +143,7 @@ app.delete("/api/comments/:comment_id", deleteComment);
 app.get("/api/people/following/:user_id", getFollowing);
 
 //get followers
+app.get('/api/user/search/:name', searchUsers);
 app.get("/api/people/followers/:user_id", getFollowers);
 app.post("/api/followcheck", followCheck);
 app.get("/api/followercount/:user_id", getFollowerCount);
