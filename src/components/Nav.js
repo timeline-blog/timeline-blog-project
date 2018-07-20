@@ -16,9 +16,11 @@ class Nav extends Component {
     this.state = {
       hoverMenuMode: "hidden",
       notificationsMode: "hidden",
-      modalMode: "hidden"
+      modalMode: "hidden",
+      isLoggedIn: false
     };
 
+    this.loggedInNav = this.loggedInNav.bind(this);
     this.toggleHoverMenu = this.toggleHoverMenu.bind(this);
     this.toggleNotificationsMenu = this.toggleNotificationsMenu.bind(this);
     this.toggleNewStoryModal = this.toggleNewStoryModal.bind(this);
@@ -27,8 +29,17 @@ class Nav extends Component {
 
   componentDidMount() {
     if (!this.props.user.user_id) {
-      this.props.getLoggedInUser();
+      this.props.getLoggedInUser().then(response => {
+        console.log( 'isLoggedIn: ', response );
+        if (response.value.data.user_id) {
+          this.loggedInNav();
+        }
+      });
     }
+  }
+
+  loggedInNav() {
+    this.setState({ isLoggedIn: true });
   }
 
   toggleHoverMenu() {
@@ -69,9 +80,9 @@ class Nav extends Component {
     return (
       <Fragment>
       {/* *TO DO: conditional rendering depending on whether user is signed in or not */}
-      <div className="main-nav">
+      <div className={this.state.isLoggedIn ? "main-nav logged-in-nav" : "main-nav logged-out-nav"}>
         <div className="nav-left">
-          <NavLink onClick={() => this.hideAllMenus()} to="/home">Home</NavLink>
+          <NavLink onClick={() => this.hideAllMenus()} to={this.state.isLoggedIn ? "/home" : "/"}>Home</NavLink>
           <NavLink onClick={() => this.hideAllMenus()} to="/discover">Discover</NavLink>
         </div>
         <div className="nav-right">

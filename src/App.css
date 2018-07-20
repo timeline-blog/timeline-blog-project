@@ -142,6 +142,9 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
     .main-footer .back-to-top:hover {
       background: #5c5c5c; }
 
+.main-nav.logged-out-nav {
+  min-height: 40px; }
+
 .main-nav {
   display: flex;
   justify-content: space-between;
@@ -368,7 +371,7 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
     width: 100%;
     bottom: 0;
     left: 0;
-    background-image: linear-gradient(transparent 15%, rgba(0, 0, 0, 0.5) 25%, rgba(0, 0, 0, 0.9) 80%);
+    background-image: linear-gradient(transparent 0%, rgba(0, 0, 0, 0.15) 16%, rgba(0, 0, 0, 0.3) 30%, rgba(0, 0, 0, 0.45) 45%, rgba(0, 0, 0, 0.6) 60%, rgba(0, 0, 0, 0.75) 75%, rgba(0, 0, 0, 0.9) 90%, black 100%);
     color: #ffffff;
     padding: 10px;
     box-sizing: border-box;
@@ -733,6 +736,12 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
 
 .profile-wrap .story-pv-author-wrap {
   display: none; }
+
+.profile-wrap span.follow-btn.btn {
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3); }
+  .profile-wrap span.follow-btn.btn:hover {
+    background: #1ddfa5;
+    cursor: default; }
 
 .profile-avatar {
   display: block;

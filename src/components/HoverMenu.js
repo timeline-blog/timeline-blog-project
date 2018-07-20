@@ -14,6 +14,7 @@ class HoverMenu extends Component {
       <div
         className={`hover-main-wrap account-hover ${this.props.hoverMenuMode}`}
       >
+        <span className="logged-in-as">Logged in as: <strong>{user.display_name}</strong></span>
         <Link to={`/profile/${user.user_id}`}>
           <button onClick={() => this.props.toggleHoverMenu()}>My Profile</button>
         </Link>
@@ -24,7 +25,6 @@ class HoverMenu extends Component {
           <button onClick={() => this.props.toggleHoverMenu()}>Followers</button>
         </Link>
         <div>
-          <span className="logged-in-as">Logged in as: <strong>{user.display_name}</strong></span>
           <a href='http://localhost:3001/auth/logout'>
             <button onClick={() => this.props.toggleHoverMenu()}>Logout</button>
           </a>
