@@ -9,6 +9,8 @@ import axios from 'axios';
 
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import faWarning from "@fortawesome/fontawesome-pro-solid/faExclamationTriangle";
+import faGoogle from "@fortawesome/fontawesome-free-brands/faGoogle";
+import faEnvelope from "@fortawesome/fontawesome-pro-solid/faEnvelope";
 
 class SignUp extends Component {
   constructor(props) {
@@ -65,8 +67,12 @@ class SignUp extends Component {
       return false;
     }
 
-    if ( nameField.includes("'") || nameField.includes('"') ) {
-      this.setState({ errorMsg: "Display name cannot contain ' or \"" });
+    if ( nameField.includes("'") || nameField.includes('"') 
+          || emailField.includes("'") || emailField.includes('"')
+          || passwordField.includes("'") || passwordField.includes('"')
+          || verifyPasswordField.includes("'") || verifyPasswordField.includes('"')
+        ) {
+      this.setState({ errorMsg: "Fields cannot contain ' or \"" });
       return false;
     }
 
@@ -119,7 +125,10 @@ class SignUp extends Component {
 
           <div className="login-form">
             <div className="google-login">
-                <button className="btn login-btn">Sign Up with Google</button>
+                <button className="btn login-btn">
+                  <FontAwesomeIcon icon={faGoogle} /> &nbsp;
+                  Sign Up with Google
+                </button>
             </div>
 
             <div className="auth-form-separator">
@@ -163,7 +172,10 @@ class SignUp extends Component {
                 type="password"
                 value={this.state.verifyPasswordField}/>
             </div>
-            <button onClick={() => this.handleClickSignUp()} className="btn login-btn">Sign Up with Email</button>
+            <button onClick={() => this.handleClickSignUp()} className="btn login-btn">
+              <FontAwesomeIcon icon={faEnvelope} /> &nbsp;
+              Sign Up with Email
+            </button>
             <Link to="/login">Already have an account? Log in here</Link>
           </div>
 
