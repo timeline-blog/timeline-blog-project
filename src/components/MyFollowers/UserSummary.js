@@ -6,14 +6,16 @@ import {
 } from "../../ducks/reducers/followsReducer";
 import { connect } from "react-redux";
 
+import { Link } from "react-router-dom";
+
 function UserSummary(props) {
   let filtered = props.followingList.filter(user => user.user_id === props.user_id)
   // console.log('filtered: ', filtered);
   return (
     <div className="user-summary-wrap">
       <div className="user-info">
-        <img src={props.avatar} />
-        <span>{props.display_name}</span>
+        <Link to={`/profile/${props.user_id}`}><img src={props.avatar} /></Link>
+        <Link to={`/profile/${props.user_id}`}><span>{props.display_name}</span></Link>
       </div>
 
         {/* 

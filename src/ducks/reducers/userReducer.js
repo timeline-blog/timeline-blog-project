@@ -4,6 +4,8 @@ const EDIT_USER = "EDIT_USER";
 const GET_LOGGEDIN_USER = "GET_LOGGEDIN_USER";
 const GET_USER_BY_ID = "GET_USER_BY_ID";
 const CLEAR_USER = "CLEAR_USER";
+const EMAIL_SIGNUP = "EMAIL_SIGNUP";
+const EMAIL_LOGIN = "EMAIL_LOGIN";
 
 export function editUser(display_name, bio, avatar, user_id) {
   return {
@@ -32,6 +34,20 @@ export function clearUser() {
     payload: {}
   };
 }
+
+export function emailSignUp(display_name, email, password) {
+  return {
+    type: EMAIL_SIGNUP,
+    payload: axios.post("/auth/signup", {display_name, email, password})
+  }
+}
+
+export function emailLogin(email, password) {
+  return {
+    type: EMAIL_LOGIN,
+    payload: axios.get("/auth/login", {email, password})
+  };
+};
 
 const initialState = {
   authedUser: {},

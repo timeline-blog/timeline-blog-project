@@ -1,8 +1,7 @@
-const getStory = (req,res) =>{
+const getStory = (req, res) => {
+  const story = req.app.get("db").story;
 
-  const story = req.app.get('db').story;
-
-  const { story_id } = req.params
+  const { story_id } = req.params;
 
   story.getStoryById([story_id])
     .then(storys=>{
