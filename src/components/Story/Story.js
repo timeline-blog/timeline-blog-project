@@ -30,7 +30,7 @@ class Story extends Component {
       images: [],
       resizedImages: [],
       uploadButtonStatus: "active",
-      selectedEvent: []
+      selectedEvent: [],
     };
     this.toggleModal = this.toggleModal.bind(this);
     this.toggleEditModal = this.toggleEditModal.bind(this);
@@ -47,7 +47,7 @@ class Story extends Component {
   };
 
   _handleImageChange = e => {
-    if (this.state.images.length == 4) {
+    if (this.state.images.length == 4 ) {
       // this.setState({ uploadButtonStatus: 'disabled' })
       console.log("limit exceeded: ", this.state.images.length);
       return;
@@ -95,6 +95,12 @@ class Story extends Component {
     });
     img && reader.readAsDataURL(img);
   };
+
+  updateEventImages=(img)=>{
+   let arr =  this.state.images.slice();
+    arr.push(img)
+    this.setState({images: arr})
+  }
 
   removeImages = index => {
     if (this.state.uploadButtonStatus === "disabled") {
@@ -150,12 +156,14 @@ class Story extends Component {
     const selectedEvent = events.filter(event=>{
        return event_id==event.event_id
      })
+
+   
      
 
     if (this.state.editEventModalMode === "hidden") {
-      this.setState({ editEventModalMode: "visible", editModalMode: "hidden", modalMode: "hidden", selectedEvent });
+      this.setState({ editEventModalMode: "visible", editModalMode: "hidden", modalMode: "hidden", eventTitle:selectedEvent[0].event_title, eventDescription:selectedEvent[0].event_description,images:selectedEvent[0].e_urls });
     } else {
-      this.setState({ editEventModalMode: "hidden",event_id:0 });
+      this.setState({ editEventModalMode: "hidden",eventTitle:'', eventDescription:'', images:[]});
     }
   }
 
@@ -186,8 +194,9 @@ class Story extends Component {
       var mappedEvents = story.events.reverse().map((event,index) => {
         // console.log(event);
         return (
-          <Fragment key={event.event_id}>
+          <Fragment key={index}>
             <Event
+               key={index}
               editEventModalMode={this.state.editEventModalMode}
               story_id={this.props.match.params.story_id}
               event_id={event.event_id}
@@ -199,7 +208,19 @@ class Story extends Component {
               event_id={event.event_id}
               selectedEvent={this.state.selectedEvent}
               toggleEditEventModal={this.toggleEditEventModal}
-            />
+              eventTitleChange={this.eventTitleChange}
+              eventDescriptionChange={this.eventDescriptionChange}
+              title={this.state.eventTitle}
+              eventDescription={this.state.eventDescription}
+              eventImages={this.state.images}
+              removeImages={this.state.removeImages}
+
+              _handleImageChange={this._handleImageChange}
+              removeImages={this.removeImages}
+              resizedImages={this.state.resizedImages}
+              uploadButtonStatus={this.state.uploadButtonStatus}
+              updateEventImages={this.updateEventImages}
+              />
             <span className="connect-line" />
           </Fragment>
         );
@@ -298,6 +319,8 @@ class Story extends Component {
           <EditStoryModal
             editModalMode={this.state.editModalMode}
             toggleEditModal={this.toggleEditModal}
+            eventTitleChange={this.eventTitleChange}
+            eventDescriptionChange={this.eventDescriptionChange}
           />
         </div>
       </div>
