@@ -151,11 +151,11 @@ class MyFollowers extends Component {
           </div>
 
           <div className="followers-list-wrap">
+          {this.state.isOpen ? searchResults : null}
             <h3 className="followers-list-title">
               {this.props.followers.length} followers
             </h3>
           </div>
-          {this.state.isOpen ? searchResults : null}
           {followersList}
         </div>
       </div>
