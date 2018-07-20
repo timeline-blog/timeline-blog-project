@@ -29,7 +29,8 @@ class Story extends Component {
       eventDescription: "",
       images: [],
       resizedImages: [],
-      uploadButtonStatus: "active"
+      uploadButtonStatus: "active",
+      selectedEvent: []
     };
     this.toggleModal = this.toggleModal.bind(this);
     this.toggleEditModal = this.toggleEditModal.bind(this);
@@ -128,9 +129,11 @@ class Story extends Component {
         resizedImages: []
       });
     }
+    this.props.getStoryById(this.props.match.params.story_id);
   }
 
   toggleEditModal() {
+    
     if (this.state.editModalMode === "hidden") {
       this.setState({
         editModalMode: "visible",
@@ -142,15 +145,17 @@ class Story extends Component {
     }
   }
 
-  toggleEditEventModal() {
+  toggleEditEventModal(event_id) {
+    const { events } = this.props.story;
+    const selectedEvent = events.filter(event=>{
+       return event_id==event.event_id
+     })
+     
+
     if (this.state.editEventModalMode === "hidden") {
-      this.setState({
-        editEventModalMode: "visible",
-        editModalMode: "hidden",
-        modalMode: "hidden"
-      });
+      this.setState({ editEventModalMode: "visible", editModalMode: "hidden", modalMode: "hidden", selectedEvent });
     } else {
-      this.setState({ editEventModalMode: "hidden" });
+      this.setState({ editEventModalMode: "hidden",event_id:0 });
     }
   }
 
@@ -172,21 +177,27 @@ class Story extends Component {
   }
 
   render() {
-    console.log(this.props);
+    
 
     const { story } = this.props;
     const { user } = this.props;
 
     if (story.events) {
-      var mappedEvents = story.events.map(event => {
+      var mappedEvents = story.events.reverse().map((event,index) => {
         // console.log(event);
         return (
           <Fragment key={event.event_id}>
             <Event
+              editEventModalMode={this.state.editEventModalMode}
+              story_id={this.props.match.params.story_id}
+              event_id={event.event_id}
+              images={event.e_urls}
+              story_userid={story.user_id}
               event_title={event.event_title}
               event_description={event.event_description}
               e_created_on={event.e_created_on}
               event_id={event.event_id}
+              selectedEvent={this.state.selectedEvent}
               toggleEditEventModal={this.toggleEditEventModal}
             />
             <span className="connect-line" />
@@ -279,12 +290,10 @@ class Story extends Component {
             eventDescription={this.state.eventDescription}
             story_id={this.props.match.params.story_id}
             uploadButtonStatus={this.state.uploadButtonStatus}
+
           />
 
-          <EditEventModal
-            editEventModalMode={this.state.editEventModalMode}
-            toggleEditEventModal={this.toggleEditEventModal}
-          />
+         
 
           <EditStoryModal
             editModalMode={this.state.editModalMode}

@@ -11,7 +11,9 @@ const GoogleStrategy = require("passport-google-oauth20");
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-const { createEvent } = require(`${__dirname}/controllers/eventCtrl`);
+
+const { createEvent,deleteEvent } = require(`${__dirname}/controllers/eventCtrl`)
+
 const {
   getLoggedInUser,
   getUser,
@@ -34,7 +36,8 @@ const {
   addFollow,
   unfollow,
   followCheck,
-  getFollowerCount
+  getFollowerCount,
+  searchUsers
 } = require(`${__dirname}/controllers/followsCtrl`);
 const { getHome, getLiked } = require(`${__dirname}/controllers/homeCtrl`);
 const {
@@ -140,6 +143,7 @@ app.delete("/api/comments/:comment_id", deleteComment);
 app.get("/api/people/following/:user_id", getFollowing);
 
 //get followers
+app.get('/api/user/search/:name', searchUsers);
 app.get("/api/people/followers/:user_id", getFollowers);
 app.post("/api/followcheck", followCheck);
 app.get("/api/followercount/:user_id", getFollowerCount);
@@ -151,7 +155,8 @@ app.post("/api/people/follow", addFollow);
 app.post("/api/people/unfollow", unfollow);
 
 //event controller
-app.post("/api/event/:story_id", createEvent);
+app.post('/api/event/:story_id',createEvent)
+app.delete('/api/event/:event_id',deleteEvent)
 
 //home following
 app.get("/api/home/:user_id", getHome);
