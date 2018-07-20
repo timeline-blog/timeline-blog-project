@@ -114,6 +114,13 @@ class Story extends Component {
     this.setState({ resizedImages: arr2 });
   };
 
+  removeImagesEvents = index =>{
+    
+    let arr = this.state.images.slice();
+    arr.splice(index,1)
+    this.setState({images: arr})
+  }
+
   componentDidMount() {
     this.props.getStoryById(this.props.match.params.story_id);
     this.props.likeCount(this.props.match.params.story_id);
@@ -215,6 +222,7 @@ class Story extends Component {
               eventImages={this.state.images}
               removeImages={this.state.removeImages}
 
+              removeImagesEvents={this.removeImagesEvents}
               _handleImageChange={this._handleImageChange}
               removeImages={this.removeImages}
               resizedImages={this.state.resizedImages}

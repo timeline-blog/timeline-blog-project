@@ -9,6 +9,7 @@ import EditEventModal from './EditEventModal'
 import { getStoryById } from "../../ducks/reducers/storyReducer";
 import Comment from './Comment';
 
+
 class Event extends Component {
     constructor(props) {
         super(props);
@@ -18,10 +19,10 @@ class Event extends Component {
             eventContentField: 'Event Content here',
             eventImages: []
         };
-        this.collapseExpand = this.collapseExpand.bind( this );
+        
     }
 
-    collapseExpand() {
+    collapseExpand=()=> {
         if ( this.state.eventState === 'collapsed' ) {
             this.setState({ eventState: 'expanded' });
         } else {
@@ -29,17 +30,26 @@ class Event extends Component {
         }
     }
 
+    deleteEvent=(event_id)=>{
+        axios.delete(`/api/event/${event_id}`)
+             .then(response=>{
+                this.props.getStoryById(this.props.story_id)
+             })
+    }
+
     render() {
         const { user } = this.props;
+        const {story_userid} = this.props;
+       
         return (
             <div className={`event-wrap ${this.state.eventState}`}>
                 <span className="connector top-connector"></span>
 
-                {/* *TO DO: only render if story belongs to logged in user */}
-               { <div className="edit-event-links">
-                    <button onClick={() => this.props.toggleEditEventModal()} className="btn">Edit Event</button>
-                    <button className="btn negative-border-btn">Delete Event</button>
-                </div>}
+                {/* *TO DO: only render if story belongs to logged in user <<DONE>> */}
+               {user.user_id && (story_userid===user.user_id)&&(<div className="edit-event-links">
+                    <button onClick={() => this.props.toggleEditEventModal(this.props.event_id)} className="btn">Edit Event</button>
+                    <button onClick={()=>this.deleteEvent(this.props.event_id)} className="btn negative-border-btn">Delete Event</button>
+                </div>)}
 
                 <header className="event-header">
                     <h2 className="event-title">{this.props.event_title}</h2>
@@ -81,7 +91,6 @@ class Event extends Component {
                     {this.state.eventState === 'collapsed' ? 'Expand +' : 'Collapse -'}
                 </button>
                 </div>
-
                 <span className="connector bottom-connector"></span>
                
                 <EditEventModal
@@ -97,7 +106,8 @@ class Event extends Component {
                     resizedImages={this.props.resizedImages}
                     uploadButtonStatus={this.state.uploadButtonStatus}
                     updateEventImages={this.props.updateEventImages}
-                 />
+                    removeImagesEvents={this.props.removeImagesEvents}
+                />
             </div>
         );
     }
@@ -105,8 +115,9 @@ class Event extends Component {
 
 const mapStateToProps =(state)=>{
     return{
-        user: state.user.authedUser
+        user: state.user.authedUser,
+
     }
 }
 
-export default connect(mapStateToProps,null)(Event);
+export default connect(mapStateToProps,{getStoryById})(Event);
