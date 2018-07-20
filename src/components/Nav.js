@@ -7,6 +7,7 @@ import HoverMenu from "./HoverMenu";
 // import faBell from "@fortawesome/fontawesome-pro-light/faBell";
 
 import NewStoryModal from "./NewStoryModal";
+import { getLoggedInUser } from "../ducks/reducers/userReducer";
 
 class Nav extends Component {
   constructor() {
@@ -22,6 +23,12 @@ class Nav extends Component {
     this.toggleNotificationsMenu = this.toggleNotificationsMenu.bind(this);
     this.toggleNewStoryModal = this.toggleNewStoryModal.bind(this);
     this.hideAllMenus = this.hideAllMenus.bind(this);
+  }
+
+  componentDidMount() {
+    if (!this.props.user.user_id) {
+      this.props.getLoggedInUser();
+    }
   }
 
   toggleHoverMenu() {
@@ -56,7 +63,7 @@ class Nav extends Component {
   }
 
   render() {
-    // console.log('NAV Props!!!    ', this.props);
+    console.log('NAV Props!!!    ', this.props);
     const { user } = this.props;
 
     return (
@@ -118,4 +125,4 @@ const mapStateToProps = state => {
     user: state.user.authedUser
   }
 };
-export default connect(mapStateToProps)(Nav);
+export default connect(mapStateToProps, {getLoggedInUser})(Nav);
