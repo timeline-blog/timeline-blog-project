@@ -17,16 +17,21 @@ const getUser=(req,res)=>{
     const { email,password } = req.body
     
    auth.default.getPassword([email])
-                .then(response=>{        
-                  if ( bcrypt.compareSync(response[0],password)){
+                .then(response=>{    
+                    console.log( 'getPassword response: ', response )    
+                  if ( bcrypt.compareSync(password,response[0].password)){
                       auth.default.getLoggedInUser([email])
                                   .then(response=>{
                                     req.session.user= response[0]
                                       res.redirect('http://localhost:3000/#/home')
                                   })
+                                  .catch( err => {
+                                      console.log( 'login error: ', err);
+                                      res.status(500).json(err);
+                                    } );
                   }else{
 
-                      res.status(500).json('Wrong username or password')
+                      res.status(500).json({errMessage: 'Wrong username or password'})
                   }
                 })
 

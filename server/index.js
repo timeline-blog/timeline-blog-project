@@ -106,7 +106,7 @@ passport.use(
 app.get("/auth/loggedIn", getLoggedInUser);
 
 //endpoint for regular user login
-app.get("/auth/login", getUser);
+app.post("/auth/login", getUser);
 
 //endpoint for regular user signup
 app.post("/auth/signup", saveUser);
