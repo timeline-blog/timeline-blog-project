@@ -53,7 +53,7 @@ export function getFollowerCount(user_id) {
 }
 
 export function searchUsers(name) {
-  console.log('name: ', name);
+  // console.log('name: ', name);
   return {
     type: SEARCH_USERS,
     payload: axios.get(`/api/user/search/${name}`)
@@ -69,8 +69,8 @@ const initialState = {
 };
 
 export default function followsReducer(state = initialState, action) {
-  console.log('PAYLOAD!!!    ', action.payload);
-  console.log('TYPE!!!    ', action.type);
+  // console.log('PAYLOAD!!!    ', action.payload);
+  // console.log('TYPE!!!    ', action.type);
 
   switch (action.type) {
     case `${GET_FOLLOWERS}_FULFILLED`:

@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import moment from 'moment';
 
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
 
-export default class NewStoryModal extends Component {
+import { createStory } from '../ducks/reducers/storyReducer';
+
+class NewStoryModal extends Component {
     constructor(props) {
         super(props);
 
@@ -23,6 +28,7 @@ export default class NewStoryModal extends Component {
         this.updateDescriptionCharsRemaining = this.updateDescriptionCharsRemaining.bind(this);
         this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+        this.submitStory = this.submitStory.bind(this);
     }
 
     switchCategory( category ) {
@@ -55,8 +61,27 @@ export default class NewStoryModal extends Component {
         }
     }
 
+    submitStory() {
+        let {storyTitleField, storyDescriptionField, selectedCategory} = this.state;
+        let s_created_on = moment().format('MM/DD/YY, hh:mm')
+        if(storyTitleField === '' || storyDescriptionField === '' || selectedCategory === ''){
+            return;
+        }else {
+            this.props.createStory(storyTitleField, storyDescriptionField, selectedCategory, s_created_on, this.props.user.user_id)
+            .then((response) => this.props.history.push(`/story/${response.value.data[0].story_id}`))
+            .then(() => this.props.toggleModal());
+            this.setState({
+                storyTitleField: '', 
+                storyDescriptionField: '', 
+                selectedCategory: ''
+            });
+        }
+    }
+
 
     render() {
+        // console.log('STATE!!!   ', this.state);
+        // console.log('PROPS!!!   ', this.props);
         return (
             <div className={`outer-modal ${this.props.modalMode}`}>
             <div className="inner-modal">
@@ -125,7 +150,7 @@ export default class NewStoryModal extends Component {
                                 News
                             </span>
                             <span 
-                                className={this.state.selectedCategory === "Sport" ? "category-selector selected" : "category-selector"}
+                                className={this.state.selectedCategory === "Sports" ? "category-selector selected" : "category-selector"}
                                 onClick={(e) => this.switchCategory(e.target.innerText)}
                             >
                                 Sports
@@ -158,10 +183,18 @@ export default class NewStoryModal extends Component {
                     </div>
 
                 </div>
-                <button className="btn create-event-btn">Create Story</button>
+                <button className="btn create-event-btn" onClick={() => this.submitStory()}>Create Story</button>
 
             </div>
             </div>
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        user: state.user.authedUser
+    }
+}
+
+export default withRouter(connect(mapStateToProps, {createStory})(NewStoryModal));

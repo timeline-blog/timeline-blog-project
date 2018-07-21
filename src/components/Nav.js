@@ -63,7 +63,7 @@ class Nav extends Component {
   }
 
   render() {
-    console.log('NAV Props!!!    ', this.props);
+    // console.log('NAV Props!!!    ', this.props);
     const { user } = this.props;
 
     return (
