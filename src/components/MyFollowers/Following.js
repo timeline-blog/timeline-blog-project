@@ -127,10 +127,10 @@ class Following extends Component {
           </div>
 
           <div className="followers-list-wrap">
+            {this.state.isOpen ? searchResults : null}
             <h3 className="followers-list-title">
               {this.props.following.length} following
             </h3>
-            {this.state.isOpen ? searchResults : null}
             {followingList}
           </div>
         </div>

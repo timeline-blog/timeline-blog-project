@@ -32,12 +32,13 @@ class EditProfileModal extends Component {
     }
 
     saveChanges() {
-      this.props.editUser( this.state.displayNameField, this.state.bioField, this.state.avatarUrl, this.props.user.user_id );
+      this.props.editUser( this.state.displayNameField, this.state.bioField, this.state.avatarUrl, this.props.user.user_id )
+        .then(() => this.props.saveUserEdit(this.state.displayNameField, this.state.bioField, this.state.avatarUrl));
     }
 
 
     render() {
-      console.log('STATE!!!   ', this.state);
+    //   console.log('STATE!!!   ', this.state);
         return (
             <div className={`outer-modal ${this.props.modalMode}`}>
             <div className="inner-modal">

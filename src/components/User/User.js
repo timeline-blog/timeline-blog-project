@@ -14,15 +14,28 @@ class User extends Component {
   constructor() {
     super();
     this.state = {
-      modalMode: "hidden"
+      modalMode: "hidden",
+      displayName: '',
+      bio: '',
+      avatarUrl: ''
     }
     this.toggleEditProfileModal = this.toggleEditProfileModal.bind(this);
     this.followHandler = this.followHandler.bind(this);
+    this.saveUserEdit = this.saveUserEdit.bind(this);
   }
 
   componentDidMount() {
     this.props.getFollowerCount(this.props.match.params.user_id);
     this.props.getUserById(this.props.match.params.user_id)
+    .then(response => {
+      console.log('response: ', response);
+      let {display_name, bio, avatar} = response.value.data[0]
+      this.setState({
+        displayName: display_name,
+        bio: bio,
+        avatarUrl: avatar
+      })
+    });
     this.props.getStoriesByUser(this.props.match.params.user_id);
     this.props.followCheck(this.props.user.user_id, this.props.match.params.user_id);
   };
@@ -31,7 +44,7 @@ class User extends Component {
 
     if(this.props.match.params.user_id !== prevProps.match.params.user_id){
       this.props.getFollowerCount(this.props.match.params.user_id);
-      this.props.getUserById(this.props.match.params.user_id)
+      this.props.getUserById(this.props.match.params.user_id);
       this.props.getStoriesByUser(this.props.match.params.user_id);
       this.props.followCheck(this.props.user.user_id, this.props.match.params.user_id);
     }
@@ -51,8 +64,16 @@ class User extends Component {
       .then(() => this.props.getFollowerCount(this.props.match.params.user_id));
   };
 
+  saveUserEdit(newDisplayName, newBio, newAvatar) {
+    this.setState({
+      displayName: newDisplayName,
+      bio: newBio,
+      avatarUrl: newAvatar
+    })
+  };
+
   render() {
-    console.log('Props!!!   ', this.props);
+    // console.log('State!!!   ', this.state);
 
     const { display_name, bio, avatar } = this.props.profileInfo
     const stories = _.map(this.props.stories);
@@ -80,10 +101,10 @@ class User extends Component {
       <div className="outer-wrap profile-wrap">
         <div className="inner-wrap">
           <div className="page-header profile-header">
-            <img className="profile-avatar" src={avatar} alt="" />
-            <h1 className="page-title profile-title">{display_name}</h1>
+            <img className="profile-avatar" src={this.state.avatarUrl} alt={this.state.displayName} />
+            <h1 className="page-title profile-title">{this.state.displayName}</h1>
             <p className="page-description profile-description">
-              {bio}
+              {this.state.bio}
             </p>
             {(this.props.user.user_id == this.props.match.params.user_id) ?
               <button onClick={() => this.toggleEditProfileModal()} className="btn"> + Edit Profile</button>
@@ -107,7 +128,11 @@ class User extends Component {
           </div>
 
           <div className="story-grid">{mappedStories}</div>
-          <EditProfileModal modalMode={this.state.modalMode} toggleModal={this.toggleEditProfileModal} />
+          <EditProfileModal 
+            modalMode={this.state.modalMode} 
+            toggleModal={this.toggleEditProfileModal} 
+            saveUserEdit={this.saveUserEdit}
+          />
         </div>
       </div>
     );
