@@ -11,8 +11,6 @@ import {
 } from "../../ducks/reducers/followsReducer";
 import { getLoggedInUser } from '../../ducks/reducers/userReducer';
 
-import { getLoggedInUser } from '../../ducks/reducers/userReducer';
-
 class MyFollowers extends Component {
   constructor() {
     super();
