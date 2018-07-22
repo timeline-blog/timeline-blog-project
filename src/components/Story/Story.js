@@ -34,7 +34,8 @@ class Story extends Component {
       selectedEvent: [],
       titleCharsRemaining: 40,
       monitorEventImages: [],
-      eventID: 0 
+      eventID: 0,
+      imgUrl: []
      
     };
     this.titleMaxChars = 40;
@@ -42,6 +43,12 @@ class Story extends Component {
     this.toggleEditModal = this.toggleEditModal.bind(this);
     this.toggleEditEventModal = this.toggleEditEventModal.bind(this);
     this.deleteStoryHandler = this.deleteStoryHandler.bind(this);
+  }
+
+  updateImgUrl=(value)=>{
+     let arr = this.state.imgUrl.slice()
+     arr.push(value)
+     this.setState({imgUrl: arr})
   }
 
   eventTitleChange = value => {
@@ -199,13 +206,13 @@ updateMonitorEventImages=(value)=>{
      if (this.state.editEventModalMode === "hidden") {
        this.setState({ editEventModalMode: "visible", editModalMode: "hidden", 
        modalMode: "hidden", eventTitle:selectedEvent[0].event_title,
-       eventDescription:selectedEvent[0].event_description,images:selectedEvent[0].e_urls,editEventuploadButtonStatus:'active', monitorEventImages: selectedEvent[0].e_urls,
+       eventDescription:selectedEvent[0].event_description,images:selectedEvent[0].e_urls,editEventuploadButtonStatus:'active',monitorEventImages: selectedEvent[0].e_urls,
         eventID: event_id
       });
        
       setTimeout(()=>this.setState({titleCharsRemaining: 40-this.state.eventTitle.length}),100) 
     } else {
-      this.setState({ editEventModalMode: "hidden",eventTitle:'', eventDescription:'', images:[],titleCharsRemaining: 40,monitorEventImages: [] });
+      this.setState({ editEventModalMode: "hidden",imgUrl:[],eventTitle:'', eventDescription:'', images:[],titleCharsRemaining: 40,monitorEventImages: [] });
     } 
     let that = this;
         function check(){
@@ -264,6 +271,8 @@ updateMonitorEventImages=(value)=>{
               eventImages={this.state.images}
               removeImages={this.state.removeImages}
 
+
+              updateImgUrl= {this.updateImgUrl}
               titleCharsRemaining={this.state.titleCharsRemaining}
               removeImagesEvents={this.removeImagesEvents}
               _handleImageChange={this._handleImageChange}
@@ -277,6 +286,7 @@ updateMonitorEventImages=(value)=>{
               updateMonitorEventImages={this.updateMonitorEventImages}
               monitorEventImages={this.state.monitorEventImages}
               eventID={this.state.eventID}
+              imgUrl={this.state.imgUrl}
               />
             <span className="connect-line" />
           </Fragment>

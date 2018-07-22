@@ -114,7 +114,9 @@ class Event extends Component {
                     updateMonitorEventImages={this.props.updateMonitorEventImages}
                     monitorEventImages={this.props.monitorEventImages}
                     eventID={this.props.eventID}
-                />
+                    updateImgUrl= {this.props.updateImgUrl}
+                    imgUrl={this.props.imgUrl}
+                    />
             </div>
         );
     }
