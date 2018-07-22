@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import ImageCompressor from "image-compressor.js";
 import FileUploader from 'react-firebase-file-uploader'
+import axios from 'axios'
+
 import firebase from '../../firebase'
-
-
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
 
@@ -35,6 +35,7 @@ class EditEventModal extends Component {
                    .then(url=>{
                        console.log(url)   
                        let img = this.state.imgUrl.slice();
+                       this.props.updateImgUrl(url)
                        img.push(url)
                        this.setState({imgUrl: img})
                    
@@ -91,7 +92,7 @@ class EditEventModal extends Component {
     }
 
     updateEvent=()=>{
-
+            let that =this;
           let arr1 =  this.props.monitorEventImages;
           let arr2 = this.state.resizedImages
             let arr3 = arr1.filter(element=>{
@@ -109,30 +110,22 @@ class EditEventModal extends Component {
                         arr2.forEach(element=>{
                             arr.push(element)
                         })
-                        console.log(arr)
-                        console.log(arr2)
-                        console.log(arr3)
-                        let obj;
-                     if(arr3.length===0) { 
-                 obj={
+                        // console.log(arr)
+                        // console.log(arr2)
+                        // console.log(arr3)
+                        //console.log(that.props.imgUrl)
+                        let obj={
                         event_title,
                         event_description,
-                        imgs: [],
-                        id
-                    }
-                }else{
-             obj={
-                        event_title,
-                        event_description,
-                        imgs:arr2,
-                        id
-                    }
-                }
-                   console.log(obj) 
+                        imgs: arr,
+                        }
+                 axios.put(`/api/event/${id}`, obj)
+                  //console.log(obj) 
              }
 
             setTimeout(()=>update(this.props.event_title,this.props.event_description,this.state.imgUrl,this.props.eventImages,this.props.eventID), 1500)
-
+            setTimeout(()=>this.props.toggleEditEventModal(),1800)
+            this.setState({imgUrl: []})
     }
 
     render() { 
