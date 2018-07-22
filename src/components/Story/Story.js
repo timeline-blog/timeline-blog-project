@@ -30,12 +30,16 @@ class Story extends Component {
       images: [],
       resizedImages: [],
       uploadButtonStatus: "active",
-      selectedEvent: []
+      selectedEvent: [],
+      storyTitle: '',
+      storyDescription: '',
+      storyCategory: ''
     };
     this.toggleModal = this.toggleModal.bind(this);
     this.toggleEditModal = this.toggleEditModal.bind(this);
     this.toggleEditEventModal = this.toggleEditEventModal.bind(this);
     this.deleteStoryHandler = this.deleteStoryHandler.bind(this);
+    this.saveEdit = this.saveEdit.bind(this);
   }
 
   eventTitleChange = value => {
@@ -47,7 +51,7 @@ class Story extends Component {
   };
 
   _handleImageChange = e => {
-    if (this.state.images.length == 4) {
+    if (this.state.images.length === 4 ) {
       // this.setState({ uploadButtonStatus: 'disabled' })
       console.log("limit exceeded: ", this.state.images.length);
       return;
@@ -84,8 +88,8 @@ class Story extends Component {
         id: id,
         url: reader.result
       });
-      console.log("arr: ", arr.length);
-      if (arr.length == 4) {
+      // console.log("arr: ", arr.length);
+      if (arr.length === 4) {
         console.log("condition met");
         this.setState({ uploadButtonStatus: "disabled" });
       }
@@ -95,6 +99,12 @@ class Story extends Component {
     });
     img && reader.readAsDataURL(img);
   };
+
+  updateEventImages=(img)=>{
+   let arr =  this.state.images.slice();
+    arr.push(img)
+    this.setState({images: arr})
+  }
 
   removeImages = index => {
     if (this.state.uploadButtonStatus === "disabled") {
@@ -108,10 +118,39 @@ class Story extends Component {
     this.setState({ resizedImages: arr2 });
   };
 
+  removeImagesEvents = index =>{
+    
+    let arr = this.state.images.slice();
+    arr.splice(index,1)
+    this.setState({images: arr})
+  }
+
   componentDidMount() {
-    this.props.getStoryById(this.props.match.params.story_id);
+    this.props.getStoryById(this.props.match.params.story_id)
+      .then(response => {
+        let {story_title, story_description, story_category} =response.value.data
+        this.setState({
+          storyTitle: story_title,
+          storyDescription: story_description,
+          storyCategory: story_category
+        })
+      });
     this.props.likeCount(this.props.match.params.story_id);
   }
+
+  saveEdit(newTitle, newDescription, newCategory) {
+    this.setState({
+      storyTitle: newTitle,
+      storyDescription: newDescription,
+      storyCategory: newCategory
+    })
+  }
+
+  // componentDidUpdate(prevProps) {
+  //   if(this.props.story.s_updated_on !== prevProps.story.s_updated_on){
+  //     this.props.getStoryById(this.props.match.params.story_id);
+  //   }
+  // };
 
   toggleModal() {
     if (this.state.modalMode === "hidden") {
@@ -150,21 +189,24 @@ class Story extends Component {
     const selectedEvent = events.filter(event=>{
        return event_id==event.event_id
      })
+
+   
      
 
     if (this.state.editEventModalMode === "hidden") {
-      this.setState({ editEventModalMode: "visible", editModalMode: "hidden", modalMode: "hidden", selectedEvent });
+      this.setState({ editEventModalMode: "visible", editModalMode: "hidden", modalMode: "hidden", eventTitle:selectedEvent[0].event_title, eventDescription:selectedEvent[0].event_description,images:selectedEvent[0].e_urls });
     } else {
-      this.setState({ editEventModalMode: "hidden",event_id:0 });
+      this.setState({ editEventModalMode: "hidden",eventTitle:'', eventDescription:'', images:[]});
     }
   }
 
   deleteStoryHandler() {
-    this.props.deleteStory(this.props.match.params.story_id);
+    this.props.deleteStory(+this.props.match.params.story_id)
+      .then(this.props.history.push(`/profile/${this.props.user.user_id}`));
   }
 
   addLikeHandler() {
-    console.log("handler fired");
+    // console.log("handler fired");
     this.props
       .addLike(this.props.user.user_id, this.props.match.params.story_id)
       .then(() => this.props.likeCount(this.props.match.params.story_id));
@@ -178,6 +220,7 @@ class Story extends Component {
 
   render() {
     
+    // console.log('this.props: ', this.props);
 
     const { story } = this.props;
     const { user } = this.props;
@@ -186,8 +229,9 @@ class Story extends Component {
       var mappedEvents = story.events.reverse().map((event,index) => {
         // console.log(event);
         return (
-          <Fragment key={event.event_id}>
+          <Fragment key={index}>
             <Event
+               key={index}
               editEventModalMode={this.state.editEventModalMode}
               story_id={this.props.match.params.story_id}
               event_id={event.event_id}
@@ -199,7 +243,20 @@ class Story extends Component {
               event_id={event.event_id}
               selectedEvent={this.state.selectedEvent}
               toggleEditEventModal={this.toggleEditEventModal}
-            />
+              eventTitleChange={this.eventTitleChange}
+              eventDescriptionChange={this.eventDescriptionChange}
+              title={this.state.eventTitle}
+              eventDescription={this.state.eventDescription}
+              eventImages={this.state.images}
+              removeImages={this.state.removeImages}
+
+              removeImagesEvents={this.removeImagesEvents}
+              _handleImageChange={this._handleImageChange}
+              removeImages={this.removeImages}
+              resizedImages={this.state.resizedImages}
+              uploadButtonStatus={this.state.uploadButtonStatus}
+              updateEventImages={this.updateEventImages}
+              />
             <span className="connect-line" />
           </Fragment>
         );
@@ -211,18 +268,16 @@ class Story extends Component {
         <div className="inner-wrap">
           <div className="page-header story-header">
             <h1 className="page-title story-title">
-              {story.story_title}{" "}
+              {this.state.storyTitle}{" "}
               <span className="byline">by {story.display_name}</span>
             </h1>
             <p className="page-description story-description">
-              {story.story_description}
+              {this.state.storyDescription}
             </p>
             <div className="follow-info-wrap">
               {this.props.user.user_id ? (
                 <button
-                  onClick={() => {
-                    console.log("clicked"), this.addLikeHandler();
-                  }}
+                  onClick={() => this.addLikeHandler()}
                   className="follow-btn btn"
                 >
                   Like
@@ -260,7 +315,7 @@ class Story extends Component {
                   onClick={() => this.deleteStoryHandler()}
                 >
                   <FontAwesomeIcon icon={faTrash} />
-                  {` Delete "${story.story_title}"`}
+                  {` Delete "${this.state.storyTitle}"`}
                 </button>
               </div>
             )}
@@ -298,6 +353,9 @@ class Story extends Component {
           <EditStoryModal
             editModalMode={this.state.editModalMode}
             toggleEditModal={this.toggleEditModal}
+            eventTitleChange={this.eventTitleChange}
+            eventDescriptionChange={this.eventDescriptionChange}
+            saveEdit={this.saveEdit}
           />
         </div>
       </div>

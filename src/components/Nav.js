@@ -74,7 +74,7 @@ class Nav extends Component {
   }
 
   render() {
-    console.log('NAV Props!!!    ', this.props);
+    // console.log('NAV Props!!!    ', this.props);
     const { user } = this.props;
 
     return (
@@ -117,7 +117,7 @@ class Nav extends Component {
           </div>
           </Fragment>) :
           (<div className="nav-left">
-            <NavLink onClick={() => this.hideAllMenus()} to="/login">Login</NavLink>
+            <NavLink onClick={() => this.hideAllMenus()} to="/login">Log In</NavLink>
             <NavLink onClick={() => this.hideAllMenus()} to="/signup">Sign Up</NavLink>
           </div>)
         }

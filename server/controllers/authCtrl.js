@@ -94,7 +94,7 @@ const googleSignIn=(req,res)=>{
                         res.redirect('http://localhost:3000/#/home')
                     } else{
 
-                        auth.google.signUp([user.displayName,user.photos[0].value,user.emails[0].value,user.id])
+                        auth.google.signUp([user.displayName,`${user.photos[0].value.split('?')[0]}?sz=200`,user.emails[0].value,user.id])
                                     .then(response=>{
                                         req.session.user = response[0]
                                         res.redirect('http://localhost:3000/#/home')

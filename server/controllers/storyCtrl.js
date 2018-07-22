@@ -10,9 +10,12 @@ const getStory = (req, res) => {
         .then(events=>{
           res.status(200).json({
             user_id: storys[0].user_id,
+            story_id: storys[0].story_id,
             story_title: storys[0].story_title,
             story_description: storys[0].story_description,
             story_category: storys[0].story_category,
+            s_updated_on: storys[0].s_updated_on,
+            s_created_on: storys[0].s_created_on,
             like_count: storys[0].like_count,
             display_name: storys[0].display_name,
             avatar: storys[0].avatar,
@@ -25,6 +28,7 @@ const getStory = (req, res) => {
 };
 
 const addStory = (req, res) => {
+  // console.log(req.body);
   const {
     story_title,
     story_description,
@@ -47,6 +51,9 @@ const addStory = (req, res) => {
 };
 
 const editStory = (req, res) => {
+
+  // console.log(req.body);
+  // console.log(req.params);
   const {
     story_title,
     story_description,
@@ -61,9 +68,13 @@ const editStory = (req, res) => {
       story_title,
       story_description,
       story_category,
-      s_updated_on
+      s_updated_on,
+      story_id
     ])
-    .then(response => res.status(200).json(response))
+    .then(response => {
+      console.log('response: ', response);
+      
+      res.status(200).json(response)})
     .catch(err => console.log(err));
 };
 

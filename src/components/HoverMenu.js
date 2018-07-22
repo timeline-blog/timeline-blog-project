@@ -26,7 +26,7 @@ class HoverMenu extends Component {
         </Link>
         <div>
           <a href='http://localhost:3001/auth/logout'>
-            <button onClick={() => this.props.toggleHoverMenu()}>Logout</button>
+            <button onClick={() => this.props.toggleHoverMenu()}>Log Out</button>
           </a>
         </div>
       </div>
