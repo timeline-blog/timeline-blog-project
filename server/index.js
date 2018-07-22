@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 
-const { createEvent,deleteEvent } = require(`${__dirname}/controllers/eventCtrl`)
+const { createEvent,deleteEvent, updateEvent } = require(`${__dirname}/controllers/eventCtrl`)
 
 const {
   getLoggedInUser,
@@ -157,6 +157,7 @@ app.post("/api/people/unfollow", unfollow);
 //event controller
 app.post('/api/event/:story_id',createEvent)
 app.delete('/api/event/:event_id',deleteEvent)
+app.put('/api/event/:event_id', updateEvent)
 
 //home following
 app.get("/api/home/:user_id", getHome);
