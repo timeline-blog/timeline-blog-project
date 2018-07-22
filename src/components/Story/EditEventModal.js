@@ -7,7 +7,7 @@ import firebase from '../../firebase'
 
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
-import { read } from 'fs';
+
 
 
 class EditEventModal extends Component {
@@ -18,54 +18,40 @@ class EditEventModal extends Component {
             imgUrl: [],
             eventTitleField: '',
             eventDescriptionField: '',
-            titleCharsRemaining: 40,
+            
             resizedImages: [],
             uploadButtonStatus:"active"
         };
 
-        this.titleMaxChars = 40;
+      
     }
 
     handleUploadSuccess=(filenmae)=>{
     
-        // firebase.storage()
-        //            .ref('events')
-        //            .child(filenmae)
-        //            .getDownloadURL()
-        //            .then(url=>{   
-        //                let img = this.state.imgUrl.slice();
-        //                img.push(url)
-        //                this.setState({imgUrl: img})
-        //            })
+        firebase.storage()
+                   .ref('events')
+                   .child(filenmae)
+                   .getDownloadURL()
+                   .then(url=>{
+                       console.log(url)   
+                       let img = this.state.imgUrl.slice();
+                       img.push(url)
+                       this.setState({imgUrl: img})
+                   
+                   })
       }
 
-      startUploadManually =()=>{
-        // this is to save the image upon successful upload
-          this.state.resizedImages.forEach(element=>{
-            this.FileUploader.startUpload(element)       
-          })
-        
- 
-        }
+    
 
         _handleImageChange = e => {
             if (this.props.eventImages.length == 4 ) {
-              // this.setState({ uploadButtonStatus: 'disabled' })
-             // console.log("limit exceeded: ", this.state.images.length);
+            
               return;
-            } else {
-              // this.setState({ uploadButtonStatus: 'active' })
-             // console.log("this.state.images.length: ", this.state.images.length);
-            }
-            let arr = [];
-            let id = 7; //the id should come from the story or event
+            } 
+            
             let reader = new FileReader();
             let img = e.target.files[0];
-            //    console.log('normal img ', img)
-            //       let resized = [];
-            //       resized = this.state.resizedImages.slice();
-            //       resized.push(img)
-            //      this.setState({resizedImages: resized})
+            
         
             let that = this;
             new ImageCompressor(img, {
@@ -76,26 +62,22 @@ class EditEventModal extends Component {
                 // console.log('image arr after resize ',result)
                 newArr.push(result);
                 that.setState({
-                  resizedImages: newArr
+                    resizedImages: newArr
                 });
+                that.props.updateMonitorEventImages(result)
               }
             });
             reader.addEventListener("load", () => {
                 this.props.updateEventImages(reader.result)
-            //   arr = this.state.images.slice();
-            //   id++;
-            //   arr.push({
-            //     id: id,
-            //     url: reader.result
-            //   });
-            //  console.log("arr: ", arr.length);
+           
               if (this.props.eventImages.length == 4) {
-              //  console.log("condition met");
-                this.setState({ uploadButtonStatus: "disabled" });
+                this.props.updateDisabled('disabled')
+                this.props.updateButton('disabled')
+              }else {    
+                  this.props.updateButton('active')
+                  this.props.updateDisabled('active')
               }
-            //   this.setState({
-            //     images: arr
-            //   });
+          
             });
             img && reader.readAsDataURL(img);
           };
@@ -106,6 +88,51 @@ class EditEventModal extends Component {
 
     changeContentField( value ) {
         this.setState({ eventContentField: value });
+    }
+
+    updateEvent=()=>{
+
+          let arr1 =  this.props.monitorEventImages;
+          let arr2 = this.state.resizedImages
+            let arr3 = arr1.filter(element=>{
+                return arr2.indexOf(element)!=-1
+            })
+
+            arr3.forEach(element=>{
+                this.FileUploader.startUpload(element)
+            })
+            // console.log(selectedEvent)
+
+             function update( event_title,event_description,imgUrl,imgUrl2, id ){
+                        let arr = imgUrl.slice()
+                        let arr2 = imgUrl2.slice().filter(element=> element.includes('https'))
+                        arr2.forEach(element=>{
+                            arr.push(element)
+                        })
+                        console.log(arr)
+                        console.log(arr2)
+                        console.log(arr3)
+                        let obj;
+                     if(arr3.length===0) { 
+                 obj={
+                        event_title,
+                        event_description,
+                        imgs: [],
+                        id
+                    }
+                }else{
+             obj={
+                        event_title,
+                        event_description,
+                        imgs:arr2,
+                        id
+                    }
+                }
+                   console.log(obj) 
+             }
+
+            setTimeout(()=>update(this.props.event_title,this.props.event_description,this.state.imgUrl,this.props.eventImages,this.props.eventID), 1500)
+
     }
 
     render() { 
@@ -130,6 +157,7 @@ class EditEventModal extends Component {
                             onChange={(e) => this.props.eventTitleChange(e.target.value)}
                              value={this.props.event_title}
                         />
+                        <span className="char-counter">{this.props.titleCharsRemaining} characters left</span>
                     </div>
 
                     <div className="field-group">
@@ -143,13 +171,13 @@ class EditEventModal extends Component {
                     </div>
 
                     <div className="field-group">
-                    <label className={`btn border-btn images-label ${this.props.uploadButtonStatus}`}>
+                    <label className={`btn border-btn images-label ${this.props.editEventuploadButtonStatus}`}>
                     Add Images
                     <FileUploader 
                         hidden //this prop hides the defualt button. you can then wrap it in a custom label tag
                         accept="image/*"
                         name="avatar"
-                        disabled={this.state.uploadButtonStatus === 'disabled' ? true : false }
+                        disabled={this.props.editEventuploadButtonStatus === 'disabled' ? true : false }
                         storageRef={firebase.storage().ref('events')}
                         onChange={e=>this._handleImageChange(e)}
                         ref ={instance=>{this.FileUploader=instance}}
@@ -159,11 +187,11 @@ class EditEventModal extends Component {
                         {/* <button className="btn border-btn">Add Image</button> */}
                     </div>
                     {this.props.eventImages.map((element, index)=>{
-                        return (<img height="150" key={index}  src={element}/> )
+                        return (<img onClick={()=>this.props.removeImagesEvents(index)} height="150" key={index}  src={element}/> )
                     }) }
                 </div>
                
-                <button className="btn create-event-btn">Save Changes</button>
+                <button onClick={this.updateEvent} className="btn create-event-btn">Save Changes</button>
             </div>
 
            
