@@ -4,6 +4,9 @@ import ImageCompressor from "image-compressor.js";
 import FileUploader from 'react-firebase-file-uploader'
 import axios from 'axios'
 
+import { withRouter } from 'react-router'
+import { getStoryById } from "../../ducks/reducers/storyReducer";
+
 import firebase from '../../firebase'
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
@@ -120,11 +123,15 @@ class EditEventModal extends Component {
                         imgs: arr,
                         }
                  axios.put(`/api/event/${id}`, obj)
+                      .then(response=>{
+                        that.props.getStoryById(that.props.match.params.story_id);
+                        that.props.toggleEditEventModal()
+                      })
                   //console.log(obj) 
              }
 
             setTimeout(()=>update(this.props.event_title,this.props.event_description,this.state.imgUrl,this.props.eventImages,this.props.eventID), 1500)
-            setTimeout(()=>this.props.toggleEditEventModal(),1800)
+           // setTimeout(()=>this.props.toggleEditEventModal(),1800)
             this.setState({imgUrl: []})
     }
 
@@ -199,4 +206,4 @@ const mapStateToProps=state=>{
     }
 }
 
-export default connect(mapStateToProps,null)(EditEventModal)
+export default withRouter(connect(mapStateToProps,{getStoryById})(EditEventModal))
