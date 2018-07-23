@@ -13,7 +13,7 @@ import {
 import Event from "./Event";
 import NewEventModal from "./NewEventModal";
 import EditStoryModal from "./EditStoryModal";
-import EditEventModal from "./EditEventModal";
+
 
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import faTrash from "@fortawesome/fontawesome-pro-solid/faTrash";
@@ -30,51 +30,74 @@ class Story extends Component {
       images: [],
       resizedImages: [],
       uploadButtonStatus: "active",
+      editEventuploadButtonStatus: 'active',
       selectedEvent: [],
+      titleCharsRemaining: 40,
+      monitorEventImages: [],
+      eventID: 0,
+      imgUrl: [],
+     
       storyTitle: '',
       storyDescription: '',
       storyCategory: ''
     };
+    this.titleMaxChars = 40;
     this.toggleModal = this.toggleModal.bind(this);
-    this.toggleEditModal = this.toggleEditModal.bind(this);
+    this.togglseEditModal = this.toggleEditModal.bind(this);
     this.toggleEditEventModal = this.toggleEditEventModal.bind(this);
     this.deleteStoryHandler = this.deleteStoryHandler.bind(this);
     this.saveEdit = this.saveEdit.bind(this);
   }
 
+  updateImgUrl=(value)=>{
+     let arr = this.state.imgUrl.slice()
+     arr.push(value)
+     this.setState({imgUrl: arr})
+  }
+
   eventTitleChange = value => {
+    if((this.titleMaxChars - value.length)>=0){
+      this.updateTitleCharsRemaining( value );
     this.setState({ eventTitle: value });
+  }
   };
 
   eventDescriptionChange = value => {
     this.setState({ eventDescription: value });
   };
+  updateTitleCharsRemaining( value ) {
+    this.setState({ titleCharsRemaining: this.titleMaxChars - value.length });
+    ;
+}
+
+updateMonitorEventImages=(value)=>{
+    let arr = this.state.monitorEventImages.slice()
+      arr.push(value)
+      this.setState({monitorEventImages: arr})
+  }
+
 
   _handleImageChange = e => {
     if (this.state.images.length === 4 ) {
       // this.setState({ uploadButtonStatus: 'disabled' })
-      console.log("limit exceeded: ", this.state.images.length);
+     // console.log("limit exceeded: ", this.state.images.length);
       return;
     } else {
-      // this.setState({ uploadButtonStatus: 'active' })
-      console.log("this.state.images.length: ", this.state.images.length);
+       this.setState({ uploadButtonStatus: 'active' })
+     // console.log("this.state.images.length: ", this.state.images.length);
     }
     let arr = [];
-    let id = 7; //the id should come from the story or event
+   
     let reader = new FileReader();
     let img = e.target.files[0];
-    //    console.log('normal img ', img)
-    //       let resized = [];
-    //       resized = this.state.resizedImages.slice();
-    //       resized.push(img)
-    //      this.setState({resizedImages: resized})
+
 
     let that = this;
     new ImageCompressor(img, {
       quality: 0.3, //signifies how much quality you want on the photo
       success(result) {
         let newArr = that.state.resizedImages.slice();
-        // console.log('image arr after resize ',result)
+         console.log('hit resized ')
         newArr.push(result);
         that.setState({
           resizedImages: newArr
@@ -83,14 +106,14 @@ class Story extends Component {
     });
     reader.addEventListener("load", () => {
       arr = this.state.images.slice();
-      id++;
+    
       arr.push({
-        id: id,
+       
         url: reader.result
       });
       // console.log("arr: ", arr.length);
       if (arr.length === 4) {
-        console.log("condition met");
+      //  console.log("condition met");
         this.setState({ uploadButtonStatus: "disabled" });
       }
       this.setState({
@@ -118,11 +141,26 @@ class Story extends Component {
     this.setState({ resizedImages: arr2 });
   };
 
+  updateDisabled=(value)=>{
+      this.setState({
+        editEventuploadButtonStatus: value
+      })
+  }
+
+  updateButton=(value)=>{
+    this.setState({
+      uploadButtonStatus: value
+    })
+
+  }
+
   removeImagesEvents = index =>{
-    
+    this.setState({editEventuploadButtonStatus:'active', uploadButtonStatus:'active'})
+    let arr1 = this.state.monitorEventImages.slice()
     let arr = this.state.images.slice();
+    arr1.splice(index, 1)
     arr.splice(index,1)
-    this.setState({images: arr})
+    this.setState({images: arr, monitorEventImages: arr1})
   }
 
   componentDidMount() {
@@ -168,11 +206,10 @@ class Story extends Component {
         resizedImages: []
       });
     }
-    this.props.getStoryById(this.props.match.params.story_id);
+    
   }
 
   toggleEditModal() {
-    
     if (this.state.editModalMode === "hidden") {
       this.setState({
         editModalMode: "visible",
@@ -190,14 +227,26 @@ class Story extends Component {
        return event_id==event.event_id
      })
 
-   
      
-
-    if (this.state.editEventModalMode === "hidden") {
-      this.setState({ editEventModalMode: "visible", editModalMode: "hidden", modalMode: "hidden", eventTitle:selectedEvent[0].event_title, eventDescription:selectedEvent[0].event_description,images:selectedEvent[0].e_urls });
+     
+     if (this.state.editEventModalMode === "hidden") {
+       this.setState({ editEventModalMode: "visible", editModalMode: "hidden", 
+       modalMode: "hidden", eventTitle:selectedEvent[0].event_title,
+       eventDescription:selectedEvent[0].event_description,images:selectedEvent[0].e_urls,editEventuploadButtonStatus:'active',monitorEventImages: selectedEvent[0].e_urls,
+        eventID: event_id
+      });
+       
+      setTimeout(()=>this.setState({titleCharsRemaining: 40-this.state.eventTitle.length}),100) 
     } else {
-      this.setState({ editEventModalMode: "hidden",eventTitle:'', eventDescription:'', images:[]});
-    }
+      this.setState({ editEventModalMode: "hidden",imgUrl:[],eventTitle:'', eventDescription:'', images:[],titleCharsRemaining: 40,monitorEventImages: [] });
+    } 
+    let that = this;
+        function check(){
+          if(that.state.images.length==4){
+            that.setState({editEventuploadButtonStatus:'disabled',})
+         }
+        }
+        setTimeout(()=>check(),50)
   }
 
   deleteStoryHandler() {
@@ -250,12 +299,22 @@ class Story extends Component {
               eventImages={this.state.images}
               removeImages={this.state.removeImages}
 
+
+              updateImgUrl= {this.updateImgUrl}
+              titleCharsRemaining={this.state.titleCharsRemaining}
               removeImagesEvents={this.removeImagesEvents}
               _handleImageChange={this._handleImageChange}
               removeImages={this.removeImages}
               resizedImages={this.state.resizedImages}
               uploadButtonStatus={this.state.uploadButtonStatus}
               updateEventImages={this.updateEventImages}
+              updateDisabled={this.updateDisabled}
+              editEventuploadButtonStatus={this.state.editEventuploadButtonStatus}
+              updateButton={this.updateButton}
+              updateMonitorEventImages={this.updateMonitorEventImages}
+              monitorEventImages={this.state.monitorEventImages}
+              eventID={this.state.eventID}
+              imgUrl={this.state.imgUrl}
               />
             <span className="connect-line" />
           </Fragment>
