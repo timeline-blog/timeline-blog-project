@@ -117,7 +117,12 @@ const likeCount = (req, res) => {
   req.app
     .get("db")
     .likes.likeCount([story_id])
-    .then(response => res.status(200).json(response))
+    .then(response => {
+      console.log('response: ', response);
+      req.app.get("db")
+      .likes.updateLikeCount([response[0].count, story_id]);
+      res.status(200).json(response);
+    })
     .catch(err => console.log(err));
 };
 
