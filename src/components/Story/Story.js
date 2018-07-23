@@ -7,7 +7,8 @@ import {
   deleteStory,
   likeCount,
   addLike,
-  unlike
+  unlike,
+  likeCheck
 } from "../../ducks/reducers/storyReducer";
 
 import Event from "./Event";
@@ -43,7 +44,7 @@ class Story extends Component {
     };
     this.titleMaxChars = 40;
     this.toggleModal = this.toggleModal.bind(this);
-    this.togglseEditModal = this.toggleEditModal.bind(this);
+    this.toggleEditModal = this.toggleEditModal.bind(this);
     this.toggleEditEventModal = this.toggleEditEventModal.bind(this);
     this.deleteStoryHandler = this.deleteStoryHandler.bind(this);
     this.saveEdit = this.saveEdit.bind(this);
@@ -174,6 +175,10 @@ updateMonitorEventImages=(value)=>{
         })
       });
     this.props.likeCount(this.props.match.params.story_id);
+    this.props.likeCheck(
+      this.props.user.user_id,
+      this.props.match.params.story_id
+    );
   }
 
   saveEdit(newTitle, newDescription, newCategory) {
@@ -183,12 +188,6 @@ updateMonitorEventImages=(value)=>{
       storyCategory: newCategory
     })
   }
-
-  // componentDidUpdate(prevProps) {
-  //   if(this.props.story.s_updated_on !== prevProps.story.s_updated_on){
-  //     this.props.getStoryById(this.props.match.params.story_id);
-  //   }
-  // };
 
   toggleModal() {
     if (this.state.modalMode === "hidden") {
@@ -258,18 +257,26 @@ updateMonitorEventImages=(value)=>{
     // console.log("handler fired");
     this.props
       .addLike(this.props.user.user_id, this.props.match.params.story_id)
-      .then(() => this.props.likeCount(this.props.match.params.story_id));
+      .then(() => this.props.likeCount(this.props.match.params.story_id))
+      .then(() => this.props.likeCheck(
+        this.props.user.user_id,
+        this.props.match.params.story_id
+      ));
   }
 
   unlikeHandler() {
     this.props
       .unlike(this.props.user.user_id, this.props.match.params.story_id)
-      .then(() => this.props.likeCount(this.props.match.params.story_id));
+      .then(() => this.props.likeCount(this.props.match.params.story_id))
+      .then(() => this.props.likeCheck(
+        this.props.user.user_id,
+        this.props.match.params.story_id
+      ));
   }
 
   render() {
     
-    // console.log('this.props: ', this.props);
+    console.log('this.props: ', this.props);
 
     const { story } = this.props;
     const { user } = this.props;
@@ -334,16 +341,26 @@ updateMonitorEventImages=(value)=>{
               {this.state.storyDescription}
             </p>
             <div className="follow-info-wrap">
-              {this.props.user.user_id ? (
+            {!this.props.user.user_id ? (
+                <span className="follow-btn btn">Likes</span>
+              ) : this.props.user.user_id && !this.props.check ? (
                 <button
                   onClick={() => this.addLikeHandler()}
                   className="follow-btn btn"
                 >
-                  Like
+                  {" "}
+                  Like{" "}
                 </button>
-              ) : (
-                <div>Likes</div>
-              )}
+              ) : this.props.user.user_id && this.props.check ? (
+                <button
+                  onClick={() => {
+                    this.unlikeHandler();
+                  }}
+                  className="follow-btn btn border-btn"
+                >
+                  Unlike
+                </button>
+              ) : null}
               {/* {this.props.user.user_id && } */}
               <span className="follow-count">{this.props.likes}</span>
 
@@ -426,11 +443,12 @@ const mapStateToProps = state => {
   return {
     story: state.story.selectedStory,
     user: state.user.authedUser,
-    likes: state.story.likeCount
+    likes: state.story.likeCount,
+    check: state.story.likeCheck
   };
 };
 
 export default connect(
   mapStateToProps,
-  { getStoryById, deleteStory, likeCount, addLike, unlike }
+  { getStoryById, deleteStory, likeCount, addLike, unlike, likeCheck }
 )(Story);
