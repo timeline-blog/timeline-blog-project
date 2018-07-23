@@ -9,14 +9,14 @@ const getProfile = (req, res) => {
     .then(story => {
       profile.getUserEvent(user_id)
         .then(event => {
-          profile.getUserImage(user_id)
-            .then(image => {
-              let obj=[...story,...event,...image]
+          // profile.getUserImage(user_id)
+          //   .then(image => {
+              let obj=[...story,...event]
               let result = groupBy(obj,(elem)=>{
                 return elem.story_id
               })
               res.status(200).json(result)
-            })
+           // })
         })
     })
 };

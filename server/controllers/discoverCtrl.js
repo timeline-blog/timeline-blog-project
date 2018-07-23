@@ -9,15 +9,17 @@ const getFiltered = (req, res) => {
       .then(story => {
         discover.getFilteredEvent([category])
           .then(event => {
-            discover.getFilteredImage([category])
-              .then(image => {
-                
-                let obj=[...story,...event,...image]
+            // discover.getFilteredImage([category])
+            //   .then(image => {
+             //   console.log(event)
+            // console.log(event)
+                let obj=[...story,...event]
                 let result = groupBy(obj,(elem)=>{
                   return elem.story_id
                 })
+              //  console.log(result)
                 res.status(200).json(result)
-              })
+            //  })
           })
       })
 };
@@ -31,14 +33,14 @@ const getAll = (req, res) => {
       .then(story => {
           discover.getAllEvent()
             .then(event => {
-                discover.getAllImage()
-                    .then(image => {
-                      let obj=[...story,...event,...image]
+                // discover.getAllImage()
+                //     .then(image => {
+                      let obj=[...story,...event]
                       let result = groupBy(obj,(elem)=>{
                         return elem.story_id
                       })
                       res.status(200).json(result)
-                    })
+                   // })
             })
       })
 };
