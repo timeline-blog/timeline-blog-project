@@ -43,7 +43,7 @@ class Story extends Component {
     };
     this.titleMaxChars = 40;
     this.toggleModal = this.toggleModal.bind(this);
-    this.togglseEditModal = this.toggleEditModal.bind(this);
+    this.toggleEditModal = this.toggleEditModal.bind(this);
     this.toggleEditEventModal = this.toggleEditEventModal.bind(this);
     this.deleteStoryHandler = this.deleteStoryHandler.bind(this);
     this.saveEdit = this.saveEdit.bind(this);
@@ -79,7 +79,7 @@ updateMonitorEventImages=(value)=>{
 
   _handleImageChange = e => {
     if (this.state.images.length === 4 ) {
-      // this.setState({ uploadButtonStatus: 'disabled' })
+       this.setState({ uploadButtonStatus: 'disabled' })
      // console.log("limit exceeded: ", this.state.images.length);
       return;
     } else {
@@ -97,7 +97,7 @@ updateMonitorEventImages=(value)=>{
       quality: 0.3, //signifies how much quality you want on the photo
       success(result) {
         let newArr = that.state.resizedImages.slice();
-         console.log('hit resized ')
+        // console.log('hit resized ')
         newArr.push(result);
         that.setState({
           resizedImages: newArr
@@ -112,7 +112,7 @@ updateMonitorEventImages=(value)=>{
         url: reader.result
       });
       // console.log("arr: ", arr.length);
-      if (arr.length === 4) {
+      if (arr.length == 4) {
       //  console.log("condition met");
         this.setState({ uploadButtonStatus: "disabled" });
       }
