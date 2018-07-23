@@ -1,21 +1,40 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import moment from 'moment';
 
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
 
-export default class EditStoryModal extends Component {
+import { editStory, getStoryById } from '../../ducks/reducers/storyReducer';
+
+class EditStoryModal extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            storyTitleField: 'Story title here', // *TO DO: change this to actual story title
-            storyDescriptionField: 'Story description here', // *TO DO: change this to actual story description
-            selectedCategory: 'Food' // *TO DO: change this to actual story category
+            storyTitleField: '', // *TO DO: change this to actual story title
+            storyDescriptionField: '', // *TO DO: change this to actual story description
+            selectedCategory: '' // *TO DO: change this to actual story category,
         };
 
         this.switchCategory = this.switchCategory.bind(this);
         this.changeStoryTitleField = this.changeStoryTitleField.bind(this);
         this.changeStoryDescriptionField = this.changeStoryDescriptionField.bind(this);
+        this.saveChanges = this.saveChanges.bind(this);
+    }
+
+    componentDidMount() {
+        this.props.getStoryById(this.props.match.params.story_id)
+            .then((response) => {
+                // console.log(response);
+                let {story_title, story_description, story_category} = response.value.data;
+                this.setState({
+                    storyTitleField: story_title,
+                    storyDescriptionField: story_description,
+                    selectedCategory: story_category
+                })
+            })
     }
 
     switchCategory( category ) {
@@ -31,7 +50,23 @@ export default class EditStoryModal extends Component {
         this.setState({ storyDescriptionField: value });
     }
 
+    saveChanges() {
+        let {storyTitleField, storyDescriptionField, selectedCategory} = this.state;
+        let s_updated_on = moment().format('MM/DD/YY, hh:mm')
+        if(storyTitleField === '' || storyDescriptionField === '' || selectedCategory === ''){
+            return;
+        }else {
+            this.props.editStory(storyTitleField, storyDescriptionField, selectedCategory, s_updated_on, this.props.match.params.story_id)
+            .then(() => this.props.saveEdit(storyTitleField, storyDescriptionField, selectedCategory))
+            .then(() => this.props.toggleEditModal())
+        }
+    }
+
     render() {
+
+        // console.log('STATE!!!   ', this.state);
+        // console.log('PROPS!!!   ', this.props);
+
         return (
             <div className={`outer-modal ${this.props.editModalMode}`}>
             <div className="inner-modal test">
@@ -100,7 +135,7 @@ export default class EditStoryModal extends Component {
                                 News
                             </span>
                             <span 
-                                className={this.state.selectedCategory === "Sport" ? "category-selector selected" : "category-selector"}
+                                className={this.state.selectedCategory === "Sports" ? "category-selector selected" : "category-selector"}
                                 onClick={(e) => this.switchCategory(e.target.innerText)}
                             >
                                 Sports
@@ -133,10 +168,18 @@ export default class EditStoryModal extends Component {
                     </div>
 
                 </div>
-                <button className="btn create-event-btn">Save Changes</button>
+                <button className="btn create-event-btn" onClick={() => this.saveChanges()}>Save Changes</button>
 
             </div>
             </div>
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        user: state.user.authedUser
+    }
+}
+
+export default withRouter(connect(mapStateToProps, {editStory, getStoryById})(EditStoryModal));

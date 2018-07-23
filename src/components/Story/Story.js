@@ -35,14 +35,18 @@ class Story extends Component {
       titleCharsRemaining: 40,
       monitorEventImages: [],
       eventID: 0,
-      imgUrl: []
+      imgUrl: [],
      
+      storyTitle: '',
+      storyDescription: '',
+      storyCategory: ''
     };
     this.titleMaxChars = 40;
     this.toggleModal = this.toggleModal.bind(this);
     this.togglseEditModal = this.toggleEditModal.bind(this);
     this.toggleEditEventModal = this.toggleEditEventModal.bind(this);
     this.deleteStoryHandler = this.deleteStoryHandler.bind(this);
+    this.saveEdit = this.saveEdit.bind(this);
   }
 
   updateImgUrl=(value)=>{
@@ -74,8 +78,8 @@ updateMonitorEventImages=(value)=>{
 
 
   _handleImageChange = e => {
-    if (this.state.images.length == 4 ) {
-       this.setState({ uploadButtonStatus: 'disabled' })
+    if (this.state.images.length === 4 ) {
+      // this.setState({ uploadButtonStatus: 'disabled' })
      // console.log("limit exceeded: ", this.state.images.length);
       return;
     } else {
@@ -107,9 +111,9 @@ updateMonitorEventImages=(value)=>{
        
         url: reader.result
       });
-     // console.log("arr: ", arr.length);
-      if (arr.length == 4) {
-     //   console.log("condition met");
+      // console.log("arr: ", arr.length);
+      if (arr.length === 4) {
+      //  console.log("condition met");
         this.setState({ uploadButtonStatus: "disabled" });
       }
       this.setState({
@@ -160,9 +164,31 @@ updateMonitorEventImages=(value)=>{
   }
 
   componentDidMount() {
-    this.props.getStoryById(this.props.match.params.story_id);
+    this.props.getStoryById(this.props.match.params.story_id)
+      .then(response => {
+        let {story_title, story_description, story_category} =response.value.data
+        this.setState({
+          storyTitle: story_title,
+          storyDescription: story_description,
+          storyCategory: story_category
+        })
+      });
     this.props.likeCount(this.props.match.params.story_id);
   }
+
+  saveEdit(newTitle, newDescription, newCategory) {
+    this.setState({
+      storyTitle: newTitle,
+      storyDescription: newDescription,
+      storyCategory: newCategory
+    })
+  }
+
+  // componentDidUpdate(prevProps) {
+  //   if(this.props.story.s_updated_on !== prevProps.story.s_updated_on){
+  //     this.props.getStoryById(this.props.match.params.story_id);
+  //   }
+  // };
 
   toggleModal() {
     if (this.state.modalMode === "hidden") {
@@ -224,11 +250,12 @@ updateMonitorEventImages=(value)=>{
   }
 
   deleteStoryHandler() {
-    this.props.deleteStory(this.props.match.params.story_id);
+    this.props.deleteStory(+this.props.match.params.story_id)
+      .then(this.props.history.push(`/profile/${this.props.user.user_id}`));
   }
 
   addLikeHandler() {
-    //console.log("handler fired");
+    // console.log("handler fired");
     this.props
       .addLike(this.props.user.user_id, this.props.match.params.story_id)
       .then(() => this.props.likeCount(this.props.match.params.story_id));
@@ -242,6 +269,7 @@ updateMonitorEventImages=(value)=>{
 
   render() {
     
+    // console.log('this.props: ', this.props);
 
     const { story } = this.props;
     const { user } = this.props;
@@ -299,18 +327,16 @@ updateMonitorEventImages=(value)=>{
         <div className="inner-wrap">
           <div className="page-header story-header">
             <h1 className="page-title story-title">
-              {story.story_title}{" "}
+              {this.state.storyTitle}{" "}
               <span className="byline">by {story.display_name}</span>
             </h1>
             <p className="page-description story-description">
-              {story.story_description}
+              {this.state.storyDescription}
             </p>
             <div className="follow-info-wrap">
               {this.props.user.user_id ? (
                 <button
-                  onClick={() => {
-                    console.log("clicked"), this.addLikeHandler();
-                  }}
+                  onClick={() => this.addLikeHandler()}
                   className="follow-btn btn"
                 >
                   Like
@@ -348,7 +374,7 @@ updateMonitorEventImages=(value)=>{
                   onClick={() => this.deleteStoryHandler()}
                 >
                   <FontAwesomeIcon icon={faTrash} />
-                  {` Delete "${story.story_title}"`}
+                  {` Delete "${this.state.storyTitle}"`}
                 </button>
               </div>
             )}
@@ -388,6 +414,7 @@ updateMonitorEventImages=(value)=>{
             toggleEditModal={this.toggleEditModal}
             eventTitleChange={this.eventTitleChange}
             eventDescriptionChange={this.eventDescriptionChange}
+            saveEdit={this.saveEdit}
           />
         </div>
       </div>

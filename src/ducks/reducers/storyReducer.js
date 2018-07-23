@@ -27,11 +27,11 @@ export function createStory(
 }
 
 export function editStory(
-  story_id,
   story_title,
   story_description,
   story_category,
-  s_updated_on
+  s_updated_on,
+  story_id
 ) {
   return {
     type: EDIT_STORY,
@@ -59,7 +59,7 @@ export function likeCount(story_id) {
 }
 
 export function addLike(user_id, story_id) {
-  console.log(user_id, story_id, "addlike");
+  // console.log(user_id, story_id, "addlike");
   return {
     type: ADD_LIKE,
     payload: axios.post("/api/like", { user_id, story_id })

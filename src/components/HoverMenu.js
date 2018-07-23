@@ -26,7 +26,7 @@ class HoverMenu extends Component {
         <div>
           <span className="logged-in-as">Logged in as: <strong>{user.display_name}</strong></span>
           <a href='http://localhost:3001/auth/logout'>
-            <button onClick={() => this.props.toggleHoverMenu()}>Logout</button>
+            <button onClick={() => this.props.toggleHoverMenu()}>Log Out</button>
           </a>
         </div>
       </div>

@@ -9,6 +9,7 @@ import {
   addFollow,
   searchUsers
 } from "../../ducks/reducers/followsReducer";
+import { getLoggedInUser } from '../../ducks/reducers/userReducer';
 
 class MyFollowers extends Component {
   constructor() {
@@ -155,13 +156,12 @@ class MyFollowers extends Component {
           </div>
 
           <div className="followers-list-wrap">
+          {this.state.isOpen ? searchResults : null}
             <h3 className="followers-list-title">
               {this.props.followers.length} followers
             </h3>
             {followersList}
           </div>
-          {this.state.isOpen ? searchResults : null}
-          {followersList}
         </div>
       </div>
     );
@@ -177,5 +177,5 @@ const mapStateToProps = state => {
 };
 export default connect(
   mapStateToProps,
-  { getFollowers, getFollowing, unfollow, addFollow, searchUsers }
+  { getFollowers, getFollowing, unfollow, addFollow, searchUsers, getLoggedInUser }
 )(MyFollowers);
