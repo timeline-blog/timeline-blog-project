@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 
-const { createEvent,deleteEvent } = require(`${__dirname}/controllers/eventCtrl`)
+const { createEvent,deleteEvent, updateEvent } = require(`${__dirname}/controllers/eventCtrl`)
 
 const {
   getLoggedInUser,
@@ -106,7 +106,7 @@ passport.use(
 app.get("/auth/loggedIn", getLoggedInUser);
 
 //endpoint for regular user login
-app.get("/auth/login", getUser);
+app.post("/auth/login", getUser);
 
 //endpoint for regular user signup
 app.post("/auth/signup", saveUser);
@@ -157,6 +157,7 @@ app.post("/api/people/unfollow", unfollow);
 //event controller
 app.post('/api/event/:story_id',createEvent)
 app.delete('/api/event/:event_id',deleteEvent)
+app.put('/api/event/:event_id', updateEvent)
 
 //home following
 app.get("/api/home/:user_id", getHome);

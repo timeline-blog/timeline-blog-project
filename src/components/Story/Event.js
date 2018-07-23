@@ -107,7 +107,16 @@ class Event extends Component {
                     uploadButtonStatus={this.state.uploadButtonStatus}
                     updateEventImages={this.props.updateEventImages}
                     removeImagesEvents={this.props.removeImagesEvents}
-                />
+                    updateDisabled={this.props.updateDisabled}
+                    editEventuploadButtonStatus={this.props.editEventuploadButtonStatus}
+                    updateButton={this.props.updateButton}
+                    titleCharsRemaining={this.props.titleCharsRemaining}
+                    updateMonitorEventImages={this.props.updateMonitorEventImages}
+                    monitorEventImages={this.props.monitorEventImages}
+                    eventID={this.props.eventID}
+                    updateImgUrl= {this.props.updateImgUrl}
+                    imgUrl={this.props.imgUrl}
+                    />
             </div>
         );
     }

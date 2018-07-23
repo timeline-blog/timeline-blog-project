@@ -3,7 +3,7 @@ import axios from 'axios'
 import moment from 'moment'
 import { connect } from 'react-redux'
 import { getStoryById } from "../../ducks/reducers/storyReducer";
-
+import { withRouter } from 'react-router'
 import FileUploader from 'react-firebase-file-uploader'
 import firebase from '../../firebase'
 
@@ -59,7 +59,6 @@ import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
            function soso(story_id,title,desc,img,user_id){
                let createdAt = moment().format('MM/DD/YY, hh:mm')
                let obj={
-                   story_id,
                    createdAt,
                    story_id,
                    title,
@@ -69,20 +68,17 @@ import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
                }
                axios.post(`/api/event/${story_id}`, obj)
                      .then(response=>{
-                        
+                        that.props.getStoryById(that.props.match.params.story_id);
                          that.props && that.props.toggleModal()
                         })
               
            }
 
-            setTimeout(()=>soso(this.props.story_id,this.state.eventTitleField,this.props.eventDescription,this.state.imgUrl, this.props.user.user_id), 2000)         
+            setTimeout(()=>soso(this.props.story_id,this.state.eventTitleField,this.props.eventDescription,this.state.imgUrl, this.props.user.user_id), 1500)         
        }
 
     updateTitleCharsRemaining( value ) {
         this.setState({ titleCharsRemaining: this.titleMaxChars - value.length });
-        // console.log('value: ', value);
-        // console.log('value.length: ', value.length);
-        // console.log('titleCharsRemaining: ', this.titleMaxChars - value.length);
     }
 
     handleTitleChange( value ) {
@@ -161,4 +157,4 @@ const mapStateToProps=state=>{
     }
 }
 
-export default connect(mapStateToProps,{getStoryById})(NewEventModal)
+export default withRouter(connect(mapStateToProps,{getStoryById})(NewEventModal))
