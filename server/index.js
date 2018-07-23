@@ -28,7 +28,8 @@ const {
   deleteStory,
   addLike,
   unlike,
-  likeCount
+  likeCount,
+  likeCheck
 } = require(`${__dirname}/controllers/storyCtrl`);
 const {
   getFollowing,
@@ -128,7 +129,8 @@ app.post("/api/story", addStory);
 app.put("/api/story/:story_id", editStory);
 app.delete("/api/story/:story_id", deleteStory);
 app.post("/api/like", addLike);
-app.delete("/api/unlike/:user_id", unlike);
+app.post("/api/unlike", unlike);
+app.post("/api/likeCheck", likeCheck);
 
 //like count
 app.get("/api/like/:story_id", likeCount);

@@ -69,9 +69,14 @@ export function addLike(user_id, story_id) {
 export function unlike(user_id, story_id) {
   return {
     type: UNLIKE,
-    payload: axios.delete(
-      `/api/unlike?user_id=${user_id}&?story_id=${story_id}`
-    )
+    payload: axios.post(`/api/unlike`, {user_id, story_id})
+  };
+}
+
+export function likeCheck(user_id, story_id) {
+  return {
+    type: LIKE_CHECK,
+    payload: axios.post("/api/likeCheck", { user_id, story_id })
   };
 }
 
@@ -82,10 +87,12 @@ const DELETE_STORY = "DELETE_STORY";
 const LIKE_COUNT = "LIKE_COUNT";
 const ADD_LIKE = "ADD_LIKE";
 const UNLIKE = "UNLIKE";
+const LIKE_CHECK = "LIKE_CHECK";
 
 const initialState = {
   selectedStory: {},
-  likeCount: 0
+  likeCount: 0,
+  likeCheck: {}
 };
 
 export default function storyReducer(state = initialState, action) {
@@ -112,6 +119,11 @@ export default function storyReducer(state = initialState, action) {
       return { ...state };
     case `${UNLIKE}_FULFILLED`:
       return { ...state };
+    case `${LIKE_CHECK}_FULFILLED`:
+      return {
+        ...state,
+        likeCheck: action.payload.data[0]
+      };
     default:
       return state;
   }
