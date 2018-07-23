@@ -1,0 +1,1 @@
+SELECT * FROM likes WHERE user_id = $1 AND story_id = $2;

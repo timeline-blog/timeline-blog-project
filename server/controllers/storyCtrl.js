@@ -72,7 +72,7 @@ const editStory = (req, res) => {
       story_id
     ])
     .then(response => {
-      console.log('response: ', response);
+      // console.log('response: ', response);
       
       res.status(200).json(response)})
     .catch(err => console.log(err));
@@ -90,7 +90,7 @@ const deleteStory = (req, res) => {
 
 const addLike = (req, res) => {
   const { user_id, story_id } = req.body;
-  console.log(user_id, story_id);
+  // console.log(user_id, story_id);
   req.app
     .get("db")
     .likes.addLike([user_id, story_id])
@@ -101,12 +101,12 @@ const addLike = (req, res) => {
 };
 
 const unlike = (req, res) => {
-  console.log(req.query, "hit");
-  const { story_id } = req.body;
+  // console.log(req.query, "hit");
+  const { user_id, story_id } = req.body;
 
   req.app
     .get("db")
-    .likes.unlike([req.user.user_id, story_id])
+    .likes.unlike([user_id, story_id])
     .then(response => res.status(200).json(response))
     .catch(err => console.log(err));
 };
@@ -118,9 +118,21 @@ const likeCount = (req, res) => {
     .get("db")
     .likes.likeCount([story_id])
     .then(response => {
-      console.log('response: ', response);
+      // console.log('response: ', response);
       req.app.get("db")
       .likes.updateLikeCount([response[0].count, story_id]);
+      res.status(200).json(response);
+    })
+    .catch(err => console.log(err));
+};
+
+const likeCheck = (req, res) => {
+  const { user_id, story_id } = req.body;
+  req.app
+    .get("db")
+    .likes.likeCheck([user_id, story_id])
+    .then(response => {
+      console.log(response);
       res.status(200).json(response);
     })
     .catch(err => console.log(err));
@@ -133,5 +145,6 @@ module.exports = {
   deleteStory,
   addLike,
   unlike,
-  likeCount
+  likeCount,
+  likeCheck
 }
