@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import moment from 'moment'
 
 const StoryPreview = (props) => {
-    // console.log('props: ', props);
+     console.log('props: ', props.url);
 
     let shortEventTitle = props.event_title.length < 28 ? props.event_title : props.event_title.substring(0, 25) + '...';
     return (
@@ -18,7 +18,7 @@ const StoryPreview = (props) => {
 
             <div className="story-pv-header">
                 {props.url !== 'No image' ? 
-                    <div className="story-pv-image" style={{ backgroundImage: `url(${props.url})` }}/>  
+                    <div className="story-pv-image" style={{ backgroundImage: `url(${props.url[0]})` }}/>  
                     :
                     <div className="story-pv-image" style={{ backgroundImage: "url('https://images.pexels.com/photos/257360/pexels-photo-257360.jpeg?auto=compress&cs=tinysrgb&h=350')" }}/> 
                     }

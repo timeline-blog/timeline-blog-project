@@ -99,7 +99,7 @@ class User extends Component {
           event_title={story[1] ? story[1].event_title : "No events"}
           e_created_on={story[1] ? story[1].e_created_on : null}
           event_id={story[1] ? story[1].event_id : null}
-          url={story[2] ? story[2].url : "No image"}
+          url={story[1] ? (story[1].e_urls ? story[1].e_urls : 'No image' ) : 'No image'}
         />
       );
     });

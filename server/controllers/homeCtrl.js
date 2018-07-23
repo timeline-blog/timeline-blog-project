@@ -10,14 +10,15 @@ const getHome = (req,res) => {
       .then(story => {
           home.getEventByStory([user_id])
             .then(event => {
-                home.getImageByEvent([user_id])
-                    .then(image => {
-                      let obj=[...story,...event,...image]
+                // home.getImageByEvent([user_id])
+                //     .then(image => {
+
+                      let obj=[...story,...event]
                       let result = groupBy(obj,(elem)=>{
                         return elem.story_id
                       })
                       res.status(200).json(result)
-                    })
+        //            })
             })
       })
 };
@@ -31,14 +32,14 @@ const getLiked = (req,res) => {
       .then(story => {
           liked.getLikedEvent([user_id])
             .then(event => {
-                liked.getLikedImage([user_id])
-                    .then(image => {
-                      let obj=[...story,...event,...image]
+                // liked.getLikedImage([user_id])
+                //     .then(image => {
+                      let obj=[...story,...event]
                       let result = groupBy(obj,(elem)=>{
                         return elem.story_id
                       })
                       res.status(200).json(result)
-                    })
+                 //   })
             })
       })
 };
