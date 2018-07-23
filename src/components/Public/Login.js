@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { emailLogin } from '../../ducks/reducers/userReducer';
 
+import axios from 'axios';
+
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import faWarning from "@fortawesome/fontawesome-pro-solid/faExclamationTriangle";
 import faGoogle from "@fortawesome/fontawesome-free-brands/faGoogle";
@@ -53,7 +55,16 @@ class Login extends Component {
             return false;
         }
 
-        
+        let email = emailField.trim();
+        let password = passwordField.trim();
+
+        axios.post('/auth/login', {email, password})
+            .then( response => {
+                this.props.history.push('/home');
+            })
+            .catch( err => {
+                console.log( 'login err: ', err.response.data.errMessage );
+            })
     }
 
     render() {
