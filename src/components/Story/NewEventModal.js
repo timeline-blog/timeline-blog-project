@@ -3,7 +3,7 @@ import axios from 'axios'
 import moment from 'moment'
 import { connect } from 'react-redux'
 import { getStoryById } from "../../ducks/reducers/storyReducer";
-
+import { withRouter } from 'react-router'
 import FileUploader from 'react-firebase-file-uploader'
 import firebase from '../../firebase'
 
@@ -68,7 +68,7 @@ import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
                }
                axios.post(`/api/event/${story_id}`, obj)
                      .then(response=>{
-                        
+                        that.props.getStoryById(that.props.match.params.story_id);
                          that.props && that.props.toggleModal()
                         })
               
@@ -157,4 +157,4 @@ const mapStateToProps=state=>{
     }
 }
 
-export default connect(mapStateToProps,{getStoryById})(NewEventModal)
+export default withRouter(connect(mapStateToProps,{getStoryById})(NewEventModal))
