@@ -40,7 +40,10 @@ const {
   getFollowerCount,
   searchUsers
 } = require(`${__dirname}/controllers/followsCtrl`);
-const { getHome, getLiked } = require(`${__dirname}/controllers/homeCtrl`);
+const { 
+  getHome, 
+  getLiked 
+} = require(`${__dirname}/controllers/homeCtrl`);
 const {
   getFiltered,
   getAll
