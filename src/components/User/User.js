@@ -4,7 +4,7 @@ import _ from "lodash";
 
 import { getStoriesByUser } from "../../ducks/reducers/previewsReducer";
 import { getUserById } from '../../ducks/reducers/userReducer';
-import { followCheck, getFollowerCount, addFollow } from '../../ducks/reducers/followsReducer';
+import { followCheck, getFollowerCount, addFollow, unfollow } from '../../ducks/reducers/followsReducer';
 
 import StoryPreview from "../StoryPreview";
 import EditProfileModal from './EditProfileModal';
@@ -21,6 +21,7 @@ class User extends Component {
     }
     this.toggleEditProfileModal = this.toggleEditProfileModal.bind(this);
     this.followHandler = this.followHandler.bind(this);
+    this.unfollowHandler = this.unfollowHandler.bind(this);
     this.saveUserEdit = this.saveUserEdit.bind(this);
   }
 
@@ -35,9 +36,9 @@ class User extends Component {
         bio: bio,
         avatarUrl: avatar
       })
-    });
+    })
+      .then(() => this.props.followCheck(this.props.user.user_id, this.props.match.params.user_id));
     this.props.getStoriesByUser(this.props.match.params.user_id);
-    this.props.followCheck(this.props.user.user_id, this.props.match.params.user_id);
   };
 
   componentDidUpdate(prevProps) {
@@ -63,6 +64,12 @@ class User extends Component {
       .then(() => this.props.followCheck(this.props.user.user_id, this.props.match.params.user_id))
       .then(() => this.props.getFollowerCount(this.props.match.params.user_id));
   };
+
+  unfollowHandler() {
+    this.props.unfollow(this.props.user.user_id, this.props.match.params.user_id)
+    .then(() => this.props.followCheck(this.props.user.user_id, this.props.match.params.user_id))
+    .then(() => this.props.getFollowerCount(this.props.match.params.user_id));
+  }
 
   saveUserEdit(newDisplayName, newBio, newAvatar) {
     this.setState({
@@ -92,7 +99,7 @@ class User extends Component {
           event_title={story[1] ? story[1].event_title : "No events"}
           e_created_on={story[1] ? story[1].e_created_on : null}
           event_id={story[1] ? story[1].event_id : null}
-          url={story[2] ? story[2].url : "No image"}
+          url={story[1] ? (story[1].e_urls ? story[1].e_urls : 'No image' ) : 'No image'}
         />
       );
     });
@@ -114,17 +121,22 @@ class User extends Component {
                   <span className="follow-btn btn">Followers</span>
                   <span className="follow-count">{this.props.followerCount}</span>
                 </div>
-              : (this.props.user.user_id && !this.props.followingCheck) ? 
-                <div className="follow-info-wrap">
-                  <button className="follow-btn btn" onClick={() => this.followHandler()}>Follow</button>
-                  <span className="follow-count">{this.props.followerCount}</span>
-                </div>
-              : (!this.props.user.user_id || this.props.followingCheck) ? 
-                <div className="follow-info-wrap">
-                  <span className="follow-btn btn">Followers</span>
-                  <span className="follow-count">{this.props.followerCount}</span>
-                </div>
-              : null}
+            : (this.props.user.user_id && !this.props.followingCheck) ? 
+              <div className="follow-info-wrap">
+                <button className="follow-btn btn" onClick={() => this.followHandler()}>Follow</button>
+                <span className="follow-count">{this.props.followerCount}</span>
+              </div>
+            : (this.props.user.user_id && this.props.followingCheck) ? 
+              <div className="follow-info-wrap">
+                <button className="btn border-btn negative-border-btn" onClick={() => this.unfollowHandler()}>Unfollow</button>
+                <span className="follow-count">{this.props.followerCount}</span>
+              </div>
+            : (!this.props.user.user_id) ? 
+              <div className="follow-info-wrap">
+                <span className="follow-btn btn">Followers</span>
+                <span className="follow-count">{this.props.followerCount}</span>
+              </div>
+            : null}
           </div>
 
           <div className="story-grid">{mappedStories}</div>
@@ -151,5 +163,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getStoriesByUser, getUserById, followCheck, getFollowerCount, addFollow }
+  { getStoriesByUser, getUserById, followCheck, getFollowerCount, addFollow, unfollow }
 )(User);

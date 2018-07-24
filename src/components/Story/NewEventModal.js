@@ -49,7 +49,8 @@ import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
        }
 
        createEvent =()=>{
-           if(this.props.title===''||this.props.eventDescription===''){
+         //  console.log('hit create event')
+           if(this.state.eventTitleField===''||this.props.eventDescription===''){
                return;
            }
            this.props.resizedImages.forEach(element=>{ 

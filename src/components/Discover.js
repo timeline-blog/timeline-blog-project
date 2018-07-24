@@ -45,7 +45,8 @@ class Discover extends Component {
     const sorted = _.sortBy(stories, [function(story) {return story[0].like_count}]).reverse();
     // console.log('SORTED!!!   ',sorted);
     const mappedStories = sorted.map(story => {
-      // console.log(story);
+      //console.log(story);
+     // const { e_urls } = story[1]
       return(
         <StoryPreview 
           key = {story[0].story_id}
@@ -62,7 +63,7 @@ class Discover extends Component {
           e_created_on = {story[1] ? story[1].e_created_on : null}
           event_id = {story[1] ? story[1].event_id : null}
 
-          url = {story[2] ? story[2].url : 'No image'}
+          url = {story[1] ? (story[1].e_urls ? story[1].e_urls : 'No image' ) : 'No image'}
         />
       )
     })

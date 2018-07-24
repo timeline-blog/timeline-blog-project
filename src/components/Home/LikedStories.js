@@ -15,11 +15,11 @@ class LikedStories extends Component {
   }
 
   render() {
-    console.log(this.props);
+    //console.log(this.props);
 
     const stories = _.map(this.props.stories)
     const mappedStories = stories.map(story => {
-      // console.log(story);
+      console.log(story);
       return(
         <StoryPreview 
           key = {story[0].story_id}
@@ -36,7 +36,7 @@ class LikedStories extends Component {
           e_created_on = {story[1] ? story[1].e_created_on : null}
           event_id = {story[1] ? story[1].event_id : null}
 
-          url = {story[2] ? story[2].url : 'No image'}
+          url = {story[1] ? (story[1].e_urls ? story[1].e_urls : 'No image' ) : 'No image'}
         />
       )
     })
