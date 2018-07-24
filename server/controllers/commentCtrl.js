@@ -8,10 +8,12 @@ const getComments = (req, res) => {
 };
 
 const addComment = (req, res) => {
-  const { user_id, event_id, comment, c_created_on } = req.body;
+  const { user_id, comment, c_created_on, event_id } = req.body;
+  console.log('req.body: ', req.body);
+
 
   req.app.get('db')
-    .comments.addComment([user_id, event_id, comment, c_created_on])
+    .comments.addComment([user_id, comment, c_created_on, event_id])
     .then(response => res.status(200).json(response))
     .catch(err => console.log(err));
 };

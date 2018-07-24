@@ -80,6 +80,27 @@ export function likeCheck(user_id, story_id) {
   };
 }
 
+export function getComments(event_id) {
+  return {
+    type: GET_COMMENTS,
+    payload: axios.get(`/api/comments/${event_id}`)
+  };
+}
+
+export function addComment(user_id, comment, c_created_on, event_id) {
+  return {
+    type: ADD_COMMENT,
+    payload: axios.post(`/api/comments/`, {user_id, comment, c_created_on, event_id})
+  };
+}
+
+export function deleteComment(comment_id) {
+  return {
+    type: DELETE_COMMENT,
+    payload: axios.delete(`/api/comments/${comment_id}`)
+  };
+}
+
 const GET_STORY_BY_ID = "GET_STORY_BY_ID";
 const CREATE_STORY = "CREATE_STORY";
 const EDIT_STORY = "EDIT_STORY";
@@ -88,15 +109,20 @@ const LIKE_COUNT = "LIKE_COUNT";
 const ADD_LIKE = "ADD_LIKE";
 const UNLIKE = "UNLIKE";
 const LIKE_CHECK = "LIKE_CHECK";
+const GET_COMMENTS = "GET_COMMENTS";
+const ADD_COMMENT = "ADD_COMMENT";
+const DELETE_COMMENT = "DELETE_COMMENT";
 
 const initialState = {
   selectedStory: {},
   likeCount: 0,
-  likeCheck: {}
+  likeCheck: {},
+  comments: []
 };
 
 export default function storyReducer(state = initialState, action) {
-  // console.log(action.payload)
+  console.log(action.type);
+  console.log(action.payload);
 
   switch (action.type) {
     case `${GET_STORY_BY_ID}_FULFILLED`:
@@ -124,6 +150,15 @@ export default function storyReducer(state = initialState, action) {
         ...state,
         likeCheck: action.payload.data[0]
       };
+    case `${GET_COMMENTS}_FULFILLED`:
+      return {
+        ...state,
+        comments: action.payload.data
+      };
+    case `${ADD_COMMENT}_FULFILLED`:
+      return { ...state };
+    case `${DELETE_COMMENT}_FULFILLED`:
+      return { ...state };
     default:
       return state;
   }

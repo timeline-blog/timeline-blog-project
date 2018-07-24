@@ -1,1 +1,1 @@
-INSERT INTO comments (user_id, event_id, comment, c_created_on) VALUES ($1, $2, $3, $4);
+INSERT INTO comments (user_id, comment, c_created_on, event_id) VALUES ($1, $2, $3, $4);
