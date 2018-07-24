@@ -70,8 +70,13 @@ import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
                axios.post(`/api/event/${story_id}`, obj)
                      .then(response=>{
                         that.props.getStoryById(that.props.match.params.story_id);
-                         that.props && that.props.toggleModal()
-                        })
+                        that.props && that.props.toggleModal()
+                        that.setState({ 
+                            imgUrl: [], 
+                            eventTitleField: '',
+                            eventDescriptionField: ''
+                        });
+                    })
               
            }
 
