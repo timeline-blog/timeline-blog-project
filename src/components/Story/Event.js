@@ -6,7 +6,7 @@ import EditEventModal from './EditEventModal'
 
 
 
-import { getStoryById } from "../../ducks/reducers/storyReducer";
+import { getStoryById, addComment, deleteComment } from "../../ducks/reducers/storyReducer";
 import Comment from './Comment';
 
 
@@ -17,7 +17,9 @@ class Event extends Component {
             eventState: 'collapsed',
             eventTitleField: 'Event Title Here',
             eventContentField: 'Event Content here',
-            eventImages: []
+            eventImages: [],
+            comments: [],
+            commentInput: ''
         };
         
     }
@@ -25,21 +27,78 @@ class Event extends Component {
     collapseExpand=()=> {
         if ( this.state.eventState === 'collapsed' ) {
             this.setState({ eventState: 'expanded' });
+            axios.get(`/api/comments/${this.props.event_id}`)
+                .then(response => {
+                    console.log('response: ', response);
+                    this.setState({
+                        comments: response.data
+                    })
+                })
         } else {
             this.setState({ eventState: 'collapsed' });
         }
     }
 
-    deleteEvent=(event_id)=>{
+    deleteEvent = (event_id) => {
         axios.delete(`/api/event/${event_id}`)
-             .then(response=>{
+             .then(()=>{
                 this.props.getStoryById(this.props.story_id)
              })
+    }
+
+    inputHandler = (e) => {
+        this.setState({
+            commentInput: e.target.value
+        })
+    }
+
+    addCommentHandler = () => {
+        const {user_id} = this.props.user;
+        const {event_id} = this.props;
+        let c_created_on = moment().format('MM/DD/YY, hh:mm');
+        this.props.addComment(user_id, this.state.commentInput, c_created_on, event_id)
+            .then(() => axios.get(`/api/comments/${this.props.event_id}`)
+            .then(response => {
+                console.log('response: ', response);
+                this.setState({
+                    comments: response.data,
+                    commentInput: ''
+                })
+            }))
+    }
+
+    deleteCommentHandler = (comment_id) => {
+        this.props.deleteComment(comment_id)
+            .then(() => axios.get(`/api/comments/${this.props.event_id}`)
+            .then(response => {
+                console.log('response: ', response);
+                this.setState({
+                    comments: response.data
+                })
+            }))
     }
 
     render() {
         const { user } = this.props;
         const {story_userid} = this.props;
+        // console.log('this.props: ', this.props);
+        // console.log('this.state: ', this.state);
+        const mappedComments = this.state.comments.map((comment) => {
+            return (
+                <Comment 
+                    key={comment.comment_id}
+                    avatar={comment.avatar}
+                    display_name={comment.display_name}
+                    comment={comment.comment}
+                    c_created_on={comment.c_created_on}
+                    comment_id={comment.comment_id}
+                    event_id={comment.event_id}
+                    deleteCommentHandler={this.deleteCommentHandler}
+                    user_id={comment.user_id}
+                    user={this.props.user}
+                />
+            )
+        })
        
         return (
             <div className={`event-wrap ${this.state.eventState}`}>
@@ -70,16 +129,14 @@ class Event extends Component {
                         <div className="event-comments-header">12 comments</div>
 
                         <div className="comments-list">
-                            <Comment />
-                            <Comment />
-                            <Comment />
-                            <Comment />
+                            {mappedComments}
                         </div>
-
+                        {(this.props.user.user_id) ?
                         <div className="comment-form-wrap">
-                            <textarea name="" id="" className="comment-form" placeholder="Leave a comment..."></textarea>
-                            <button className="btn">Post Comment</button>
+                            <textarea onChange={(e) => this.inputHandler(e)} name="" id="" className="comment-form" value={this.state.commentInput} placeholder="Leave a comment..."></textarea>
+                            <button className="btn" onClick={() => this.addCommentHandler()}>Post Comment</button>
                         </div>
+                        : null}
 
                     </div>
                 </div>
@@ -124,9 +181,8 @@ class Event extends Component {
 
 const mapStateToProps =(state)=>{
     return{
-        user: state.user.authedUser,
-
+        user: state.user.authedUser
     }
 }
 
-export default connect(mapStateToProps,{getStoryById})(Event);
+export default connect(mapStateToProps,{getStoryById, addComment, deleteComment})(Event);

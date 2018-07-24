@@ -276,7 +276,7 @@ updateMonitorEventImages=(value)=>{
 
   render() {
     
-    console.log('this.props: ', this.props);
+    // console.log('this.props: ', this.props);
 
     const { story } = this.props;
     const { user } = this.props;
