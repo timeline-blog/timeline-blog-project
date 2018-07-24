@@ -228,12 +228,33 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
 .outer-wrap.landing-wrap {
   min-height: 50vh;
   background: #4d4d4d;
+  background-image: url("./background-banner.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center; }
+  .outer-wrap.landing-wrap .page-title {
+    display: inline-block; }
+  .outer-wrap.landing-wrap .title-wrap {
+    position: relative;
+    width: 80%;
+    max-width: 400px;
+    margin: 0 auto; }
   .outer-wrap.landing-wrap .welcome-title {
-    color: #cccccc; }
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 200;
+    letter-spacing: 1px; }
+  .outer-wrap.landing-wrap .site-logo {
+    margin: 0 auto;
+    display: block;
+    max-width: 100%; }
 
 .welcome-wrap {
   width: 100%;
@@ -363,7 +384,7 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
     display: block;
     background: #1ddfa5;
     height: 200px;
-    background-size: 100%;
+    background-size: cover;
     background-position: top center;
     background-repeat: no-repeat; }
   .story-preview-wrap .story-pv-header .story-pv-title {

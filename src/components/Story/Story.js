@@ -43,7 +43,7 @@ class Story extends Component {
     };
     this.titleMaxChars = 40;
     this.toggleModal = this.toggleModal.bind(this);
-    this.togglseEditModal = this.toggleEditModal.bind(this);
+    this.toggleEditModal = this.toggleEditModal.bind(this);
     this.toggleEditEventModal = this.toggleEditEventModal.bind(this);
     this.deleteStoryHandler = this.deleteStoryHandler.bind(this);
     this.saveEdit = this.saveEdit.bind(this);
