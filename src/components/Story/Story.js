@@ -42,7 +42,9 @@ class Story extends Component {
      
       storyTitle: '',
       storyDescription: '',
-      storyCategory: ''
+      storyCategory: '',
+
+      deleteModalMode: 'hidden'
     };
     this.titleMaxChars = 40;
     this.toggleModal = this.toggleModal.bind(this);
@@ -50,6 +52,7 @@ class Story extends Component {
     this.toggleEditEventModal = this.toggleEditEventModal.bind(this);
     this.deleteStoryHandler = this.deleteStoryHandler.bind(this);
     this.saveEdit = this.saveEdit.bind(this);
+    this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
   }
 
   updateImgUrl=(value)=>{
@@ -210,6 +213,14 @@ updateMonitorEventImages=(value)=>{
     
   }
 
+  toggleDeleteModal() {
+    if ( this.state.deleteModalMode === 'hidden' ) {
+      this.setState({ deleteModalMode: 'visible' });
+    } else {
+      this.setState({ deleteModalMode: 'hidden' });
+    }
+  }
+
   toggleEditModal() {
     if (this.state.editModalMode === "hidden") {
       this.setState({
@@ -252,7 +263,8 @@ updateMonitorEventImages=(value)=>{
 
   deleteStoryHandler() {
     this.props.deleteStory(+this.props.match.params.story_id)
-      .then(this.props.history.push(`/profile/${this.props.user.user_id}`));
+      .then(() => this.toggleDeleteModal());
+      // .then(this.props.history.push(`/profile/${this.props.user.user_id}`));
   }
 
   addLikeHandler() {
@@ -436,6 +448,15 @@ updateMonitorEventImages=(value)=>{
             eventDescriptionChange={this.eventDescriptionChange}
             saveEdit={this.saveEdit}
           />
+
+          <div className={`delete-outer-modal outer-modal ${this.state.deleteModalMode}`}>
+            <div className="inner-modal">
+              <h2>This story has been deleted successfully.</h2>
+              <button className="btn" onClick={() => this.props.history.push(`/profile/${this.props.user.user_id}`)}>
+                Back to My Profile
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     );

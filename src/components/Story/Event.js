@@ -215,7 +215,7 @@ class Event extends Component {
                             <FontAwesomeIcon icon={faTimes} />
                         </button>
                         
-                        {this.props.images.length > 1 
+                        {this.props.images && this.props.images.length > 1 
                         ? (<div className="image-nav">
                             <div 
                                 className="image-nav-left"><FontAwesomeIcon icon={faChevronLeft}

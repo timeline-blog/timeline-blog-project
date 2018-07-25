@@ -821,6 +821,13 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
   .image-nav .image-nav-right {
     float: right; }
 
+.delete-outer-modal h2 {
+  font-weight: 200; }
+
+.delete-outer-modal .btn {
+  font-size: 22px;
+  padding: 8px 14px; }
+
 .profile-wrap .story-pv-author-wrap {
   display: none; }
 
