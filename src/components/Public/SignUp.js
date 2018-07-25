@@ -101,11 +101,9 @@ class SignUp extends Component {
     let email = validFields.email.trim();
     let password = validFields.password.trim();
 
-    axios.get()
-
     axios.post("/auth/signup", {display_name, email, password})
       .then( response => {
-        this.props.history.push('/home');
+        this.props.history.push('/discover');
       })
       .catch( err => {
         console.log( 'sign up err: ', err.response.data );
@@ -125,10 +123,10 @@ class SignUp extends Component {
 
           <div className="login-form">
             <div className="google-login">
-                <button className="btn login-btn">
+                <a href="http://localhost:3001/auth/google" className="btn login-btn">
                   <FontAwesomeIcon icon={faGoogle} /> &nbsp;
                   Sign Up with Google
-                </button>
+                </a>
             </div>
 
             <div className="auth-form-separator">

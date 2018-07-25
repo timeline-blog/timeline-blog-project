@@ -41,6 +41,24 @@ input[type="text"], input[type="password"], input[type="email"], .main-input
         background: $negativeColor
         color: #ffffff
 
+.edit-btn
+    background: none
+    border: none
+    color: $highlightColor
+    font-size: 20px
+    display: inline-block
+    vertical-align: middle
+    margin: 0 0 0 10px
+    cursor: pointer
+    opacity: 0.7
+    transition: 0.2s all ease-in-out
+    outline: none
+    &:hover
+        opacity: 1
+
+.edit-btn.delete-btn
+    color: $negativeColor
+
 .outer-wrap
     background: $mainBg
     color: $midContrastColor
@@ -91,6 +109,15 @@ input[type="text"], input[type="password"], input[type="email"], .main-input
         color: $midContrastColor
         // display: inline-block
         // margin: 0 0 20px
+        img
+            max-width: 150px
+            display: block
+            text-align: center
+            margin: 0 auto
+            opacity: 0.4
+            transition: 0.2s all ease-in-out
+            &:hover
+                opacity: 0.75
     .credits-wrap
         padding: 20px 30px 0
         margin: 20px 0 0

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import ImageCompressor from "image-compressor.js";
+import { Link } from "react-router-dom";
 
 import {
   getStoryById,
@@ -18,6 +19,7 @@ import EditStoryModal from "./EditStoryModal";
 
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import faTrash from "@fortawesome/fontawesome-pro-solid/faTrash";
+import faPen from "@fortawesome/fontawesome-pro-solid/faPen";
 
 class Story extends Component {
   constructor(props) {
@@ -40,7 +42,9 @@ class Story extends Component {
      
       storyTitle: '',
       storyDescription: '',
-      storyCategory: ''
+      storyCategory: '',
+
+      deleteModalMode: 'hidden'
     };
     this.titleMaxChars = 40;
     this.toggleModal = this.toggleModal.bind(this);
@@ -48,6 +52,7 @@ class Story extends Component {
     this.toggleEditEventModal = this.toggleEditEventModal.bind(this);
     this.deleteStoryHandler = this.deleteStoryHandler.bind(this);
     this.saveEdit = this.saveEdit.bind(this);
+    this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
   }
 
   updateImgUrl=(value)=>{
@@ -208,6 +213,14 @@ updateMonitorEventImages=(value)=>{
     
   }
 
+  toggleDeleteModal() {
+    if ( this.state.deleteModalMode === 'hidden' ) {
+      this.setState({ deleteModalMode: 'visible' });
+    } else {
+      this.setState({ deleteModalMode: 'hidden' });
+    }
+  }
+
   toggleEditModal() {
     if (this.state.editModalMode === "hidden") {
       this.setState({
@@ -250,7 +263,8 @@ updateMonitorEventImages=(value)=>{
 
   deleteStoryHandler() {
     this.props.deleteStory(+this.props.match.params.story_id)
-      .then(this.props.history.push(`/profile/${this.props.user.user_id}`));
+      .then(() => this.toggleDeleteModal());
+      // .then(this.props.history.push(`/profile/${this.props.user.user_id}`));
   }
 
   addLikeHandler() {
@@ -335,7 +349,19 @@ updateMonitorEventImages=(value)=>{
           <div className="page-header story-header">
             <h1 className="page-title story-title">
               {this.state.storyTitle}{" "}
-              <span className="byline">by {story.display_name}</span>
+              {/* *TO DO: only render this if story belongs to logged in user DONE*/}
+              {user.user_id &&
+                user.user_id === story.user_id && (
+                  // <div className="edit-story-links">
+                    <span
+                      onClick={() => this.toggleEditModal()}
+                      className="edit-story-link edit-btn edit-story-btn"
+                    >
+                      <FontAwesomeIcon icon={faPen} />
+                    </span>
+                  // </div>
+                )}
+              <span className="byline">by <Link to={`/profile/${story.user_id}`}>{story.display_name}</Link></span>
             </h1>
             <p className="page-description story-description">
               {this.state.storyDescription}
@@ -364,18 +390,7 @@ updateMonitorEventImages=(value)=>{
               {/* {this.props.user.user_id && } */}
               <span className="follow-count">{this.props.likes}</span>
 
-              {/* *TO DO: only render this if story belongs to logged in user DONE*/}
-              {user.user_id &&
-                user.user_id === story.user_id && (
-                  <div className="edit-story-links">
-                    <span
-                      onClick={() => this.toggleEditModal()}
-                      className="edit-story-link btn border-btn"
-                    >
-                      Edit Story
-                    </span>
-                  </div>
-                )}
+              
             </div>
           </div>
 
@@ -433,6 +448,15 @@ updateMonitorEventImages=(value)=>{
             eventDescriptionChange={this.eventDescriptionChange}
             saveEdit={this.saveEdit}
           />
+
+          <div className={`delete-outer-modal outer-modal ${this.state.deleteModalMode}`}>
+            <div className="inner-modal">
+              <h2>This story has been deleted successfully.</h2>
+              <button className="btn" onClick={() => this.props.history.push(`/profile/${this.props.user.user_id}`)}>
+                Back to My Profile
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     );

@@ -4,7 +4,12 @@ import moment from 'moment'
 import axios from 'axios'
 import EditEventModal from './EditEventModal'
 
-
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import faTrash from "@fortawesome/fontawesome-pro-solid/faTrash";
+import faPen from "@fortawesome/fontawesome-pro-solid/faPen";
+import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
+import faChevronLeft from "@fortawesome/fontawesome-pro-light/faChevronLeft";
+import faChevronRight from "@fortawesome/fontawesome-pro-light/faChevronRight";
 
 import { getStoryById, addComment, deleteComment } from "../../ducks/reducers/storyReducer";
 import Comment from './Comment';
@@ -19,9 +24,15 @@ class Event extends Component {
             eventContentField: 'Event Content here',
             eventImages: [],
             comments: [],
-            commentInput: ''
+            commentInput: '',
+            imageModalMode: 'hidden',
+            expandedImage: '',
+            expandedImageIndex: null
         };
-        
+
+        this.toggleImageModal = this.toggleImageModal.bind(this);
+        this.handleImageClick = this.handleImageClick.bind(this);
+        this.navigateImages = this.navigateImages.bind(this);
     }
 
     collapseExpand=()=> {
@@ -78,6 +89,40 @@ class Event extends Component {
             }))
     }
 
+    toggleImageModal() {
+        if ( this.state.imageModalMode === 'hidden' ) {
+            this.setState({ imageModalMode: 'visible' });
+        } else {
+            this.setState({ imageModalMode: 'hidden' });
+        }
+    }
+
+    handleImageClick( index ) {
+        this.setState({ expandedImage: this.props.images[index], expandedImageIndex: index });
+
+        this.toggleImageModal();
+    }
+
+    navigateImages( direction ) {
+        if ( direction === 'right' && this.state.expandedImageIndex === this.props.images.length - 1 ) return false;
+        if ( direction === 'left' && this.state.expandedImageIndex === 0 ) return false;
+
+        
+        if ( direction === 'left') {
+            let newIndex = this.state.expandedImageIndex - 1;
+            this.setState({ 
+                expandedImage: this.props.images[newIndex], 
+                expandedImageIndex: newIndex 
+            });
+        } else {
+            let newIndex = this.state.expandedImageIndex + 1;
+            this.setState({ 
+                expandedImage: this.props.images[newIndex], 
+                expandedImageIndex: newIndex 
+            });
+        }
+    }
+
     render() {
         const { user } = this.props;
         const {story_userid} = this.props;
@@ -106,8 +151,16 @@ class Event extends Component {
 
                 {/* *TO DO: only render if story belongs to logged in user <<DONE>> */}
                {user.user_id && (story_userid===user.user_id)&&(<div className="edit-event-links">
-                    <button onClick={() => this.props.toggleEditEventModal(this.props.event_id)} className="btn">Edit Event</button>
-                    <button onClick={()=>this.deleteEvent(this.props.event_id)} className="btn negative-border-btn">Delete Event</button>
+                    <button 
+                        onClick={() => this.props.toggleEditEventModal(this.props.event_id)} 
+                        className="edit-btn edit-event-btn">
+                        <FontAwesomeIcon icon={faPen} />
+                    </button>
+                    <button 
+                        onClick={()=>this.deleteEvent(this.props.event_id)} 
+                        className="edit-btn delete-btn">
+                        <FontAwesomeIcon icon={faTrash} />
+                    </button>
                 </div>)}
 
                 <header className="event-header">
@@ -117,7 +170,13 @@ class Event extends Component {
 
                 <div className="event-gallery">
                 {this.props.images&&this.props.images.map((element,index)=>{
-                    return (<div key={index} className="event-image" style={{ backgroundImage:`url(${element})`}}></div>)
+                    return (
+                        <div 
+                            key={index} 
+                            className="event-image" 
+                            style={{ backgroundImage:`url(${element})`}}
+                            onClick={() => this.handleImageClick(index)}>
+                        </div>)
                 })}
                    
                 </div>
@@ -126,7 +185,7 @@ class Event extends Component {
                     <p>{this.props.event_description}</p>
 
                     <div className="event-comments-section">
-                        <div className="event-comments-header">12 comments</div>
+                        <div className="event-comments-header">{mappedComments.length} comments</div>
 
                         <div className="comments-list">
                             {mappedComments}
@@ -149,6 +208,30 @@ class Event extends Component {
                 </button>
                 </div>
                 <span className="connector bottom-connector"></span>
+
+                <div className={`image-outer-modal outer-modal ${this.state.imageModalMode}`}>
+                    <div className="image-inner-modal inner-modal">
+                        <button onClick={() => this.toggleImageModal()} className="close-modal border-btn btn">
+                            <FontAwesomeIcon icon={faTimes} />
+                        </button>
+                        
+                        {this.props.images && this.props.images.length > 1 
+                        ? (<div className="image-nav">
+                            <div 
+                                className="image-nav-left"><FontAwesomeIcon icon={faChevronLeft}
+                                onClick={() => this.navigateImages('left')}
+                            /></div>
+                            <div 
+                                className="image-nav-right"><FontAwesomeIcon icon={faChevronRight}
+                                onClick={() => this.navigateImages('right')}
+                            /></div>
+                        </div>)
+                        : null
+                        }
+
+                        <img className="expanded-event-image" src={this.state.expandedImage} />
+                    </div>
+                </div>
                
                 <EditEventModal
                     editEventModalMode={this.props.editEventModalMode}

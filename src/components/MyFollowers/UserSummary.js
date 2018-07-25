@@ -29,7 +29,7 @@ function UserSummary(props) {
           onClick={() =>
             props.unfollow(props.authedUser.user_id, props.user_id)
           }
-          className="btn border-btn negative-border-btn"
+          className="btn border-btn"
         >
           Unfollow
         </button>

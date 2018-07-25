@@ -23,10 +23,10 @@
         position: relative
         .story-pv-image
             display: block
-            background: $highlightColor
+            background: $mainBg
             height: 200px
             background-size: cover
-            background-position: top center
+            background-position: center
             background-repeat: no-repeat
         .story-pv-title
             // display: none
@@ -99,23 +99,35 @@
             font-size: 18px
             font-weight: 200
             letter-spacing: initial
+            display: block
+            a
+                color: $highlightColor
+                &:hover
+                    text-decoration: underline
 
     .follow-info-wrap
         position: relative
+
+        .btn.border-btn
+            padding: 2px 8px
+            outline: none
     
     .edit-story-links
-        position: absolute
-        bottom: 0
-        right: 0
-        .edit-story-link
-            display: inline-block
-            font-weight: 200
+        // position: absolute
+        // bottom: 0
+        // right: 0
+        // .edit-story-link
+        //     display: inline-block
+        //     font-weight: 200
 
 .delete-story-wrap
     margin: 75px 0 0
-    border-top: 3px dashed $negativeColor
+    background: rgba($negativeColor, 0.2)
+    padding: 30px 0
+    // border-top: 3px dashed $negativeColor
     .delete-title
         color: $highContrastColor
+        margin-top: 0
     .btn.negative-btn
         font-weight: 200
         padding: 8px 14px
@@ -222,6 +234,9 @@
                                 color: $highContrastColor
                             .comment-text
                                 margin-top: 0
+                        .edit-btn.delete-btn
+                            float: right
+                            font-size: 16px
                 .comment-form
                     +mainInput
                     display: block
@@ -402,6 +417,16 @@
                 color: lighten($storySummaryBg, 30%)
                 cursor: default
 
+        .added-images
+            text-align: left
+            margin: 10px 0 0 0
+            img
+                display: inline-block
+                vertical-align: top
+                cursor: pointer
+                margin: 0 3px 3px 0
+
+
         .create-event-btn
             font-size: 20px
             text-transform: uppercase
@@ -432,3 +457,37 @@
 @keyframes fadeIn
     from { opacity: 0 }
     to { opacity: 1 }
+
+
+/* Event Image Modal */
+
+.expanded-event-image
+    display: block
+    margin: 0 auto
+    max-width: 100%
+    position: relative
+
+.image-nav
+    position: absolute
+    top: 48%
+    left: 0
+    width: 95%
+    margin: 0 2.5%
+    font-size: 24px
+    .image-nav-left, .image-nav-right
+        float: left
+        cursor: pointer
+        color: darken($highContrastColor, 15%)
+        &:hover
+            color: $highContrastColor
+        &.disabled
+            color: darken($highContrastColor, 50%)
+    .image-nav-right
+        float: right
+
+.delete-outer-modal
+    h2
+        font-weight: 200
+    .btn
+        font-size: 22px
+        padding: 8px 14px
