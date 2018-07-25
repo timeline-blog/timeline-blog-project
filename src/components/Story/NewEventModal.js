@@ -143,11 +143,13 @@ import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
                                 ref ={instance=>{this.FileUploader=instance}}
                                 onUploadSuccess={this.handleUploadSuccess}
                             />
-                            </label>
+                            </label> (4 images max)
                             
                             {/* <button className="btn border-btn">Upload Images</button> */}
                         </div>
-                        {this.props.images && this.props.images.map((element,index)=>(<img onClick={()=>this.props.removeImages(index)} key={index} src={element.url} height="150"  />))}
+                        <div className="added-images">
+                        {this.props.images && this.props.images.map((element,index)=>(<img onClick={()=>this.props.removeImages(index)} key={index} src={element.url} height="100"  />))}
+                        </div>
                     </div>
                     <button onClick={this.createEvent} className="btn create-event-btn">Create Event</button>
 

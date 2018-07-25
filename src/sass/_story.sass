@@ -234,6 +234,9 @@
                                 color: $highContrastColor
                             .comment-text
                                 margin-top: 0
+                        .edit-btn.delete-btn
+                            float: right
+                            font-size: 16px
                 .comment-form
                     +mainInput
                     display: block
@@ -414,6 +417,16 @@
                 color: lighten($storySummaryBg, 30%)
                 cursor: default
 
+        .added-images
+            text-align: left
+            margin: 10px 0 0 0
+            img
+                display: inline-block
+                vertical-align: top
+                cursor: pointer
+                margin: 0 3px 3px 0
+
+
         .create-event-btn
             font-size: 20px
             text-transform: uppercase
@@ -444,3 +457,30 @@
 @keyframes fadeIn
     from { opacity: 0 }
     to { opacity: 1 }
+
+
+/* Event Image Modal */
+
+.expanded-event-image
+    display: block
+    margin: 0 auto
+    max-width: 100%
+    position: relative
+
+.image-nav
+    position: absolute
+    top: 48%
+    left: 0
+    width: 95%
+    margin: 0 2.5%
+    font-size: 24px
+    .image-nav-left, .image-nav-right
+        float: left
+        cursor: pointer
+        color: darken($highContrastColor, 15%)
+        &:hover
+            color: $highContrastColor
+        &.disabled
+            color: darken($highContrastColor, 50%)
+    .image-nav-right
+        float: right

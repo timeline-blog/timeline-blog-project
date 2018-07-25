@@ -183,12 +183,14 @@ class EditEventModal extends Component {
                         ref ={instance=>{this.FileUploader=instance}}
                         onUploadSuccess={this.handleUploadSuccess}
                     />
-                    </label>
+                    </label> (4 images max)
                         {/* <button className="btn border-btn">Add Image</button> */}
                     </div>
+                    <div className="added-images">
                     {this.props.eventImages.map((element, index)=>{
-                        return (<img onClick={()=>this.props.removeImagesEvents(index)} height="150" key={index}  src={element}/> )
+                        return (<img onClick={()=>this.props.removeImagesEvents(index)} height="100" key={index}  src={element}/> )
                     }) }
+                    </div>
                 </div>
                
                 <button onClick={this.updateEvent} className="btn create-event-btn">Save Changes</button>
