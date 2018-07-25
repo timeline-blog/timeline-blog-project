@@ -77,7 +77,7 @@ class Login extends Component {
                     </header>
                     <div className="login-form">
                         <div className="google-login">
-                            <a href="http://localhost:3001/auth/google" className="btn login-btn">
+                            <a href="/auth/google" className="btn login-btn">
                                 <FontAwesomeIcon icon={faGoogle} /> &nbsp;
                                 Log In with Google
                             </a>

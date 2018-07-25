@@ -11,6 +11,7 @@ const GoogleStrategy = require("passport-google-oauth20");
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+app.use( express.static( `${__dirname}/../build` ) );
 
 const { createEvent,deleteEvent, updateEvent } = require(`${__dirname}/controllers/eventCtrl`)
 
@@ -179,6 +180,10 @@ app.get("/api/user/:user_id", getUserById);
 
 //logout
 app.get("/auth/logout", logout);
+
+app.get('*', (req, res)=>{
+  res.sendFile(path.join(__dirname, '../build/index.html'));
+});
 
 //app listening
 app.listen(PORT, () => {

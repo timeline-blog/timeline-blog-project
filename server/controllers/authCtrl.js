@@ -23,7 +23,7 @@ const getUser=(req,res)=>{
                       auth.default.getLoggedInUser([email])
                                   .then(response=>{
                                     req.session.user= response[0]
-                                      res.redirect('http://localhost:3000/#/home')
+                                      res.redirect('/#/home')
                                   })
                                   .catch( err => {
                                       console.log( 'login error: ', err);
@@ -91,13 +91,13 @@ const googleSignIn=(req,res)=>{
                     if(response[0]){   
                         req.session.user = response[0]    
                         // console.log('response from db is ',response[0])                            
-                        res.redirect('http://localhost:3000/#/home')
+                        res.redirect('/#/home')
                     } else{
 
                         auth.google.signUp([user.displayName,`${user.photos[0].value.split('?')[0]}?sz=200`,user.emails[0].value,user.id])
                                     .then(response=>{
                                         req.session.user = response[0]
-                                        res.redirect('http://localhost:3000/#/discover')
+                                        res.redirect('/#/discover')
                                     })
                     }
                 })
@@ -109,7 +109,7 @@ const googleSignIn=(req,res)=>{
 
 const logout=(req,res) =>{
     req.session.destroy(()=>{
-        res.redirect('http://localhost:3000/#/')
+        res.redirect('/#/')
     })
 
 }
