@@ -125,10 +125,10 @@ class SignUp extends Component {
 
           <div className="login-form">
             <div className="google-login">
-                <button className="btn login-btn">
+                <a href="http://localhost:3001/auth/google" className="btn login-btn">
                   <FontAwesomeIcon icon={faGoogle} /> &nbsp;
                   Sign Up with Google
-                </button>
+                </a>
             </div>
 
             <div className="auth-form-separator">

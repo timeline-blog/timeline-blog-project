@@ -9,6 +9,9 @@ import { followCheck, getFollowerCount, addFollow, unfollow } from '../../ducks/
 import StoryPreview from "../StoryPreview";
 import EditProfileModal from './EditProfileModal';
 
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import faPen from "@fortawesome/fontawesome-pro-solid/faPen";
+
 class User extends Component {
 
   constructor() {
@@ -109,13 +112,17 @@ class User extends Component {
         <div className="inner-wrap">
           <div className="page-header profile-header">
             <img className="profile-avatar" src={this.state.avatarUrl} alt={this.state.displayName} />
-            <h1 className="page-title profile-title">{this.state.displayName}</h1>
+            <h1 className="page-title profile-title">{this.state.displayName}
+              {(this.props.user.user_id == this.props.match.params.user_id) ?
+                <button onClick={() => this.toggleEditProfileModal()} className="edit-btn edit-profile-btn">
+                  <FontAwesomeIcon icon={faPen} />
+                </button>
+                : null}
+            </h1>
             <p className="page-description profile-description">
               {this.state.bio}
             </p>
-            {(this.props.user.user_id == this.props.match.params.user_id) ?
-              <button onClick={() => this.toggleEditProfileModal()} className="btn"> + Edit Profile</button>
-              : null}
+            
             {(this.props.user.user_id == this.props.match.params.user_id) ? 
                 <div className="follow-info-wrap">
                   <span className="follow-btn btn">Followers</span>
@@ -128,7 +135,7 @@ class User extends Component {
               </div>
             : (this.props.user.user_id && this.props.followingCheck) ? 
               <div className="follow-info-wrap">
-                <button className="btn border-btn negative-border-btn" onClick={() => this.unfollowHandler()}>Unfollow</button>
+                <button className="btn border-btn" onClick={() => this.unfollowHandler()}>Unfollow</button>
                 <span className="follow-count">{this.props.followerCount}</span>
               </div>
             : (!this.props.user.user_id) ? 
