@@ -101,11 +101,9 @@ class SignUp extends Component {
     let email = validFields.email.trim();
     let password = validFields.password.trim();
 
-    axios.get()
-
     axios.post("/auth/signup", {display_name, email, password})
       .then( response => {
-        this.props.history.push('/home');
+        this.props.history.push('/discover');
       })
       .catch( err => {
         console.log( 'sign up err: ', err.response.data );

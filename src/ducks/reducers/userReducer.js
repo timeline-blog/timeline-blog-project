@@ -58,7 +58,9 @@ export default function userReducer(state = initialState, action) {
 //  console.log(action.payload)
   switch (action.type) {
     case `${EDIT_USER}_FULFILLED`:
-      return { ...state };
+      return {
+        ...state, authedUser:action.payload.data
+      }
 
     case `${GET_LOGGEDIN_USER}_FULFILLED`:
     

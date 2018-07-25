@@ -11,15 +11,25 @@ class EditProfileModal extends Component {
         super(props);
 
         this.state = {
-            displayNameField: this.props.user.display_name, 
-            bioField: this.props.user.bio, 
-            avatarUrl: this.props.user.avatar
+            displayNameField: '', 
+            bioField: '', 
+            avatarUrl: '',
+            user_id: ''
         };
 
         this.changeAvatar = this.changeAvatar.bind(this);
         this.changeDisplayName = this.changeDisplayName.bind(this);
         this.changeBio = this.changeBio.bind(this);
         this.saveChanges = this.saveChanges.bind(this);
+    }
+
+    componentDidMount() {
+        this.setState({
+            displayNameField: this.props.display_name, 
+            bioField: this.props.bio, 
+            avatarUrl: this.props.avatar,
+            user_id: this.props.user_id
+        });
     }
 
     changeAvatar( value ) {
@@ -41,7 +51,8 @@ class EditProfileModal extends Component {
 
 
     render() {
-    //   console.log('STATE!!!   ', this.state);
+      console.log('STATE!!!   ', this.state);
+      console.log('PROPS!!!   ', this.props);
         return (
             <div className={`outer-modal ${this.props.modalMode}`}>
             <div className="inner-modal">

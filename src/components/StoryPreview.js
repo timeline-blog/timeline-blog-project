@@ -41,7 +41,7 @@ const StoryPreview = (props) => {
             </div>
 
             <div className="story-pv-header">
-                {props.url !== 'No image' ? 
+                {props.url !== 'No image' && props.url[0] ? 
                     <div className="story-pv-image" style={{ backgroundImage: `url(${props.url[0]})` }}/>  
                     :
                     <div className="story-pv-image" style={{ backgroundImage: `url('${defaultImages[props.story_category.toLowerCase()]}')` }}/> 
@@ -61,7 +61,11 @@ const StoryPreview = (props) => {
                     <div className="story-pv-event">
                         {/* <p>{props.event_title}</p> */}
                         <p>{shortEventTitle}</p>
-                        <span>{moment(props.e_created_on).from(moment().format("MM/DD/YY, hh:mm"))}</span>
+                        {props.event_title === 'No events' 
+                        ? null
+                        : <span>{moment(props.e_created_on).from(moment().format("MM/DD/YY, hh:mm"))}</span>
+                        }
+                        
                     </div>
                 </div>
             </div>

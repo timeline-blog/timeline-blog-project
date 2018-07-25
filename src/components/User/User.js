@@ -84,6 +84,7 @@ class User extends Component {
 
   render() {
     // console.log('State!!!   ', this.state);
+    // console.log('props!!!   ', this.props);
 
     const { display_name, bio, avatar } = this.props.profileInfo
     const stories = _.map(this.props.stories);
@@ -151,6 +152,10 @@ class User extends Component {
             modalMode={this.state.modalMode} 
             toggleModal={this.toggleEditProfileModal} 
             saveUserEdit={this.saveUserEdit}
+            display_name={this.props.user.display_name}
+            bio={this.props.user.bio}
+            avatar={this.props.user.avatar}
+            user_id={this.props.user.user_id}
           />
         </div>
       </div>

@@ -38,6 +38,17 @@ class Nav extends Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.user.display_name !== prevProps.user.display_name || this.props.user.avatar !== prevProps.user.avatar) {
+      this.props.getLoggedInUser().then(response => {
+        console.log( 'isLoggedIn: ', response );
+        if (response.value.data.user_id) {
+          this.loggedInNav();
+        }
+      });
+    }
+  }
+
   loggedInNav() {
     this.setState({ isLoggedIn: true });
   }
