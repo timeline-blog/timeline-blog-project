@@ -3,20 +3,33 @@ import { connect } from 'react-redux';
 
 import {editUser} from '../../ducks/reducers/userReducer';
 
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
+
 class EditProfileModal extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            displayNameField: this.props.user.display_name, 
-            bioField: this.props.user.bio, 
-            avatarUrl: this.props.user.avatar
+            displayNameField: '', 
+            bioField: '', 
+            avatarUrl: '',
+            user_id: ''
         };
 
         this.changeAvatar = this.changeAvatar.bind(this);
         this.changeDisplayName = this.changeDisplayName.bind(this);
         this.changeBio = this.changeBio.bind(this);
         this.saveChanges = this.saveChanges.bind(this);
+    }
+
+    componentDidMount() {
+        this.setState({
+            displayNameField: this.props.display_name, 
+            bioField: this.props.bio, 
+            avatarUrl: this.props.avatar,
+            user_id: this.props.user_id
+        });
     }
 
     changeAvatar( value ) {
@@ -38,12 +51,15 @@ class EditProfileModal extends Component {
 
 
     render() {
-    //   console.log('STATE!!!   ', this.state);
+      console.log('STATE!!!   ', this.state);
+      console.log('PROPS!!!   ', this.props);
         return (
             <div className={`outer-modal ${this.props.modalMode}`}>
             <div className="inner-modal">
 
-                <button onClick={() => this.props.toggleModal()} className="close-modal border-btn btn">X</button>
+                <button onClick={() => this.props.toggleModal()} className="close-modal border-btn btn">
+                    <FontAwesomeIcon icon={faTimes} />
+                </button>
 
                 <header className="modal-header">
                     <h3 className="modal-title">Edit Profile</h3>

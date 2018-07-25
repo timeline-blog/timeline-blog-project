@@ -16,3 +16,13 @@
     display: grid
     grid-template-columns: repeat(3, 1fr)
     grid-gap: 30px
+
+@media screen and (max-width: 920px)
+    .story-grid
+        grid-template-columns: repeat(2, 1fr)
+
+@media screen and (max-width: 600px)
+    .story-grid
+        max-width: 320px
+        margin: 50px auto
+        grid-template-columns: repeat(1, 1fr)
