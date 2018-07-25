@@ -2,10 +2,34 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment'
 
+import travelImg from '../category-images/travel.png';
+import musicImg from '../category-images/music.png';
+import foodImg from '../category-images/food.png';
+import personalImg from '../category-images/personal.png';
+import newsImg from '../category-images/news.png';
+import sportsImg from '../category-images/sports.png';
+import educationImg from '../category-images/education.png';
+import artImg from '../category-images/art.png';
+import styleImg from '../category-images/style.png';
+import entertainmentImg from '../category-images/entertainment.png';
+
 const StoryPreview = (props) => {
-     console.log('props: ', props.url);
+    //  console.log('props: ', props.url);
 
     let shortEventTitle = props.event_title.length < 28 ? props.event_title : props.event_title.substring(0, 25) + '...';
+    let defaultImages = {
+        travel: travelImg,
+        music: musicImg,
+        food: foodImg,
+        personal: personalImg,
+        news: newsImg,
+        sports: sportsImg,
+        education: educationImg,
+        art: artImg,
+        style: styleImg,
+        entertainment: entertainmentImg
+    }
+
     return (
         <div className="story-preview-wrap">
             
@@ -20,7 +44,7 @@ const StoryPreview = (props) => {
                 {props.url !== 'No image' ? 
                     <div className="story-pv-image" style={{ backgroundImage: `url(${props.url[0]})` }}/>  
                     :
-                    <div className="story-pv-image" style={{ backgroundImage: "url('https://images.pexels.com/photos/257360/pexels-photo-257360.jpeg?auto=compress&cs=tinysrgb&h=350')" }}/> 
+                    <div className="story-pv-image" style={{ backgroundImage: `url('${defaultImages[props.story_category.toLowerCase()]}')` }}/> 
                     }
                 <div className="story-pv-title">
                     {props.story_title}

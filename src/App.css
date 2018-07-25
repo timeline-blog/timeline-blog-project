@@ -110,6 +110,15 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
   .main-footer .footer-logo-wrap {
     font-size: 24px;
     color: #a8a8a8; }
+    .main-footer .footer-logo-wrap img {
+      max-width: 150px;
+      display: block;
+      text-align: center;
+      margin: 0 auto;
+      opacity: 0.4;
+      transition: 0.2s all ease-in-out; }
+      .main-footer .footer-logo-wrap img:hover {
+        opacity: 0.75; }
   .main-footer .credits-wrap {
     padding: 20px 30px 0;
     margin: 20px 0 0;
@@ -385,7 +394,7 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
     background: #1ddfa5;
     height: 200px;
     background-size: cover;
-    background-position: top center;
+    background-position: center;
     background-repeat: no-repeat; }
   .story-preview-wrap .story-pv-header .story-pv-title {
     position: absolute;
