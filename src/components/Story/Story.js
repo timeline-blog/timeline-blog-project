@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import ImageCompressor from "image-compressor.js";
+import { Link } from "react-router-dom";
 
 import {
   getStoryById,
@@ -18,6 +19,7 @@ import EditStoryModal from "./EditStoryModal";
 
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import faTrash from "@fortawesome/fontawesome-pro-solid/faTrash";
+import faPen from "@fortawesome/fontawesome-pro-solid/faPen";
 
 class Story extends Component {
   constructor(props) {
@@ -335,7 +337,19 @@ updateMonitorEventImages=(value)=>{
           <div className="page-header story-header">
             <h1 className="page-title story-title">
               {this.state.storyTitle}{" "}
-              <span className="byline">by {story.display_name}</span>
+              {/* *TO DO: only render this if story belongs to logged in user DONE*/}
+              {user.user_id &&
+                user.user_id === story.user_id && (
+                  // <div className="edit-story-links">
+                    <span
+                      onClick={() => this.toggleEditModal()}
+                      className="edit-story-link edit-btn edit-story-btn"
+                    >
+                      <FontAwesomeIcon icon={faPen} />
+                    </span>
+                  // </div>
+                )}
+              <span className="byline">by <Link to={`/profile/${story.user_id}`}>{story.display_name}</Link></span>
             </h1>
             <p className="page-description story-description">
               {this.state.storyDescription}
@@ -364,18 +378,7 @@ updateMonitorEventImages=(value)=>{
               {/* {this.props.user.user_id && } */}
               <span className="follow-count">{this.props.likes}</span>
 
-              {/* *TO DO: only render this if story belongs to logged in user DONE*/}
-              {user.user_id &&
-                user.user_id === story.user_id && (
-                  <div className="edit-story-links">
-                    <span
-                      onClick={() => this.toggleEditModal()}
-                      className="edit-story-link btn border-btn"
-                    >
-                      Edit Story
-                    </span>
-                  </div>
-                )}
+              
             </div>
           </div>
 

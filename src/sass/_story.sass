@@ -99,23 +99,35 @@
             font-size: 18px
             font-weight: 200
             letter-spacing: initial
+            display: block
+            a
+                color: $highlightColor
+                &:hover
+                    text-decoration: underline
 
     .follow-info-wrap
         position: relative
+
+        .btn.border-btn
+            padding: 2px 8px
+            outline: none
     
     .edit-story-links
-        position: absolute
-        bottom: 0
-        right: 0
-        .edit-story-link
-            display: inline-block
-            font-weight: 200
+        // position: absolute
+        // bottom: 0
+        // right: 0
+        // .edit-story-link
+        //     display: inline-block
+        //     font-weight: 200
 
 .delete-story-wrap
     margin: 75px 0 0
-    border-top: 3px dashed $negativeColor
+    background: rgba($negativeColor, 0.2)
+    padding: 30px 0
+    // border-top: 3px dashed $negativeColor
     .delete-title
         color: $highContrastColor
+        margin-top: 0
     .btn.negative-btn
         font-weight: 200
         padding: 8px 14px

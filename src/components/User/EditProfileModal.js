@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 
 import {editUser} from '../../ducks/reducers/userReducer';
 
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import faTimes from "@fortawesome/fontawesome-pro-light/faTimes";
+
 class EditProfileModal extends Component {
     constructor(props) {
         super(props);
@@ -43,7 +46,9 @@ class EditProfileModal extends Component {
             <div className={`outer-modal ${this.props.modalMode}`}>
             <div className="inner-modal">
 
-                <button onClick={() => this.props.toggleModal()} className="close-modal border-btn btn">X</button>
+                <button onClick={() => this.props.toggleModal()} className="close-modal border-btn btn">
+                    <FontAwesomeIcon icon={faTimes} />
+                </button>
 
                 <header className="modal-header">
                     <h3 className="modal-title">Edit Profile</h3>

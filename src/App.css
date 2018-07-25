@@ -35,6 +35,7 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
   font-weight: 700;
   text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
   border: none;
+  outline: none;
   padding: 3px 8px;
   cursor: pointer;
   font-size: 14px;
@@ -81,6 +82,9 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
   outline: none; }
   .edit-btn:hover {
     opacity: 1; }
+
+.edit-btn.delete-btn {
+  color: #ea6c6c; }
 
 .outer-wrap {
   background: #333333;
@@ -479,24 +483,26 @@ input[type="text"], input[type="password"], input[type="email"], .main-input {
   .story-header .story-title .byline {
     font-size: 18px;
     font-weight: 200;
-    letter-spacing: initial; }
+    letter-spacing: initial;
+    display: block; }
+    .story-header .story-title .byline a {
+      color: #1ddfa5; }
+      .story-header .story-title .byline a:hover {
+        text-decoration: underline; }
 
 .story-header .follow-info-wrap {
   position: relative; }
-
-.story-header .edit-story-links {
-  position: absolute;
-  bottom: 0;
-  right: 0; }
-  .story-header .edit-story-links .edit-story-link {
-    display: inline-block;
-    font-weight: 200; }
+  .story-header .follow-info-wrap .btn.border-btn {
+    padding: 2px 8px;
+    outline: none; }
 
 .delete-story-wrap {
   margin: 75px 0 0;
-  border-top: 3px dashed #ea6c6c; }
+  background: rgba(234, 108, 108, 0.2);
+  padding: 30px 0; }
   .delete-story-wrap .delete-title {
-    color: #cccccc; }
+    color: #cccccc;
+    margin-top: 0; }
   .delete-story-wrap .btn.negative-btn {
     font-weight: 200;
     padding: 8px 14px; }

@@ -4,7 +4,9 @@ import moment from 'moment'
 import axios from 'axios'
 import EditEventModal from './EditEventModal'
 
-
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import faTrash from "@fortawesome/fontawesome-pro-solid/faTrash";
+import faPen from "@fortawesome/fontawesome-pro-solid/faPen";
 
 import { getStoryById, addComment, deleteComment } from "../../ducks/reducers/storyReducer";
 import Comment from './Comment';
@@ -106,8 +108,16 @@ class Event extends Component {
 
                 {/* *TO DO: only render if story belongs to logged in user <<DONE>> */}
                {user.user_id && (story_userid===user.user_id)&&(<div className="edit-event-links">
-                    <button onClick={() => this.props.toggleEditEventModal(this.props.event_id)} className="btn">Edit Event</button>
-                    <button onClick={()=>this.deleteEvent(this.props.event_id)} className="btn negative-border-btn">Delete Event</button>
+                    <button 
+                        onClick={() => this.props.toggleEditEventModal(this.props.event_id)} 
+                        className="edit-btn edit-event-btn">
+                        <FontAwesomeIcon icon={faPen} />
+                    </button>
+                    <button 
+                        onClick={()=>this.deleteEvent(this.props.event_id)} 
+                        className="edit-btn delete-btn">
+                        <FontAwesomeIcon icon={faTrash} />
+                    </button>
                 </div>)}
 
                 <header className="event-header">
